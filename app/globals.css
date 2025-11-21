@@ -456,3 +456,6 @@ body {
   backface-visibility: hidden;
   perspective: 1000px;
 }
+.hindi-text {
+  line-height: 1.6 !important;
+}

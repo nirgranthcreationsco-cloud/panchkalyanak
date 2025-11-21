@@ -5,12 +5,10 @@ import { Yojana } from "./types/yojana";
 
 import BookingModal from "./component/booking";
 import CertificateModal from "./component/certificatemodal";
-import ContactSection from "./component/contactsection";
 import DonationSection from "./component/donations";
 import FooterSection from "./component/footer";
 import PanchkalyanakHero from "./component/herosection";
 import DivineIntro from "./component/intro";
-import SocialConnectSection from "./component/socialconnect";
 import VenueConnectivity from "./component/venue";
 import YojanaSection from "./component/yojna";
 
@@ -35,8 +33,6 @@ const LandingPage = () => {
       <VenueConnectivity />
       <YojanaSection setSelectedYojana={setSelectedYojana} />
       <DonationSection />
-      <ContactSection />
-      <SocialConnectSection />
       
       <FooterSection />
 

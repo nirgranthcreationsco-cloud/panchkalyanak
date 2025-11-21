@@ -1,6 +1,5 @@
-// /app/component/types.ts
 export interface Yojana {
-  icon: string;
+  icon: React.ReactNode;   // <-- changed from string to React.ReactNode
   name: string;
   amount: string;
   description: string;
