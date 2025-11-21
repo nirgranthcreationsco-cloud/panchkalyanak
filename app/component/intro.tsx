@@ -88,7 +88,7 @@ const DivineIntro: React.FC = () => {
             <SanidhyaCard name="आदित्य सागर जी महाराज" img="/aditya.jpg" />
 <SanidhyaCard name="अप्रमित सागर जी महाराज" img="/apramit.jpg" />
 <SanidhyaCard name="सहज सागर जी महाराज" img="/sahaj.jpg" />
-<SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/sanidhya4.jpg" />
+<SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/chullak.png" />
 
           </div>
         </div>
@@ -96,11 +96,11 @@ const DivineIntro: React.FC = () => {
 
       {/* ⭐ BOTTOM CORNER GURUS */}
       <div className="absolute bottom-2 left-2 sm:left-6 z-20">
-        <GuruBottom img="/mataji1.jpeg"  title=""/>
+        <GuruBottom img="/mataji1.jpeg"  title="आर्यिका श्री 105 विकाम्याश्री माताजी"/>
       </div>
 
       <div className="absolute bottom-2 right-2 sm:right-6 z-20">
-        <GuruBottom img="/mataji2.jpeg" title="" />
+        <GuruBottom img="/mataji2.jpeg" title="आर्यिका श्री 105 विगुंजन माताजी" />
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-[#D9A441] to-transparent opacity-20" />
@@ -138,14 +138,13 @@ const GuruCorner = ({ img, title }: any) => {
     </div>
   );
 };
-
-
 const GuruBottom = ({ img, title }: any) => {
-
-  const needsTopCrop = img.includes("mataji1") || img.includes("mataji2");
+  const needsTopCrop =
+    img.includes("mataji1") || img.includes("mataji2");
 
   return (
-    <div className="relative">
+    <div className="relative flex flex-col items-center pb-10">
+      
       <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden 
         border-4 border-[#D9A441] shadow-xl bg-white p-1">
         
@@ -155,11 +154,12 @@ const GuruBottom = ({ img, title }: any) => {
           className={`w-full h-full rounded-full bg-[#fff6e5] 
             ${needsTopCrop ? "object-cover object-top" : "object-contain"}`}
         />
-
       </div>
 
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-[#5E0B15] text-white 
-        text-[10px] sm:text-sm px-4 py-1 rounded-full border-2 border-[#D9A441]">
+      {/* TITLE — Now placed normally, never cut off */}
+      <div className="mt-3 bg-[#5E0B15] text-white 
+        text-[10px] sm:text-sm px-4 py-1 rounded-full border-2 border-[#D9A441]
+        shadow-md">
         {title}
       </div>
     </div>
