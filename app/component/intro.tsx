@@ -85,10 +85,11 @@ const DivineIntro: React.FC = () => {
           </h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
-            <SanidhyaCard name="संत श्री आदित्य" img="/aditya.jpg" />
-            <SanidhyaCard name="संत श्री अप्रमित" img="/apramit.jpg" />
-            <SanidhyaCard name="संत श्री शाज" img="/sahaj.jpg" />
-            <SanidhyaCard name="संत श्री" img="/sanidhya4.jpg" />
+            <SanidhyaCard name="आदित्य सागर जी महाराज" img="/aditya.jpg" />
+<SanidhyaCard name="अप्रमित सागर जी महाराज" img="/apramit.jpg" />
+<SanidhyaCard name="सहज सागर जी महाराज" img="/sahaj.jpg" />
+<SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/sanidhya4.jpg" />
+
           </div>
         </div>
       </div>
