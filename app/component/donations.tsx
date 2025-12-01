@@ -35,7 +35,6 @@ interface BankDetails {
   accountNumber: string;
   ifsc: string;
   bankName: string;
-  upiId: string;
 }
 
 type CopyHandler = (text: string, field: string) => void;
@@ -161,7 +160,6 @@ export default function DonationSection() {
     accountNumber: "21279057179",
     ifsc: "RMGB0001279",
     bankName: "Rajasthan Gramin Bank, Banswara",
-    upiId: "jaindham@okhdfcbank",
   };
 
   /* Copy Handler */
@@ -490,9 +488,7 @@ function PaymentSection({
                 />
               </div>
 
-              <p className="text-center font-semibold text-[#8B0048]">
-                UPI ID: {bankDetails.upiId}
-              </p>
+             
             </div>
 
             {/* Divider */}

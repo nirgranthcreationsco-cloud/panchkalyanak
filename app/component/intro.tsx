@@ -241,6 +241,7 @@ const GuruBottom: React.FC<{ img: string; title: string }> = ({
 };
 
 
+
 const SanidhyaCard: React.FC<{ name: string; img: string }> = ({ name, img }) => {
   return (
     <div className="group flex flex-col items-center">

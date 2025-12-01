@@ -22,7 +22,6 @@ interface BankDetails {
   accountNumber: string;
   ifsc: string;
   bankName: string;
-  upiId: string;
 }
 
 const bankDetails: BankDetails = {
@@ -30,7 +29,6 @@ const bankDetails: BankDetails = {
   accountNumber: "21279057179",
   ifsc: "RMGB0001279",
   bankName: "Rajasthan Gramin Bank, Banswara",
-  upiId: "jaindham@okhdfcbank",
 };
 
 // ------------------------ MODAL PROPS ------------------------
@@ -172,9 +170,7 @@ export default function UniversalYojnaBookingFlow({
                 <img src="/qr.png" className="w-52 h-52 object-contain border-4 border-[#E0679F] rounded-xl p-3 bg-white" />
               </div>
 
-              <p className="text-center text-[#8B0048] font-semibold">
-                UPI ID: {bankDetails.upiId}
-              </p>
+             
             </div>
 
             {/* BANK DETAILS */}
