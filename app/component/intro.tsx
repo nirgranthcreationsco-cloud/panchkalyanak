@@ -1,251 +1,264 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 const DivineIntro: React.FC = () => {
   return (
-    <section className="relative w-full min-h-screen bg-gradient-to-b from-[#FFF7F0] via-[#FAE7D6] to-[#F7B7A3]/20 overflow-hidden py-12 px-4">
-      
-      {/* Decorative Background */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
+    <section className="relative w-full min-h-screen overflow-hidden py-10 sm:py-14 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
+      {/* Soft Pattern Overlay */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.045]">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #D9A441 1px, transparent 1px),
-                             radial-gradient(circle at 75% 75%, #5E0B15 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23E3A8C4'/%3E%3C/svg%3E")`,
+            backgroundSize: "80px 80px",
           }}
         />
       </div>
 
-      {/* Ambient Glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#D9A441]/10 rounded-full blur-[120px]" />
-      </div>
+      {/* Central Radial Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(233,126,152,0.18),transparent_70%)]" />
 
-      {/* ⭐ TOP CORNER GURUS */}
-      <div className="absolute top-4 left-2 sm:left-4 z-20">
-        <GuruCorner img="/virag.png" title="आचार्य श्री" />
-      </div>
+      {/* MAIN CONTAINER */}
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-10 px-4 sm:px-6 lg:px-8">
+        {/* TOP GURUS + SYMBOLS */}
+<div className="mx-auto w-full max-w-5xl rounded-3xl border border-white/60 bg-white/85 shadow-[0_18px_45px_rgba(148,27,73,0.18)] backdrop-blur-md px-2 py-3 sm:px-5 sm:py-5 overflow-hidden">
 
-      <div className="absolute top-4 right-2 sm:right-4 z-20">
-        <GuruCorner img="/vishudh.png" title="आचार्य श्री" />
-      </div>
+  <div className="flex flex-nowrap items-center justify-between gap-2 sm:gap-4">
 
-      {/* MAIN CONTENT */}
-      <div className="relative z-10 max-w-6xl mx-auto pt-28 md:pt-32">
-        
-        {/* Title */}
-        <div className="text-center mb-10 px-4">
+            <GuruCorner img="/virag.png" title="आचार्य श्री विराग सागर जी म.सा." />
+
+            {/* Center Sacred Symbols */}
+            <div className="flex flex-col items-center justify-center gap-1 sm:gap-1.5 px-2">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="text-3xl sm:text-4xl md:text-5xl text-[#E0679F]">
+                  ॐ
+                </span>
+                <span className="text-4xl sm:text-5xl md:text-6xl text-transparent bg-gradient-to-br from-[#E0679F] via-[#F0B86C] to-[#E0679F] bg-clip-text drop-shadow">
+                  卐
+                </span>
+                <span className="text-3xl sm:text-4xl md:text-5xl text-[#E0679F]">
+                  ॐ
+                </span>
+              </div>
+              <p
+                className="text-[9px] sm:text-xs text-[#7A1433] font-medium tracking-[0.15em] uppercase"
+                style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+              >
+                श्री मज्जिनेन्द्र चतुर्विंशती तीर्थंकर
+              </p>
+            </div>
+
+            <GuruCorner
+              img="/vishudh.png"
+              title="आचार्य श्री विशुद्ध सागर जी म.सा."
+            />
+          </div>
+        </div>
+
+        {/* TITLE BLOCK */}
+        <div className="mx-auto max-w-4xl text-center space-y-4 sm:space-y-5">
           <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#5E0B15] leading-tight"
+            className="text-xl sm:text-2xl md:text-3xl font-semibold text-[#7A1433] leading-snug"
             style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
           >
             श्री मज्जिनेन्द्र चतुर्विंशती तीर्थंकर
           </h1>
-          
+
           <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-[#D9A441] via-[#F7B7A3] to-[#5E0B15] bg-clip-text text-transparent leading-tight mt-3"
-            style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[3.75rem] font-extrabold leading-tight bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] bg-clip-text text-transparent"
+            style={{
+              fontFamily: "'Noto Serif Devanagari', serif",
+              backgroundSize: "220%",
+            }}
           >
             पंचकल्याणक प्रतिष्ठा महा-महोत्सव
           </h2>
 
-          <p className="text-sm sm:text-base md:text-xl text-[#5E0B15] italic opacity-90 mt-4 px-2">
-            "जहाँ आत्मा का उत्थान ही महोत्सव बन जाता है"
-          </p>
+          
         </div>
 
-        {/* DESCRIPTION BOX */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-2xl border-2 border-[#D9A441]/30 shadow-xl p-6 sm:p-8 mb-16 relative">
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 text-sm md:text-base"
-            style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
-          >
-            <div className="space-y-4">
-              <DescItem icon="✦" text="500+ जिनबिंब की प्रतिष्ठा का ऐतिहासिक पंचकल्याणक" />
-              <DescEvent />
-              <DescLocation />
+        {/* INFORMATION CARD */}
+        <div className="mx-auto mb-4 w-full max-w-5xl">
+          <div className="overflow-hidden rounded-3xl border border-pink-200/70 bg-white/90 shadow-[0_18px_45px_rgba(158,39,88,0.16)] backdrop-blur-md">
+            {/* Top Accent */}
+            <div className="h-1.5 bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]" />
+
+            <div
+              className="grid grid-cols-1 gap-6 px-6 py-7 text-sm sm:grid-cols-2 sm:gap-8 sm:px-8 sm:py-9 md:gap-10 md:px-10 md:text-base"
+              style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+            >
+              <div className="space-y-5 sm:space-y-6">
+                <InfoItem
+                  icon="✦"
+                  title="ऐतिहासिक आयोजन"
+                  text="500+ जिनबिंब की प्रतिष्ठा का भव्य पंचकल्याणक"
+                />
+                <InfoItem
+                  icon="🛕"
+                  title="भावी जिनालय का शिलान्यास"
+                  text="22 फरवरी 2026, प्रातः 08:00 बजे"
+                />
+                <InfoItem
+                  icon="📍"
+                  title="पुण्य स्थल"
+                  text="टिम्बा गामड़ी, मोरडी मिल के पास, बाँसवाड़ा–उदयपुर रोड "
+                />
+              </div>
+
+              <div className="space-y-5 sm:space-y-6">
+                <InfoItem
+                  icon="💐"
+                  title="आप सपरिवार सादर आमंत्रित"
+                  text="इस पावन अवसर पर आपका हार्दिक स्वागत है"
+                />
+                <InfoItem
+                  icon="🌿"
+                  title="आयोजक"
+                  text="चतुर्विंशती तीर्थंकर समिति, वात्सल्य सेवार्थ फाउंडेशन"
+                />
+
+                <div className="rounded-2xl border border-[#F0B86C]/60 bg-gradient-to-br from-[#FFE5F0]/70 via-[#FFF7EA]/70 to-[#FFE5F0]/70 px-4 py-4 sm:px-5 sm:py-5">
+                  <p className="mb-2 text-sm font-semibold text-[#7A1433]">
+                    आयोजन समिति
+                  </p>
+                  <p className="text-xs sm:text-sm text-[#7A1433]/90">
+                    <span className="font-semibold">अध्यक्ष:</span> दिनेश जी
+                    खोड़निया
+                  </p>
+                  <p className="text-xs sm:text-sm text-[#7A1433]/90">
+                    <span className="font-semibold">गौरवाध्यक्ष:</span> अशोक जी
+                    वोरा
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <DescItem icon="💐" text="आप सपरिवार सादर आमंत्रित हैं" />
-              <DescOrganisers />
-              <DescTeam />
-            </div>
+            {/* Bottom Accent */}
+            <div className="h-1 bg-gradient-to-r from-transparent via-[#E0679F] to-transparent" />
           </div>
         </div>
 
-        {/* ⭐ SANIDHYA GRID — IMAGES FROM PUBLIC */}
-        <div className="mb-20">
+        {/* SANIDHYA SECTION */}
+        <div className="mx-auto mb-4 flex w-full max-w-5xl flex-col gap-6 sm:gap-8">
           <h3
-            className="text-2xl md:text-3xl font-bold text-[#5E0B15] text-center mb-6"
+            className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-[#7A1433]"
             style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
           >
             विशिष्ट सानिध्य
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
-            <SanidhyaCard name="आदित्य सागर जी महाराज" img="/aditya.jpg" />
-<SanidhyaCard name="अप्रमित सागर जी महाराज" img="/apramit.jpg" />
-<SanidhyaCard name="सहज सागर जी महाराज" img="/sahaj.jpg" />
-<SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/chullak.png" />
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 sm:gap-7 md:gap-8">
+            <SanidhyaCard name="आदित्य सागर जी महाराज" img="/aditya.png" />
+            <SanidhyaCard name="अप्रमित सागर जी महाराज" img="/apramit.png" />
+            <SanidhyaCard name="सहज सागर जी महाराज" img="/sahaj.png" />
+            <SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/chullak.png" />
+          </div>
+        </div>
 
+        {/* BOTTOM GURUS ROW */}
+        <div className="mx-auto w-full max-w-5xl border-t border-pink-200/60 pt-6 sm:pt-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:justify-between">
+            <GuruBottom
+              img="/mataji1.jpeg"
+              title="आर्यिका श्री 105 विकाम्याश्री माताजी"
+            />
+            <GuruBottom
+              img="/mataji2.jpeg"
+              title="आर्यिका श्री 105 विगुंजन माताजी"
+            />
           </div>
         </div>
       </div>
 
-      {/* ⭐ BOTTOM CORNER GURUS */}
-      <div className="absolute bottom-2 left-2 sm:left-6 z-20">
-        <GuruBottom img="/mataji1.jpeg"  title="आर्यिका श्री 105 विकाम्याश्री माताजी"/>
-      </div>
-
-      <div className="absolute bottom-2 right-2 sm:right-6 z-20">
-        <GuruBottom img="/mataji2.jpeg" title="आर्यिका श्री 105 विगुंजन माताजी" />
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-[#D9A441] to-transparent opacity-20" />
+      {/* Bottom Glow Line */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-[#E0679F] to-transparent" />
     </section>
   );
 };
 
 export default DivineIntro;
 
-/* -----------------------------------------
-   Sub Components
------------------------------------------- */
+/* ============================================================
+   COMPONENTS
+============================================================ */
 
-const GuruCorner = ({ img, title }: any) => {
-  const isTallImage =
-    img.includes("virag") ||
-    img.includes("vishudh") 
+interface SimpleProps {
+  img: string;
+  title?: string;
+  name?: string;
+  icon?: string;
+  text?: string;
+}
 
+const GuruCorner: React.FC<{ img: string; title: string }> = ({ img, title }) => {
   return (
-    <div className="relative">
-      {/* Circular Frame */}
-      <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-[#D9A441] shadow-xl bg-white p-1">
-        <img
-          src={img}
-          alt={title}
-          className={`w-full h-full rounded-full bg-[#fff6e5]
-            ${isTallImage ? "object-cover object-top" : "object-contain"}`}
-        />
-      </div>
-
-      {/* Title Label */}
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-[#5E0B15] text-white text-[10px] sm:text-xs px-3 py-1 rounded-full border-2 border-[#D9A441] whitespace-nowrap">
-        {title}
-      </div>
-    </div>
-  );
-};
-const GuruBottom = ({ img, title }: any) => {
-  const needsTopCrop =
-    img.includes("mataji1") || img.includes("mataji2");
-
-  return (
-    <div className="relative flex flex-col items-center pb-10">
-      
-      <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden 
-        border-4 border-[#D9A441] shadow-xl bg-white p-1">
-        
-        <img
-          src={img}
-          alt={title}
-          className={`w-full h-full rounded-full bg-[#fff6e5] 
-            ${needsTopCrop ? "object-cover object-top" : "object-contain"}`}
-        />
-      </div>
-
-      {/* TITLE — Now placed normally, never cut off */}
-      <div className="mt-3 bg-[#5E0B15] text-white 
-        text-[10px] sm:text-sm px-4 py-1 rounded-full border-2 border-[#D9A441]
-        shadow-md">
-        {title}
-      </div>
-    </div>
-  );
-};
-
-
-const DescItem = ({ icon, text }: any) => (
-  <div className="flex items-start gap-3">
-    <span className="text-[#D9A441] text-xl mt-1">{icon}</span>
-    <p className="text-[#5E0B15] leading-relaxed">{text}</p>
-  </div>
-);
-
-const DescEvent = () => (
-  <div className="flex items-start gap-3">
-    <span className="text-[#D9A441] text-xl mt-1">🛕</span>
-    <div>
-      <p className="font-semibold text-[#5E0B15] mb-1">भावी जिनालय का शिलान्यास</p>
-      <p className="text-[#5E0B15]/80 text-sm">📅 22 फरवरी 2026, प्रातः 08:00 बजे</p>
-    </div>
-  </div>
-);
-
-const DescLocation = () => (
-  <div className="flex items-start gap-3">
-    <span className="text-[#D9A441] text-xl mt-1">📍</span>
-    <div>
-      <p className="font-semibold text-[#5E0B15] mb-1">पुण्य स्थल</p>
-      <p className="text-[#5E0B15]/80 text-sm leading-snug">
-        बाँसवाड़ा–उदयपुर रोड, मोरडी मिल के पास, टिम्बा गामड़ी
-      </p>
-    </div>
-  </div>
-);
-
-const DescOrganisers = () => (
-  <div className="flex items-start gap-3">
-    <span className="text-[#D9A441] text-xl mt-1">🌿</span>
-    <div>
-      <p className="font-semibold text-[#5E0B15] mb-1">आयोजक</p>
-      <p className="text-[#5E0B15]/80 text-sm leading-snug">
-        चतुर्विंशती तीर्थंकर समिति, वात्सल्य सेवार्थ फाउंडेशन
-      </p>
-    </div>
-  </div>
-);
-
-const DescTeam = () => (
-  <div className="bg-[#F7B7A3]/30 rounded-lg p-3 border border-[#D9A441]/20">
-    <p className="text-xs text-[#5E0B15] mb-1">
-      <span className="font-semibold">अध्यक्ष:</span> दिनेश जी खोड़निया
-    </p>
-    <p className="text-xs text-[#5E0B15]">
-      <span className="font-semibold">गौरवाध्यक्ष:</span> अशोका जी वोरा
-    </p>
-  </div>
-);
-
-const SanidhyaCard = ({ name, img }: any) => {
-
-  // For tall/portrait images, show top (face-first)
-  const isTallImage = img.includes("aditya") || img.includes("apramit") || img.includes("sahaj");
-
-  return (
-    <div className="flex flex-col items-center group">
-      <div className="relative mb-4">
-
-        <div
-          className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D9A441] via-transparent to-[#D9A441] animate-spin opacity-30"
-          style={{ animationDuration: '3s' }}
-        />
-
-        <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#D9A441] shadow-xl bg-white p-1 group-hover:scale-110 transition-transform duration-300">
+    <div className="flex flex-col items-center">
+      <div className="relative">
+        <div className="relative h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 
+                        rounded-full border-4 border-white shadow-[0_10px_25px_rgba(130,24,67,0.35)]
+                        bg-white overflow-hidden">
           <img
             src={img}
-            alt={name}
-            className={`w-full h-full rounded-full bg-[#fff6e5] 
-              ${isTallImage ? "object-cover object-top" : "object-contain"}`}
+            alt={title}
+            className="h-full w-full object-cover object-center"
           />
         </div>
-
       </div>
 
       <p
-        className="text-xs sm:text-sm md:text-base text-[#5E0B15] font-semibold"
+        className="mt-2 max-w-[150px] rounded-full bg-[#7A1433] border border-[#F0B86C]/70
+                   px-3 py-1 text-[10px] sm:text-xs md:text-sm font-medium text-white text-center shadow-lg"
+        style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+      >
+        {title}
+      </p>
+    </div>
+  );
+};
+
+const GuruBottom: React.FC<{ img: string; title: string }> = ({
+  img,
+  title,
+}) => {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 rounded-full border-[4px] border-[#F0B86C] overflow-hidden shadow-[0_10px_25px_rgba(148,27,73,0.3)] bg-white">
+        <img
+          src={img}
+          alt={title}
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+
+      <p
+        className="mt-2 max-w-[170px] rounded-full border border-[#F0B86C] bg-[#7A1433] px-3 py-1 text-[10px] sm:text-xs md:text-sm font-medium text-white text-center shadow-md"
+        style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+      >
+        {title}
+      </p>
+    </div>
+  );
+};
+
+
+const SanidhyaCard: React.FC<{ name: string; img: string }> = ({ name, img }) => {
+  return (
+    <div className="group flex flex-col items-center">
+      <div className="relative mb-3 sm:mb-4">
+        <div className="relative h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 
+                        rounded-full border-4 border-white bg-white
+                        shadow-[0_12px_30px_rgba(148,27,73,0.25)] overflow-hidden">
+          <img
+            src={img}
+            alt={name}
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+      </div>
+
+      <p
+        className="px-1 text-center text-sm sm:text-base md:text-lg font-semibold text-[#7A1433]
+                   group-hover:text-[#E0679F] transition-colors duration-300"
         style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
       >
         {name}
@@ -254,3 +267,24 @@ const SanidhyaCard = ({ name, img }: any) => {
   );
 };
 
+const InfoItem: React.FC<{ icon: string; title: string; text: string }> = ({
+  icon,
+  title,
+  text,
+}) => (
+  <div className="group">
+    <div className="flex items-start gap-3 sm:gap-4">
+      <span className="mt-0.5 flex-shrink-0 text-xl sm:text-2xl text-[#E0679F] transition-transform duration-300 group-hover:scale-110">
+        {icon}
+      </span>
+      <div>
+        <p className="mb-1 text-sm font-bold text-[#7A1433] sm:text-base">
+          {title}
+        </p>
+        <p className="text-xs leading-relaxed text-[#7A1433]/85 sm:text-sm">
+          {text}
+        </p>
+      </div>
+    </div>
+  </div>
+);

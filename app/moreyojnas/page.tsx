@@ -1,18 +1,16 @@
 "use client";
 
 import {
-  CheckCircle2,
   ChevronRight,
   Crown,
   Gem,
   Heart,
   Landmark,
-  QrCode,
   Sparkles,
-  Star,
-  X,
+  Star
 } from "lucide-react";
 import { JSX, useState } from "react";
+import UniversalYojnaBookingFlow from "../component/booking";
 
 type YojnaItem = {
   name: string;
@@ -426,127 +424,12 @@ export default function MoreYojnas() {
         </div>
       </main>
 
-      {/* MODAL */}
       {selected && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
-          onClick={handleCloseModal}
-        >
-          <div
-            className="relative w-full max-w-2xl bg-gradient-to-br from-white via-[#FFF7F0] to-[#FAD2C1]/80 rounded-3xl shadow-2xl overflow-hidden border border-[#FFD76A]/80 animate-scaleIn max-h-[90vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="relative p-8 md:p-10 bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#5A0030] text-white flex-shrink-0">
-              <button
-                onClick={handleCloseModal}
-                className="absolute top-4 right-4 z-20 w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-all hover:rotate-90"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="pr-12">
-                <p className="hindi-text text-xs sm:text-sm tracking-[0.25em] uppercase text-[#FAD2C1]/80 mb-2">
-                  {selected.sectionTitle}
-                </p>
-                <h2 className="hindi-text text-2xl sm:text-3xl md:text-4xl font-bold leading-[1.35]">
-                  {selected.name}
-                </h2>
-              </div>
-            </div>
-
-            {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto p-8 space-y-6">
-              {/* Amount block */}
-              <div className="text-center py-6 md:py-8 bg-gradient-to-br from-white via-[#FFF2E4] to-white rounded-2xl border border-[#FFD76A]/70 shadow-inner">
-                <p className="hindi-text text-xs sm:text-sm font-semibold text-[#8B0048]/80 tracking-wide mb-2">
-                  अनुशंसित यजमान राशि
-                </p>
-                <p className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A]">
-                  {selected.amount}
-                </p>
-              </div>
-
-              {/* Benefits */}
-              {selected.benefits && (
-                <div className="space-y-4">
-                  <h3 className="hindi-text text-lg md:text-xl font-bold text-[#5A0030] flex items-center gap-2">
-                    <CheckCircle2 className="w-6 h-6 text-[#C04878]" />
-                    लाभ एवं विशेषताएँ
-                  </h3>
-                  <div className="space-y-3">
-                    {selected.benefits.map((benefit, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-3 p-3 md:p-4 bg-white/95 rounded-xl border border-[#FAD2C1]/80"
-                      >
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#8B0048] to-[#C04878] flex items-center justify-center flex-shrink-0">
-                          <span className="text-white text-sm">✓</span>
-                        </div>
-                        <p className="hindi-text text-sm md:text-base text-[#5E0B15] leading-relaxed">
-                          {benefit}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* QR toggle / payment flow */}
-              {!showQR ? (
-                <button
-                  onClick={() => setShowQR(true)}
-                  className="w-full px-8 py-5 bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A] hover:via-[#D96B9A] text-white font-bold text-lg rounded-xl shadow-xl transition-all transform hover:scale-[1.03] flex items-center justify-center gap-3"
-                >
-                  <QrCode className="w-6 h-6" />
-                  योगदान हेतु QR कोड देखें
-                </button>
-              ) : (
-                <div className="space-y-4 animate-fadeIn">
-                  <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl border border-[#FAD2C1]">
-                    <div className="w-48 h-48 bg-[#F7F0E8] rounded-xl flex items-center justify-center border border-[#FAD2C1]">
-                      <div className="text-center text-[#5A0030]">
-                        <QrCode className="w-16 h-16 mx-auto mb-2" />
-                        <p className="text-sm font-semibold hindi-text">
-                          QR कोड Placeholder
-                        </p>
-                        <p className="text-xs text-[#8B0048]/70 mt-1 hindi-text">
-                          यहाँ संस्था का वास्तविक UPI / QR जोड़ा जाएगा
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-center space-y-1">
-                      <p className="hindi-text text-sm font-semibold text-[#5A0030]">
-                        किसी भी UPI ऐप से QR कोड स्कैन कर योगदान करें
-                      </p>
-                      <p className="hindi-text text-xs text-[#5E0B15]/75">
-                        कृपया भुगतान के बाद स्क्रीनशॉट सुरक्षित रखें और समिति से
-                        पुष्टि अवश्य करें।
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => setShowQR(false)}
-                    className="w-full px-6 py-3 bg-[#FAD2C1] hover:bg-[#F7B7A3] text-[#5A0030] font-semibold rounded-xl transition-all hindi-text"
-                  >
-                    QR छुपाएं
-                  </button>
-                </div>
-              )}
-
-              {/* Footer note */}
-              <div className="text-center pt-4 border-t border-[#FAD2C1]">
-                <p className="hindi-text text-sm text-[#5E0B15]/80 leading-relaxed">
-                  यजमान बनने, भुगतान व्यवस्था एवं रसीद के लिए कृपया समिति के
-                  अधिकृत प्रतिनिधि से संपर्क करें। सभी विवरण आपको विनम्रतापूर्वक
-                  उपलब्ध कराए जाएंगे।
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+  <UniversalYojnaBookingFlow
+    yojana={selected}
+    onClose={() => setSelected(null)}
+  />
+)}
 
       <style jsx>{`
         @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap");

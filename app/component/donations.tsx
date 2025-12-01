@@ -3,7 +3,6 @@
 import {
   Check,
   Copy,
-  FileCheck2,
   HeartHandshake,
   IndianRupee,
   Mail,
@@ -14,6 +13,7 @@ import {
   User,
   X
 } from "lucide-react";
+
 import React, { useState } from "react";
 
 /* -----------------------------------------
@@ -41,450 +41,41 @@ interface BankDetails {
 type CopyHandler = (text: string, field: string) => void;
 
 /* -----------------------------------------
-   Main Donation Section
+   Input Field Component
 ------------------------------------------ */
 
-export default function DonationSection() {
-  const [formData, setFormData] = useState<FormData>({
-    donationAmount: 0,
-    donorName: "",
-    donorPhone: "",
-    donorEmail: "",
-    donationPurpose: "",
-  });
-
-  const [stage, setStage] = useState<Stage>("form");
-  const [copiedField, setCopiedField] = useState<string>("");
-
-
-  const presetAmounts = [501, 1100, 2100, 5100];
-
-  const bankDetails: BankDetails = {
-    accountName: "जैन तीर्थ निर्माण ट्रस्ट",
-    accountNumber: "1234567890123456",
-    ifsc: "SBIN0001234",
-    bankName: "State Bank of India",
-    upiId: "jaindham@okhdfcbank",
-  };
-
-  const handleCopy: CopyHandler = (text, field) => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(text);
-      setCopiedField(field);
-      setTimeout(() => setCopiedField(""), 2000);
-    }
-  };
-
-  const handleSubmit = () => {
-    if (!formData.donationAmount) {
-      alert("कृपया दान राशि दर्ज करें");
-      return;
-    }
-    if (!formData.donorName || !formData.donorPhone || !formData.donorEmail) {
-      alert("कृपया सभी विवरण भरें");
-      return;
-    }
-
-    setStage("payment");
-  };
-
-  const handlePaymentDone = () => {
-    setStage("certificate");
-  };
-
-  const downloadCertificate = () => {
-    alert("प्रमाण पत्र डाउनलोड किया जा रहा है...");
-  };
-
-  if (stage === "payment") {
-    return (
-      <PaymentSection
-        formData={formData}
-        bankDetails={bankDetails}
-        onPaymentDone={handlePaymentDone}
-        onBack={() => setStage("form")}
-        copiedField={copiedField}
-        onCopy={handleCopy}
-      />
-    );
-  }
-
-  if (stage === "certificate") {
-    return (
-      <CertificateSection
-        formData={formData}
-        onDownload={downloadCertificate}
-        onNewDonation={() => {
-          setFormData({
-            donationAmount: 0,
-            donorName: "",
-            donorPhone: "",
-            donorEmail: "",
-            donationPurpose: "",
-          });
-          setStage("form");
-        }}
-      />
-    );
-  }
-
-  return (
-    <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-br from-[#FFF7F0] via-[#FAD2C1]/40 to-[#C04878]/10 hindi-text">
-      {/* Background Glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[10%] w-[25rem] h-[25rem] bg-[#FFD76A]/30 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[5%] w-[20rem] h-[20rem] bg-[#C04878]/20 blur-[120px] rounded-full" />
-      </div>
-
-      <div className="relative max-w-5xl mx-auto z-10">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <HeartHandshake className="w-14 h-14 mx-auto text-[#C04878]" />
-
-          <h2
-            className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text 
-                       bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A] 
-                       mt-4 leading-[1.45]"
-          >
-            आपका योगदान अत्यंत मूल्यवान है
-          </h2>
-
-          <p className="text-gray-700 max-w-2xl mx-auto mt-5 text-lg leading-[1.7]">
-            हर दान, हर रुपये में भविष्य का तीर्थ बसता है।  
-            आपका सहयोग एक पवित्र निर्माण की नींव है।
-          </p>
-        </div>
-
-        {/* Main Container */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#FFD76A]/40 overflow-hidden">
-          {/* Section Header */}
-          <div className="bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#8B0048] p-8 text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3 leading-[1.5]">
-              <IndianRupee className="w-7 h-7 text-[#FFD76A]" />
-              दान करें - पुण्य कमाएं
-            </h3>
-
-            <p className="text-[#FAD2C1] mt-2 text-lg leading-[1.7]">
-              पवित्र कार्य में भागीदारी
-            </p>
-          </div>
-
-          {/* Content */}
-          <div className="p-8 md:p-12">
-            {/* Quick Amount Buttons */}
-            <div className="mb-8">
-              <label className="block text-[#8B0048] font-bold text-xl mb-4 text-center leading-[1.7]">
-                अपनी श्रद्धा अनुसार राशि चुनें
-              </label>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {presetAmounts.map((amount) => (
-                  <button
-                    key={amount}
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        donationAmount: amount,
-                      }))
-                    }
-                    className={`p-6 rounded-2xl text-xl font-bold border transition-all duration-300 ${
-                      formData.donationAmount === amount
-                        ? "bg-gradient-to-br from-[#8B0048] to-[#C04878] text-white border-[#FFD76A] shadow-xl scale-105"
-                        : "bg-white border-[#C04878]/40 text-[#8B0048] hover:border-[#8B0048]"
-                    }`}
-                  >
-                    ₹{amount}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Custom Amount Input */}
-            <div className="mb-8">
-              <label className="block text-[#8B0048] font-bold text-lg mb-3 leading-[1.6]">
-                या अपनी इच्छा अनुसार राशि दर्ज करें
-              </label>
-
-              <div className="relative">
-                <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C04878]" />
-
-                <input
-                  type="number"
-                  value={formData.donationAmount || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      donationAmount: parseInt(e.target.value, 10) || 0,
-                    }))
-                  }
-                  className="w-full pl-12 pr-6 py-4 border-2 border-[#C04878]/40 rounded-xl 
-                             focus:border-[#8B0048] text-2xl font-semibold text-[#8B0048]
-                             outline-none leading-[1.6]"
-                  placeholder="राशि दर्ज करें"
-                />
-              </div>
-            </div>
-
-            {/* Donor Details */}
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <InputField
-                icon={User}
-                label="दाता का नाम"
-                value={formData.donorName}
-                placeholder="अपना नाम दर्ज करें"
-                onChange={(v) =>
-                  setFormData((prev) => ({ ...prev, donorName: v }))
-                }
-              />
-
-              <InputField
-                icon={Phone}
-                label="व्हाट्सएप नंबर"
-                value={formData.donorPhone}
-                placeholder="+91 XXXXX XXXXX"
-                onChange={(v) =>
-                  setFormData((prev) => ({ ...prev, donorPhone: v }))
-                }
-              />
-            </div>
-
-            <InputField
-              icon={Mail}
-              label="ईमेल पता"
-              value={formData.donorEmail}
-              placeholder="example@gmail.com"
-              onChange={(v) =>
-                setFormData((prev) => ({ ...prev, donorEmail: v }))
-              }
-            />
-
-            {/* Donation Purpose */}
-            <div className="mb-8 mt-6">
-              <label className="block text-[#8B0048] font-semibold mb-2 flex items-center gap-2 leading-[1.6]">
-                <Target className="w-5 h-5 text-[#C04878]" />
-                दान का उद्देश्य
-              </label>
-
-              <select
-                value={formData.donationPurpose}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    donationPurpose: e.target.value,
-                  }))
-                }
-                className="w-full px-4 py-4 border-2 border-[#C04878]/40 rounded-xl 
-                           focus:border-[#8B0048] outline-none leading-[1.7]"
-              >
-                <option value="">दान का उद्देश्य चुनें</option>
-                <option value="tirth_nirman">तीर्थ निर्माण सहयोग</option>
-                <option value="pratishtha_sahyog">प्रतिष्ठा महोत्सव सहयोग</option>
-                <option value="aahar_daan">
-                  आहार दान (साधु–साध्वी के लिए)
-                </option>
-                <option value="puja_samagri">पूजा–सामग्री सहयोग</option>
-                <option value="goshala_sahyog">गौशाला सहयोग</option>
-                <option value="shastra_daan">जिनवाणी / शास्त्र दान</option>
-                <option value="vidhyalaya_sahyog">
-                  जैन विद्यालय / पाठशाला सहयोग
-                </option>
-                <option value="navekarn">
-                  मंदिर नव-निर्माण एवं सौंदर्यीकरण
-                </option>
-                <option value="general">सामान्य दान</option>
-              </select>
-            </div>
-
-            {/* Transparency Message */}
-            <div className="bg-[#FAD2C1]/40 p-6 rounded-xl mb-10 border border-[#C04878]/30">
-              <div className="flex items-start gap-4">
-                <ShieldCheck className="w-8 h-8 text-[#8B0048]" />
-                <div>
-                  <h4 className="font-bold text-[#8B0048] text-xl mb-2 leading-[1.7]">
-                    पूर्ण पारदर्शिता की गारंटी
-                  </h4>
-
-                  <p className="text-[#8B0048]/80 leading-[1.7]">
-                    आपका प्रत्येक रुपया सेवा कार्य में समर्पित किया जाता है —
-                    बिना किसी कटौती के।
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            
-
-            {/* Donate Button */}
-            <button
-              onClick={handleSubmit}
-              className="w-full py-6 rounded-xl bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A]
-                         text-white font-bold text-2xl shadow-xl hover:scale-[1.03] 
-                         transition-all duration-300 flex items-center justify-center gap-4 leading-[1.6]"
-            >
-              अभी दान करें
-            </button>
-
-            <p className="text-center text-gray-600 mt-4 text-sm leading-[1.6]">
-              🔒 सुरक्षित भुगतान • 100% एन्क्रिप्टेड
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+interface InputFieldProps {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
 }
 
-/* -----------------------------------------
-   Payment Section
------------------------------------------- */
-
-interface PaymentSectionProps {
-  formData: FormData;
-  bankDetails: BankDetails;
-  onPaymentDone: () => void;
-  onBack: () => void;
-  copiedField: string;
-  onCopy: CopyHandler;
-}
-
-function PaymentSection({
-  formData,
-  bankDetails,
-  onPaymentDone,
-  onBack,
-  copiedField,
-  onCopy,
-}: PaymentSectionProps) {
+function InputField({
+  icon: Icon,
+  label,
+  value,
+  placeholder,
+  onChange,
+}: InputFieldProps) {
   return (
-    <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-br from-[#FFF7F0] via-[#FAD2C1]/40 to-[#C04878]/10">
-      <div className="relative max-w-5xl mx-auto z-10">
-        {/* Close Button */}
-        <button
-          onClick={onBack}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-200 rounded-full transition"
-        >
-          <X className="w-6 h-6 text-[#8B0048]" />
-        </button>
+    <div>
+      <label className="block text-[#8B0048] font-semibold mb-2 flex items-center gap-2 leading-[1.6]">
+        <Icon className="w-5 h-5 text-[#E0679F]" />
+        {label}
+      </label>
 
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#8B0048] mb-2">
-            भुगतान करें
-          </h2>
-          <p className="text-gray-700 text-lg">
-            ₹{formData.donationAmount} का दान
-          </p>
-        </div>
-
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#FFD76A]/40 overflow-hidden">
-          <div className="p-8 md:p-12">
-            {/* QR Code Section */}
-            <div className="bg-gradient-to-br from-[#FFF7F0] to-[#FAD2C1]/30 rounded-3xl p-8 mb-10 border-2 border-[#C04878]/30">
-              <div className="text-center mb-6">
-                <QrCode className="w-12 h-12 mx-auto text-[#C04878] mb-3" />
-                <h3 className="text-2xl font-bold text-[#8B0048] mb-2">
-                  तत्काल भुगतान
-                </h3>
-                <p className="text-gray-600">अपने फोन से स्कैन करें</p>
-              </div>
-
-              {/* Placeholder QR Code */}
-              <div className="flex justify-center mb-6">
-                <div className="w-64 h-64 bg-gradient-to-br from-[#8B0048]/10 to-[#C04878]/10 rounded-2xl border-4 border-[#C04878] flex items-center justify-center">
-                  <div className="text-center">
-                    <QrCode className="w-24 h-24 text-[#C04878]/50 mx-auto mb-2" />
-                    <p className="text-gray-500 text-sm">UPI QR Code</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <p className="text-gray-700 font-semibold">
-                  UPI ID: {bankDetails.upiId}
-                </p>
-              </div>
-            </div>
-
-            {/* Divider */}
-            <div className="flex items-center gap-4 my-10">
-              <div className="flex-1 h-px bg-gradient-to-r from-[#C04878]/0 to-[#C04878]/50"></div>
-              <span className="text-gray-600 font-semibold">या</span>
-              <div className="flex-1 h-px bg-gradient-to-l from-[#C04878]/0 to-[#C04878]/50"></div>
-            </div>
-
-            {/* Bank Transfer Section */}
-            <div className="bg-[#FAD2C1]/20 rounded-3xl p-8 border-2 border-[#C04878]/30 mb-10">
-              <h3 className="text-2xl font-bold text-[#8B0048] mb-6 text-center">
-                बैंक ट्रांसफर
-              </h3>
-
-              <div className="space-y-4">
-                <BankDetailRow
-                  label="खाता धारक का नाम"
-                  value={bankDetails.accountName}
-                  field="accountName"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="खाता संख्या"
-                  value={bankDetails.accountNumber}
-                  field="accountNumber"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="IFSC कोड"
-                  value={bankDetails.ifsc}
-                  field="ifsc"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="बैंक का नाम"
-                  value={bankDetails.bankName}
-                  field="bankName"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-              </div>
-            </div>
-
-            {/* Important Note */}
-            <div className="bg-[#FFD76A]/30 rounded-2xl p-6 border-l-4 border-[#FFD76A] mb-10">
-              <p className="text-[#8B0048] font-bold text-lg mb-2">📞 महत्वपूर्ण:</p>
-              <p className="text-[#8B0048] leading-relaxed">
-                भुगतान पूरा करने के बाद, कृपया हमें{" "}
-                <span className="font-bold">+91-XXXXX-XXXXX</span> पर कॉल करें
-                या WhatsApp भेजें।
-              </p>
-              <p className="text-[#8B0048] text-sm mt-2 opacity-80">
-                (अपनी पुष्टि के लिए आपका नाम और राशि दें ताकि हम आपका प्रमाण
-                पत्र तैयार कर सकें)
-              </p>
-            </div>
-
-            {/* Payment Done Button */}
-            <button
-              onClick={onPaymentDone}
-              className="w-full py-6 rounded-xl bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A]
-                         text-white font-bold text-2xl shadow-xl hover:scale-[1.02] 
-                         transition-all duration-300 flex items-center justify-center gap-3 mb-4"
-            >
-              <Check className="w-6 h-6" />
-              भुगतान पूरा हुआ
-            </button>
-
-            <button
-              onClick={onBack}
-              className="w-full py-4 rounded-xl border-2 border-[#C04878] text-[#8B0048]
-                         font-bold text-lg transition-all duration-300"
-            >
-              वापस जाएं
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+      <input
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.value)
+        }
+        placeholder={placeholder}
+        className="w-full px-4 py-4 border-2 border-[#E0679F]/40 rounded-xl 
+                   focus:border-[#8B0048] outline-none leading-[1.6]"
+      />
+    </div>
   );
 }
 
@@ -508,191 +99,23 @@ function BankDetailRow({
   onCopy,
 }: BankDetailRowProps) {
   return (
-    <div className="bg-white rounded-xl p-4 border-2 border-[#C04878]/30 flex items-center justify-between gap-4">
+    <div className="bg-white rounded-xl p-4 border-2 border-[#E0679F]/30 flex items-center justify-between gap-4">
       <div>
         <p className="text-gray-600 text-sm mb-1">{label}</p>
         <p className="text-[#8B0048] font-bold text-lg">{value}</p>
       </div>
+
       <button
         onClick={() => onCopy(value, field)}
-        className="p-3 hover:bg-[#FFD76A]/30 rounded-lg transition"
-        type="button"
+        className="p-3 hover:bg-[#F0B86C]/30 rounded-lg transition"
       >
         {copiedField === field ? (
           <Check className="w-5 h-5 text-green-500" />
         ) : (
-          <Copy className="w-5 h-5 text-[#C04878]" />
+          <Copy className="w-5 h-5 text-[#E0679F]" />
         )}
       </button>
     </div>
-  );
-}
-
-/* -----------------------------------------
-   Certificate Section
------------------------------------------- */
-
-interface CertificateSectionProps {
-  formData: FormData;
-  onDownload: () => void;
-  onNewDonation: () => void;
-}
-
-function CertificateSection({
-  formData,
-  onDownload,
-  onNewDonation,
-}: CertificateSectionProps) {
-  const getDonationCategoryName = (purpose: string | number) => {
-    const categories: Record<string, string> = {
-      tirth_nirman: "तीर्थ निर्माण",
-      pratishtha_sahyog: "प्रतिष्ठा महोत्सव",
-      aahar_daan: "आहार दान",
-      puja_samagri: "पूजा सामग्री",
-      goshala_sahyog: "गौशाला सहयोग",
-      shastra_daan: "जिनवाणी दान",
-      vidhyalaya_sahyog: "जैन विद्यालय",
-      navekarn: "मंदिर नव-निर्माण",
-      general: "सामान्य दान",
-    };
-    return categories[String(purpose)] || "दान";
-  };
-
-  const certificateNumber = React.useMemo(
-    () => `JDT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-    []
-  );
-
-  return (
-    <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-br from-[#FFF7F0] via-[#FAD2C1]/40 to-[#C04878]/10">
-      <div className="relative max-w-4xl mx-auto z-10">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#8B0048] mb-2">
-            🙏 धन्यवाद
-          </h2>
-          <p className="text-gray-700 text-lg">आपका प्रमाण पत्र तैयार है</p>
-        </div>
-
-        {/* Certificate */}
-        <div className="bg-white rounded-3xl shadow-2xl border-8 border-[#8B0048] overflow-hidden">
-          {/* Certificate Header */}
-          <div className="bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A] p-8 text-center relative">
-            <div className="absolute top-2 left-2 w-12 h-12 border-t-4 border-l-4 border-white opacity-50"></div>
-            <div className="absolute bottom-2 right-2 w-12 h-12 border-b-4 border-r-4 border-white opacity-50"></div>
-
-            <h3 className="text-3xl font-extrabold text-white mb-1">
-              सम्मान प्रमाण पत्र
-            </h3>
-            <p className="text-white/90 text-lg">Certificate of Merit</p>
-          </div>
-
-          {/* Certificate Body */}
-          <div className="p-12 text-center relative">
-            {/* Decorative Elements */}
-            <div className="absolute top-8 left-8 w-20 h-20 border-2 border-[#FFD76A] rounded-full opacity-30"></div>
-            <div className="absolute bottom-8 right-8 w-16 h-16 border-2 border-[#C04878] rounded-full opacity-30"></div>
-
-            <div className="mb-8">
-              <p className="text-[#8B0048]/70 text-lg font-semibold mb-4">
-                जैन समाज को सम्मानित करते हुए
-              </p>
-              <p className="text-gray-600 text-sm mb-6">
-                यह प्रमाण पत्र प्रदान किया जाता है
-              </p>
-            </div>
-
-            {/* Donor Name */}
-            <div className="mb-10 py-6 border-t-2 border-b-2 border-[#C04878]">
-              <p className="text-[#8B0048]/60 text-lg mb-2">
-                को सम्मानित किया जाता है
-              </p>
-              <h2 className="text-4xl font-extrabold text-[#8B0048] break-words">
-                {formData.donorName}
-              </h2>
-            </div>
-
-            {/* Certificate Details */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <CertificateField
-                label="दान राशि"
-                value={`₹ ${formData.donationAmount}`}
-              />
-              <CertificateField
-                label="दान श्रेणी"
-                value={getDonationCategoryName(formData.donationPurpose)}
-              />
-              <CertificateField label="दाता ईमेल" value={formData.donorEmail} />
-              <CertificateField label="दाता संपर्क" value={formData.donorPhone} />
-            </div>
-
-            {/* Purpose */}
-            <div className="bg-[#FFF7F0] rounded-2xl p-6 mb-10 border-l-4 border-[#C04878]">
-              <p className="text-[#8B0048]/70 text-sm mb-2">पवित्र उद्देश्य</p>
-              <p className="text-[#8B0048] font-bold text-lg">
-                {getDonationCategoryName(formData.donationPurpose)} के लिए दान
-              </p>
-            </div>
-
-            {/* Message */}
-            <p className="text-[#8B0048] text-sm leading-relaxed mb-12 px-4">
-              "दान का अर्थ है - निःस्वार्थ भाव से समाज के कल्याण के लिए अपना
-              योगदान देना।"
-            </p>
-
-            {/* Date and Seal Area */}
-            <div className="grid md:grid-cols-3 gap-8 mt-12 pt-8 border-t-2 border-[#C04878]/40">
-              <div>
-                <p className="text-[#8B0048]/60 text.sm mb-4">दिनांक</p>
-                <p className="text-[#8B0048] font-bold">
-                  {new Date().toLocaleDateString("hi-IN", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </div>
-              <div>
-                <p className="text-center text-[#C04878] font-extrabold text-3xl">
-                  ✨
-                </p>
-              </div>
-              <div>
-                <p className="text-[#8B0048]/60 text-sm mb-4">प्रमाण संख्या</p>
-                <p className="text-[#8B0048] font-bold">{certificateNumber}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Certificate Footer */}
-          <div className="bg-[#FAD2C1]/30 p-6 border-t-2 border-[#C04878] text-center">
-            <p className="text-[#8B0048] text-sm font-semibold">
-              🌟 आपका दान भविष्य पीढ़ी के लिए एक प्रकाश स्तंभ है 🌟
-            </p>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-4 mt-10 flex-col md:flex-row">
-          <button
-            onClick={onDownload}
-            className="flex-1 py-4 rounded-xl bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A]
-                       text-white font-bold text-lg shadow-xl hover:scale-[1.02] 
-                       transition-all duration-300 flex items-center justify-center gap-3"
-          >
-            <FileCheck2 className="w-5 h-5" />
-            प्रमाण पत्र डाउनलोड करें
-          </button>
-
-          <button
-            onClick={onNewDonation}
-            className="flex-1 py-4 rounded-xl border-2 border-[#C04878] text-[#8B0048]
-                       font-bold text-lg transition-all duration-300 hover:bg-[#FAD2C1]/30"
-          >
-            फिर से दान करें
-          </button>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -707,7 +130,7 @@ interface CertificateFieldProps {
 
 function CertificateField({ label, value }: CertificateFieldProps) {
   return (
-    <div className="bg-[#FFF7F0] rounded-xl p-4 border-2 border-[#FFD76A]/50">
+    <div className="bg-[#FFF1F5] rounded-xl p-4 border-2 border-[#F0B86C]/50">
       <p className="text-[#8B0048]/70 text-sm mb-1">{label}</p>
       <p className="text-[#8B0048] font-bold text-lg break-words">{value}</p>
     </div>
@@ -715,58 +138,561 @@ function CertificateField({ label, value }: CertificateFieldProps) {
 }
 
 /* -----------------------------------------
-   Input Field Component
+   MAIN DONATION SECTION
 ------------------------------------------ */
 
-interface InputFieldProps {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  placeholder: string;
-  onChange: (value: string) => void;
-}
+export default function DonationSection() {
+  const [stage, setStage] = useState<Stage>("form");
+  const [copiedField, setCopiedField] = useState("");
+  const [errors, setErrors] = useState({ donorPhone: "", donorEmail: "" });
 
-function InputField({
-  icon: Icon,
-  label,
-  value,
-  placeholder,
-  onChange,
-}: InputFieldProps) {
-  return (
-    <div>
-      <label className="block text-[#8B0048] font-semibold mb-2 flex items-center gap-2 leading-[1.6]">
-        <Icon className="w-5 h-5 text-[#C04878]" />
-        {label}
-      </label>
+  const [formData, setFormData] = useState<FormData>({
+    donationAmount: 0,
+    donorName: "",
+    donorPhone: "",
+    donorEmail: "",
+    donationPurpose: "",
+  });
 
-      <input
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          onChange(e.target.value)
-        }
-        placeholder={placeholder}
-        className="w-full px-4 py-4 border-2 border-[#C04878]/40 rounded-xl 
-                   focus:border-[#8B0048] outline-none leading-[1.6]"
+  const presetAmounts = [501, 1100, 2100, 5100];
+
+  const bankDetails: BankDetails = {
+    accountName: "वात्सल्य सेवार्थ फाउंडेशन",
+    accountNumber: "21279057179",
+    ifsc: "RMGB0001279",
+    bankName: "Rajasthan Gramin Bank, Banswara",
+    upiId: "jaindham@okhdfcbank",
+  };
+
+  /* Copy Handler */
+  const handleCopy: CopyHandler = (text, field) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    setTimeout(() => setCopiedField(""), 2000);
+  };
+
+  /* VALIDATORS */
+  const validatePhone = (value: string) => {
+    const cleaned = value.replace(/\D/g, "").slice(0, 10);
+    let error = "";
+    if (cleaned.length > 0 && cleaned.length < 10) {
+      error = "कृपया 10 अंकों का मोबाइल नंबर दर्ज करें";
+    }
+    setErrors((p) => ({ ...p, donorPhone: error }));
+    return cleaned;
+  };
+
+  const validateEmail = (value: string) => {
+    const cleaned = value.trim();
+    let error = "";
+    if (cleaned.length > 0) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(cleaned)) {
+        error = "कृपया सही ईमेल दर्ज करें";
+      }
+    }
+    setErrors((p) => ({ ...p, donorEmail: error }));
+    return cleaned;
+  };
+
+  /* SUBMIT FORM */
+  const handleSubmit = () => {
+    if (!formData.donationAmount) return alert("कृपया दान राशि दर्ज करें");
+    if (!formData.donorName.trim()) return alert("कृपया अपना नाम दर्ज करें");
+    if (formData.donorPhone.length !== 10)
+      return alert("कृपया सही मोबाइल नंबर दर्ज करें");
+
+    setStage("payment");
+  };
+
+  /* Payment Done */
+  const handlePaymentDone = () => setStage("certificate");
+
+  /* Certificate Download */
+  const downloadCertificate = () => alert("प्रमाण पत्र डाउनलोड हो रहा है...");
+
+  /* Render Next Stage */
+  if (stage === "payment")
+    return (
+      <PaymentSection
+        formData={formData}
+        bankDetails={bankDetails}
+        onBack={() => setStage("form")}
+        onPaymentDone={handlePaymentDone}
+        onCopy={handleCopy}
+        copiedField={copiedField}
       />
-    </div>
+    );
+
+  if (stage === "certificate")
+    return (
+      <CertificateSection
+        formData={formData}
+        onDownload={downloadCertificate}
+        onNewDonation={() => {
+          setFormData({
+            donationAmount: 0,
+            donorName: "",
+            donorPhone: "",
+            donorEmail: "",
+            donationPurpose: "",
+          });
+          setStage("form");
+        }}
+      />
+    );
+
+  /* -------------------------
+     FORM SCREEN
+  -------------------------- */
+
+  return (
+    <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
+      {/* Glows */}
+      <div className="absolute top-[-10%] left-[10%] w-[25rem] h-[25rem] bg-[#F0B86C]/30 blur-[160px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[10%] w-[20rem] h-[20rem] bg-[#E0679F]/25 blur-[160px] rounded-full" />
+
+      <div className="relative max-w-5xl mx-auto z-10">
+        {/* Heading */}
+        <div className="text-center mb-12">
+          <HeartHandshake className="w-14 h-14 mx-auto text-[#E0679F]" />
+
+          <h2 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] bg-clip-text text-transparent mt-4 leading-[1.3]">
+            आपका योगदान अत्यंत मूल्यवान है
+          </h2>
+
+          <p className="text-gray-700 max-w-2xl mx-auto mt-5 text-lg">
+            हर दान, हर रुपये में भविष्य का तीर्थ बसता है।
+          </p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#F0B86C]/40 overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] p-8 text-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3">
+              <IndianRupee className="w-7 h-7 text-[#FFF1F5]" />
+              दान करें - पुण्य कमाएं
+            </h3>
+          </div>
+
+          {/* Content */}
+          <div className="p-8 md:p-12">
+            {/* Quick Amounts */}
+            <label className="block text-[#8B0048] font-bold text-xl mb-4 text-center">
+              अपनी श्रद्धा अनुसार राशि चुनें
+            </label>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+              {presetAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() =>
+                    setFormData((p) => ({ ...p, donationAmount: amount }))
+                  }
+                  className={`p-6 rounded-2xl text-xl font-bold border transition-all duration-300 ${
+                    formData.donationAmount === amount
+                      ? "bg-gradient-to-br from-[#E0679F] via-[#F0B86C] to-[#E0679F] text-white border-[#F0B86C] shadow-xl scale-105"
+                      : "bg-white border-[#E0679F]/40 text-[#8B0048]"
+                  }`}
+                >
+                  ₹{amount}
+                </button>
+              ))}
+            </div>
+
+            {/* Custom Amount */}
+            <label className="block text-[#8B0048] font-bold text-lg mb-3">
+              या अपनी इच्छा अनुसार राशि दर्ज करें
+            </label>
+
+            <div className="relative mb-10">
+              <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-[#E0679F]" />
+              <input
+                type="number"
+                value={formData.donationAmount || ""}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    donationAmount: parseInt(e.target.value) || 0,
+                  }))
+                }
+                className="w-full pl-12 pr-6 py-4 border-2 border-[#E0679F]/40 rounded-xl focus:border-[#E0679F]"
+                placeholder="राशि दर्ज करें"
+              />
+            </div>
+
+            {/* User Details */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <InputField
+                icon={User}
+                label="दाता का नाम"
+                value={formData.donorName}
+                placeholder="अपना नाम दर्ज करें"
+                onChange={(v) => setFormData((p) => ({ ...p, donorName: v }))}
+              />
+
+              <div>
+                <InputField
+                  icon={Phone}
+                  label="मोबाइल नंबर"
+                  value={formData.donorPhone}
+                  placeholder="10 अंकों का नंबर"
+                  onChange={(v) =>
+                    setFormData((p) => ({
+                      ...p,
+                      donorPhone: validatePhone(v),
+                    }))
+                  }
+                />
+                {errors.donorPhone && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.donorPhone}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <InputField
+                icon={Mail}
+                label="ईमेल पता (वैकल्पिक)"
+                value={formData.donorEmail}
+                placeholder="example@gmail.com"
+                onChange={(v) =>
+                  setFormData((p) => ({
+                    ...p,
+                    donorEmail: validateEmail(v),
+                  }))
+                }
+              />
+              {errors.donorEmail && (
+                <p className="text-red-600 text-sm mt-1">
+                  {errors.donorEmail}
+                </p>
+              )}
+            </div>
+
+            {/* Purpose */}
+            <label className="block text-[#8B0048] font-semibold mb-2 flex items-center gap-2">
+              <Target className="w-5 h-5 text-[#E0679F]" />
+              दान का उद्देश्य
+            </label>
+
+            <select
+              value={formData.donationPurpose}
+              onChange={(e) =>
+                setFormData((p) => ({ ...p, donationPurpose: e.target.value }))
+              }
+              className="w-full px-4 py-4 border-2 border-[#E0679F]/40 rounded-xl mb-8"
+            >
+              <option value="">दान का उद्देश्य चुनें</option>
+              <option value="tirth_nirman">तीर्थ निर्माण सहयोग</option>
+              <option value="pratishtha_sahyog">प्रतिष्ठा महोत्सव सहयोग</option>
+              <option value="aahar_daan">आहार दान</option>
+              <option value="puja_samagri">पूजा–सामग्री सहयोग</option>
+              <option value="goshala_sahyog">गौशाला सहयोग</option>
+              <option value="shastra_daan">जिनवाणी / शास्त्र दान</option>
+              <option value="vidhyalaya_sahyog">जैन विद्यालय सहयोग</option>
+              <option value="navekarn">मंदिर नव-निर्माण</option>
+              <option value="general">सामान्य दान</option>
+            </select>
+
+            {/* Transparency Box */}
+            <div className="bg-[#FFE4EC]/60 border border-[#E0679F]/30 p-6 rounded-xl mb-10">
+              <div className="flex items-start gap-4">
+                <ShieldCheck className="w-8 h-8 text-[#8B0048]" />
+                <div>
+                  <h4 className="font-bold text-[#8B0048] text-xl mb-2">
+                    पूर्ण पारदर्शिता की गारंटी
+                  </h4>
+                  <p className="text-[#8B0048]/80">
+                    आपका प्रत्येक रुपया सेवा कार्य में समर्पित किया जाता है — 
+                    बिना किसी कटौती के।
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Button */}
+            <button
+              onClick={handleSubmit}
+              className="w-full py-6 rounded-xl text-white text-2xl font-bold shadow-xl 
+                         bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
+                         hover:scale-[1.03] transition-all"
+            >
+              अभी दान करें
+            </button>
+
+            <p className="text-center text-gray-600 mt-4 text-sm">
+              🔒 सुरक्षित भुगतान • 100% एन्क्रिप्टेड
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
 /* -----------------------------------------
-   Benefit Component
+   PAYMENT SECTION COMPONENT
 ------------------------------------------ */
 
-interface BenefitProps {
-  icon: React.ElementType;
-  text: string;
+function PaymentSection({
+  formData,
+  bankDetails,
+  onPaymentDone,
+  onBack,
+  copiedField,
+  onCopy,
+}: {
+  formData: FormData;
+  bankDetails: BankDetails;
+  onPaymentDone: () => void;
+  onBack: () => void;
+  copiedField: string;
+  onCopy: CopyHandler;
+}) {
+  return (
+    <section className="py-20 px-4 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
+      <div className="max-w-5xl mx-auto relative">
+        {/* Close */}
+        <button
+          onClick={onBack}
+          className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200"
+        >
+          <X className="w-6 h-6 text-[#8B0048]" />
+        </button>
+
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-extrabold text-[#8B0048]">भुगतान करें</h2>
+          <p className="text-gray-700 text-lg">₹{formData.donationAmount}</p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#F0B86C]/40">
+          <div className="p-8 md:p-12">
+            {/* QR Box */}
+            <div className="border-2 border-[#E0679F]/30 rounded-3xl p-8 bg-[#FFF1F5]/60 mb-10">
+              <div className="text-center mb-6">
+                <QrCode className="w-12 h-12 mx-auto text-[#E0679F]" />
+                <h3 className="text-2xl font-bold text-[#8B0048] mt-3">
+                  तत्काल भुगतान
+                </h3>
+                <p className="text-gray-600">अपने फोन से स्कैन करें</p>
+              </div>
+
+              <div className="flex justify-center my-6">
+                <img
+                  src="/qr.png"
+                  className="w-64 h-64 border-4 border-[#E0679F] rounded-2xl bg-white p-4"
+                />
+              </div>
+
+              <p className="text-center font-semibold text-[#8B0048]">
+                UPI ID: {bankDetails.upiId}
+              </p>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-10">
+              <div className="flex-1 h-px bg-[#E0679F]/40"></div>
+              <span className="text-gray-600 font-semibold">या</span>
+              <div className="flex-1 h-px bg-[#E0679F]/40"></div>
+            </div>
+
+            {/* Bank Transfer */}
+            <div className="bg-[#FFE4EC]/40 border-2 border-[#E0679F]/30 p-8 rounded-3xl mb-10">
+              <h3 className="text-2xl font-bold text-[#8B0048] text-center mb-6">
+                बैंक ट्रांसफर
+              </h3>
+
+              <div className="space-y-4">
+                <BankDetailRow
+                  label="खाता धारक का नाम"
+                  value={bankDetails.accountName}
+                  field="name"
+                  copiedField={copiedField}
+                  onCopy={onCopy}
+                />
+                <BankDetailRow
+                  label="खाता संख्या"
+                  value={bankDetails.accountNumber}
+                  field="number"
+                  copiedField={copiedField}
+                  onCopy={onCopy}
+                />
+                <BankDetailRow
+                  label="IFSC कोड"
+                  value={bankDetails.ifsc}
+                  field="ifsc"
+                  copiedField={copiedField}
+                  onCopy={onCopy}
+                />
+                <BankDetailRow
+                  label="बैंक"
+                  value={bankDetails.bankName}
+                  field="bank"
+                  copiedField={copiedField}
+                  onCopy={onCopy}
+                />
+              </div>
+            </div>
+
+            {/* Important */}
+            <div className="bg-[#F0B86C]/20 p-6 rounded-xl border-l-4 border-[#F0B86C] mb-10">
+              <p className="font-bold text-[#8B0048] text-lg mb-2">📞 महत्वपूर्ण:</p>
+              <p className="text-[#8B0048]">
+                भुगतान के बाद कृपया हमें <b>+91-xxxxxxxxxx</b> पर WhatsApp भेजें।
+              </p>
+            </div>
+
+            {/* Buttons */}
+            <button
+              onClick={onPaymentDone}
+              className="w-full py-6 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
+                text-white font-bold text-2xl shadow-xl mb-4"
+            >
+              भुगतान पूरा हुआ
+            </button>
+
+            <button
+              onClick={onBack}
+              className="w-full py-4 rounded-xl border-2 border-[#E0679F] text-[#8B0048] font-bold"
+            >
+              वापस जाएं
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function Benefit({ icon: Icon, text }: BenefitProps) {
+/* -----------------------------------------
+   CERTIFICATE SECTION
+------------------------------------------ */
+
+function CertificateSection({
+  formData,
+  onDownload,
+  onNewDonation,
+}: {
+  formData: FormData;
+  onDownload: () => void;
+  onNewDonation: () => void;
+}) {
+  const categoryNames: Record<string, string> = {
+    tirth_nirman: "तीर्थ निर्माण",
+    pratishtha_sahyog: "प्रतिष्ठा महोत्सव",
+    aahar_daan: "आहार दान",
+    puja_samagri: "पूजा सामग्री",
+    goshala_sahyog: "गौशाला सहयोग",
+    shastra_daan: "जिनवाणी दान",
+    vidhyalaya_sahyog: "जैन विद्यालय",
+    navekarn: "मंदिर नव-निर्माण",
+    general: "सामान्य दान",
+  };
+
+  const certificateNumber = React.useMemo(
+    () => "JDT-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    []
+  );
+
   return (
-    <div className="bg-white/70 border border-[#FFD76A]/40 rounded-xl p-5 text-center shadow-sm">
-      <Icon className="w-8 h-8 mx-auto text-[#C04878] mb-2" />
-      <p className="text-[#8B0048] font-semibold leading-[1.7]">{text}</p>
-    </div>
+    <section className="py-20 px-4 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-extrabold text-[#8B0048]">🙏 धन्यवाद</h2>
+          <p className="text-gray-700 text-lg">आपका प्रमाण पत्र तैयार है</p>
+        </div>
+
+        {/* Certificate */}
+        <div className="bg-white rounded-3xl shadow-2xl border-8 border-[#E0679F] overflow-hidden">
+          {/* header */}
+          <div className="bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] p-8 text-center">
+            <h3 className="text-3xl font-extrabold text-white">
+              सम्मान प्रमाण पत्र
+            </h3>
+            <p className="text-white/90 text-lg">Certificate of Merit</p>
+          </div>
+
+          {/* body */}
+          <div className="p-12 text-center">
+            <p className="text-[#8B0048]/70 text-lg mb-2">
+              यह प्रमाण पत्र प्रदान किया जाता है
+            </p>
+
+            {/* name */}
+            <div className="py-6 border-y-2 border-[#E0679F] my-6">
+              <h2 className="text-4xl font-extrabold text-[#8B0048]">
+                {formData.donorName}
+              </h2>
+            </div>
+
+            {/* details */}
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              <CertificateField label="दान राशि" value={`₹${formData.donationAmount}`} />
+              <CertificateField
+                label="दान श्रेणी"
+                value={categoryNames[formData.donationPurpose] || "दान"}
+              />
+              <CertificateField label="ईमेल" value={formData.donorEmail} />
+              <CertificateField label="संपर्क नंबर" value={formData.donorPhone} />
+            </div>
+
+            {/* purpose */}
+            <div className="bg-[#FFF1F5] p-6 rounded-xl border-l-4 border-[#E0679F] mb-12">
+              <p className="text-[#8B0048] font-bold text-lg">
+                {categoryNames[formData.donationPurpose] || "दान"} हेतु दान
+              </p>
+            </div>
+
+            {/* date */}
+            <div className="grid md:grid-cols-3 mt-6 pt-6 border-t-2 border-[#E0679F]/40">
+              <div>
+                <p className="text-[#8B0048]/60 mb-2">दिनांक</p>
+                <p className="text-[#8B0048] font-bold">
+                  {new Date().toLocaleDateString("hi-IN")}
+                </p>
+              </div>
+
+              <div className="text-3xl text-[#E0679F]">✨</div>
+
+              <div>
+                <p className="text-[#8B0048]/60 mb-2">प्रमाण संख्या</p>
+                <p className="text-[#8B0048] font-bold">{certificateNumber}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* footer */}
+          <div className="bg-[#FFE4EC]/50 p-6 text-center">
+            <p className="text-[#8B0048] font-semibold text-sm">
+              🌟 आपका दान भविष्य पीढ़ी के लिए एक प्रकाश स्तंभ है 🌟
+            </p>
+          </div>
+        </div>
+
+        {/* buttons */}
+        <div className="flex flex-col md:flex-row gap-4 mt-10">
+          <button
+            onClick={onDownload}
+            className="flex-1 py-4 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
+                       text-white font-bold text-lg shadow-xl"
+          >
+            प्रमाण पत्र डाउनलोड करें
+          </button>
+
+          <button
+            onClick={onNewDonation}
+            className="flex-1 py-4 rounded-xl border-2 border-[#E0679F] text-[#8B0048] font-bold"
+          >
+            फिर से दान करें
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -1,7 +1,8 @@
 export interface Yojana {
-  icon: React.ReactNode;   // <-- changed from string to React.ReactNode
   name: string;
   amount: string;
-  description: string;
-  features: string[];
+  description?: string;
+  features?: string[];
+  icon?: React.ReactNode; // ⭐ fixes your error
+  benefits?: string[]; // used in more yojna modal
 }

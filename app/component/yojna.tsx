@@ -14,7 +14,7 @@ const YojanaSection: React.FC<YojanaSectionProps> = ({ setSelectedYojana }) => {
 
   const yojanas: Yojana[] = [
     {
-      icon: <Sparkles className="w-10 h-10 text-[#FFD76A]" />,
+      icon: <Sparkles className="w-10 h-10 text-[#1a1918]" />,
       name: "सामान्य इन्द्र–इन्द्राणी",
       amount: "₹ 3,100",
       description: "",
