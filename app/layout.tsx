@@ -52,10 +52,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 <script
   dangerouslySetInnerHTML={{
     __html: `
-      document.documentElement.style.colorScheme = 'light';
+      (function() {
+        const ua = navigator.userAgent || "";
+        if (/Android/i.test(ua)) {
+          document.documentElement.classList.add("android-fix");
+        }
+      })();
     `,
   }}
 />
+
       </head>
 
       <body
