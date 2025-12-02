@@ -7,8 +7,10 @@
    FORCE LIGHT MODE EVERYWHERE
 ============================================================ */
 
+/* Disable dark mode and force custom colors */
 :root {
   color-scheme: light only !important;
+
   --bg-light: #FFF1F5;
   --bg-card: #FFFFFF;
   --primary: #7A1433;
@@ -18,11 +20,13 @@
   --soft-pink: #FFE7F0;
 }
 
+/* Force light mode in HTML */
 html {
   color-scheme: light only !important;
   background: var(--bg-light) !important;
 }
 
+/* Kill dark-mode media queries (Chrome/Android/OS) */
 @media (prefers-color-scheme: dark) {
   :root,
   html,
@@ -47,7 +51,7 @@ body {
   overflow-x: hidden;
 }
 
-/* stop browser-level darkening */
+/* Stop browser auto-darkening & blending tricks */
 * {
   color-scheme: light only !important;
   mix-blend-mode: normal !important;
@@ -117,7 +121,7 @@ body {
 }
 
 /* ============================================================
-   INFORMATION ITEMS
+   INFO ROW ITEMS
 ============================================================ */
 
 .info-row {
@@ -166,14 +170,20 @@ body {
    ANDROID OVERRIDE — HARD MODE
 ============================================================ */
 
+/* Applied only when JS adds class "android-fix" */
 html.android-fix,
 html.android-fix body,
 html.android-fix * {
   background: var(--bg-light) !important;
   color-scheme: light only !important;
+
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+
   filter: none !important;
   mix-blend-mode: normal !important;
   background-blend-mode: normal !important;
+
+  -webkit-transform: none !important;
+  transform: none !important;
 }
