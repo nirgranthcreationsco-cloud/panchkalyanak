@@ -154,3 +154,35 @@ html.android-fix * {
   -webkit-transform: none !important;
   transform: none !important;
 }
+/* ============================================================
+   ADD THIS ONLY TO THE END OF YOUR EXISTING globals.css
+   DO NOT REMOVE ANYTHING - JUST ADD THESE LINES AT THE BOTTOM
+============================================================ */
+
+/* Prevent Android dark mode from affecting colors */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: light !important;
+    background: var(--bg-light) !important;
+  }
+  
+  body {
+    color-scheme: light !important;
+    background: var(--bg-light) !important;
+  }
+}
+
+/* Force light mode on html and body */
+html {
+  color-scheme: light !important;
+}
+
+body {
+  color-scheme: light !important;
+}
+
+/* Prevent forced-color-adjust from darkening elements */
+* {
+  forced-color-adjust: none !important;
+  -webkit-forced-color-adjust: none !important;
+}
