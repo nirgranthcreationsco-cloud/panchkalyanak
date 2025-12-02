@@ -22,9 +22,10 @@ const FooterAll = () => {
           ह्रींकार तीर्थ पंचकल्याणक समिति
         </h3>
 
-        <p className="text-[#FAD2C1]/90 text-lg mb-10 leading-[1.5]">
-          19 फरवरी 2026
-        </p>
+       <p className="text-[#FAD2C1] text-2xl sm:text-3xl font-bold mb-10 leading-[1.5] tracking-wide">
+  19 से 24 फरवरी 2026
+</p>
+
 
         {/* Social Icons */}
         <div className="flex justify-center gap-6 md:gap-10 mb-12">

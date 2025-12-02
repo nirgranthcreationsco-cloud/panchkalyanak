@@ -11,7 +11,7 @@ export const viewport: Viewport = {
   themeColor: "#FFF1F5",
 };
 
-/* ✔ Safe metadata (no themeColor here) */
+/* ✔ Safe metadata (NO themeColor here) */
 export const metadata: Metadata = {
   title: "Panchkalyanak Mahotsav",
   description: "Official Website",
@@ -28,7 +28,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="android-fix" style={{ colorScheme: "light" }}>
+    <html
+      lang="en"
+      className="light fixed-colors"
+      style={{
+        colorScheme: "light",
+        backgroundColor: "#FFF1F5",
+      }}
+    >
       <head>
         {/* ✔ Forces Android Chrome/WebView to stay light */}
         <meta name="color-scheme" content="light" />
@@ -36,28 +43,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#FFF1F5" />
         <meta name="google" content="notranslate" />
 
-        {/* ✔ Detect Android + WebView and add class to <html> */}
+        {/* ✔ Single lightweight Android detection script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const ua = navigator.userAgent || navigator.vendor || window.opera;
-
-                // Detect Android device
-                const isAndroid = /Android/i.test(ua);
-
-                // Detect WebView (Samsung/Xiaomi/Generic)
-                const isWebView =
-                  /wv/i.test(ua) ||
-                  window.navigator.userAgent.includes('Version/') ||
+                var ua = navigator.userAgent || "";
+                var isAndroid = /Android/i.test(ua);
+                var isWebView =
+                  /wv|Version\\/|; wv\\)/i.test(ua) ||
                   (!!window.AndroidBridge) ||
-                  (window?.chrome?.webview !== undefined);
+                  (!!window?.chrome?.webview);
 
                 if (isAndroid) {
-                  document.documentElement.classList.add("android-fix");
+                  document.documentElement.classList.add("android");
                 }
                 if (isAndroid && isWebView) {
-                  document.documentElement.classList.add("android-fix");
+                  document.documentElement.classList.add("android-webview");
                 }
               })();
             `,
@@ -71,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           backgroundColor: "#FFF1F5",
           colorScheme: "light",
           WebkitTapHighlightColor: "transparent",
+          overscrollBehavior: "none",
         }}
       >
         {children}

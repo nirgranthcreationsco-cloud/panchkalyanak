@@ -1,4 +1,5 @@
 "use client";
+import { Calendar, Landmark, MapPin, Users } from "lucide-react";
 import React from "react";
 
 const DivineIntro: React.FC = () => {
@@ -29,23 +30,14 @@ const DivineIntro: React.FC = () => {
 
             {/* Center Sacred Symbols */}
             <div className="flex flex-col items-center justify-center gap-1 sm:gap-1.5 px-2">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="text-3xl sm:text-4xl md:text-5xl text-[#E0679F]">
-                  ॐ
-                </span>
-                <span className="text-4xl sm:text-5xl md:text-6xl text-transparent bg-gradient-to-br from-[#E0679F] via-[#F0B86C] to-[#E0679F] bg-clip-text drop-shadow">
-                  卐
-                </span>
-                <span className="text-3xl sm:text-4xl md:text-5xl text-[#E0679F]">
-                  ॐ
-                </span>
-              </div>
-              <p
-                className="text-[9px] sm:text-xs text-[#7A1433] font-medium tracking-[0.15em] uppercase"
-                style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
-              >
-                श्री मज्जिनेन्द्र चतुर्विंशती तीर्थंकर
-              </p>
+             
+             <p
+  className="text-lg sm:text-2xl md:text-3xl font-extrabold text-[#7A1433] tracking-wide uppercase leading-tight"
+  style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+>
+  श्री मज्जिनेन्द्र चतुर्विंशती तीर्थंकर
+</p>
+
             </div>
 
             <GuruCorner
@@ -57,12 +49,7 @@ const DivineIntro: React.FC = () => {
 
         {/* TITLE BLOCK */}
         <div className="mx-auto max-w-4xl text-center space-y-4 sm:space-y-5">
-          <h1
-            className="text-xl sm:text-2xl md:text-3xl font-semibold text-[#7A1433] leading-snug"
-            style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
-          >
-            श्री मज्जिनेन्द्र चतुर्विंशती तीर्थंकर
-          </h1>
+          
 
           <h2
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[3.75rem] font-extrabold leading-tight bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] bg-clip-text text-transparent"
@@ -78,65 +65,76 @@ const DivineIntro: React.FC = () => {
         </div>
 
         {/* INFORMATION CARD */}
-        <div className="mx-auto mb-4 w-full max-w-5xl">
-          <div className="overflow-hidden rounded-3xl border border-pink-200/70 bg-white/90 shadow-[0_18px_45px_rgba(158,39,88,0.16)] backdrop-blur-md">
-            {/* Top Accent */}
-            <div className="h-1.5 bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]" />
+    {/* INFORMATION CARD */}
+<div className="mx-auto mb-4 w-full max-w-5xl">
+  <div className="overflow-hidden rounded-3xl border border-pink-200/70 bg-white/90 shadow-[0_18px_45px_rgba(158,39,88,0.16)] backdrop-blur-md">
 
-            <div
-              className="grid grid-cols-1 gap-6 px-6 py-7 text-sm sm:grid-cols-2 sm:gap-8 sm:px-8 sm:py-9 md:gap-10 md:px-10 md:text-base"
-              style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
-            >
-              <div className="space-y-5 sm:space-y-6">
-                <InfoItem
-                  icon="✦"
-                  title="ऐतिहासिक आयोजन"
-                  text="500+ जिनबिंब की प्रतिष्ठा का भव्य पंचकल्याणक"
-                />
-                <InfoItem
-                  icon="🛕"
-                  title="भावी जिनालय का शिलान्यास"
-                  text="22 फरवरी 2026, प्रातः 08:00 बजे"
-                />
-                <InfoItem
-                  icon="📍"
-                  title="पुण्य स्थल"
-                  text="टिम्बा गामड़ी, मोरडी मिल के पास, बाँसवाड़ा–उदयपुर रोड "
-                />
-              </div>
+    {/* Top Accent */}
+    <div className="h-1.5 bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]" />
 
-              <div className="space-y-5 sm:space-y-6">
-                <InfoItem
-                  icon="💐"
-                  title="आप सपरिवार सादर आमंत्रित"
-                  text="इस पावन अवसर पर आपका हार्दिक स्वागत है"
-                />
-                <InfoItem
-                  icon="🌿"
-                  title="आयोजक"
-                  text="चतुर्विंशती तीर्थंकर समिति, वात्सल्य सेवार्थ फाउंडेशन"
-                />
+    <div
+      className="grid grid-cols-1 gap-6 px-6 py-7 text-sm sm:grid-cols-2 sm:gap-8 sm:px-8 sm:py-9 md:gap-10 md:px-10 md:text-base"
+      style={{ fontFamily: "'Noto Serif Devanagari', serif" }}
+    >
+      {/* LEFT COLUMN */}
+      <div className="space-y-6">
+        
+        <InfoItem
+          icon={<Landmark className="w-5 h-5 text-[#E0679F]" />}
+          title="ऐतिहासिक आयोजन"
+          text="500+ जिनबिंब की प्रतिष्ठा का भव्य पंचकल्याणक"
+        />
 
-                <div className="rounded-2xl border border-[#F0B86C]/60 bg-gradient-to-br from-[#FFE5F0]/70 via-[#FFF7EA]/70 to-[#FFE5F0]/70 px-4 py-4 sm:px-5 sm:py-5">
-                  <p className="mb-2 text-sm font-semibold text-[#7A1433]">
-                    आयोजन समिति
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#7A1433]/90">
-                    <span className="font-semibold">अध्यक्ष:</span> दिनेश जी
-                    खोड़निया
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#7A1433]/90">
-                    <span className="font-semibold">गौरवाध्यक्ष:</span> अशोक जी
-                    वोरा
-                  </p>
-                </div>
-              </div>
-            </div>
+        <InfoItem
+          icon={<Calendar className="w-5 h-5 text-[#E0679F]" />}
+          title="भावी जिनालय का शिलान्यास"
+          text="22 फरवरी 2026, प्रातः 08:00 बजे"
+        />
 
-            {/* Bottom Accent */}
-            <div className="h-1 bg-gradient-to-r from-transparent via-[#E0679F] to-transparent" />
-          </div>
+        <InfoItem
+          icon={<MapPin className="w-5 h-5 text-[#E0679F]" />}
+          title="पुण्य स्थल"
+          text="टिम्बा गामड़ी, मोरडी मिल के पास, बाँसवाड़ा–उदयपुर रोड"
+        />
+
+      </div>
+
+      {/* RIGHT COLUMN */}
+      <div className="space-y-6">
+
+        <InfoItem
+          icon={<Users className="w-5 h-5 text-[#E0679F]" />}
+          title="आप सपरिवार सादर आमंत्रित"
+          text="इस पावन अवसर पर आपका हार्दिक स्वागत है"
+        />
+
+        <InfoItem
+          icon={<Landmark className="w-5 h-5 text-[#E0679F]" />}
+          title="आयोजक"
+          text="चतुर्विंशती तीर्थंकर समिति, वात्सल्य सेवार्थ फाउंडेशन"
+        />
+
+        <div className="rounded-2xl border border-[#F0B86C]/60 bg-gradient-to-br from-[#FFE5F0]/70 via-[#FFF7EA]/70 to-[#FFE5F0]/70 px-4 py-4 sm:px-5 sm:py-5">
+          <p className="mb-2 text-sm font-semibold text-[#7A1433]">
+            आयोजन समिति
+          </p>
+          <p className="text-xs sm:text-sm text-[#7A1433]/90">
+            <span className="font-semibold">अध्यक्ष:</span> दिनेश जी खोड़निया
+          </p>
+          <p className="text-xs sm:text-sm text-[#7A1433]/90">
+            <span className="font-semibold">गौरवाध्यक्ष:</span> अशोक जी वोरा
+          </p>
         </div>
+
+      </div>
+    </div>
+
+    {/* Bottom Accent */}
+    <div className="h-1 bg-gradient-to-r from-transparent via-[#E0679F] to-transparent" />
+
+  </div>
+</div>
+
 
         {/* SANIDHYA SECTION */}
         <div className="mx-auto mb-4 flex w-full max-w-5xl flex-col gap-6 sm:gap-8">
@@ -267,12 +265,12 @@ const SanidhyaCard: React.FC<{ name: string; img: string }> = ({ name, img }) =>
     </div>
   );
 };
-
-const InfoItem: React.FC<{ icon: string; title: string; text: string }> = ({
+const InfoItem: React.FC<{ icon: React.ReactNode; title: string; text: string }> = ({
   icon,
   title,
   text,
 }) => (
+
   <div className="group">
     <div className="flex items-start gap-3 sm:gap-4">
       <span className="mt-0.5 flex-shrink-0 text-xl sm:text-2xl text-[#E0679F] transition-transform duration-300 group-hover:scale-110">

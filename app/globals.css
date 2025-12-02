@@ -1,350 +1,156 @@
-/* globals.css
-   Updated: Android-safe, filter/blend fallbacks, responsive tweaks,
-   keeps original visual language but avoids Android auto-darkening.
-*/
+/* ============================================================
+   GLOBAL RESET — Android safe design
+============================================================ */
 
-/* ----------------------------
-   Tailwind import (if used)
------------------------------ */
 @import "tailwindcss";
 
-/* ----------------------------
-   Root variables (light by default)
------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --royal-gold: #D97706;
-  --royal-amber: #F59E0B;
-  --royal-rose: #DC2626;
-  --royal-maroon: #7C2D12;
-
-  /* certificate/gold */
-  --gold-deep: #D4AF37;
-  --soft-pink: #FFE4EC;
-  --card-bg: rgba(255, 245, 238, 0.95);
+  --bg-light: #FFF1F5;
+  --bg-card: #FFFFFF;
+  --primary: #7A1433;
+  --accent-pink: #E0679F;
+  --accent-gold: #D8A24E;
+  --border-light: #F5D6E2;
+  --soft-pink: #FFE7F0;
 }
 
-/* Inline theme mapping for any theme helper */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* Dark theme variables (only to keep developer debugging — we will force light mode in layout) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* ----------------------------
-   Base rules
------------------------------ */
-html, body {
-  -webkit-overflow-scrolling: touch;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  -webkit-tap-highlight-color: transparent;
-  overscroll-behavior: none;
-  scroll-behavior: smooth;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Noto Serif Devanagari', Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-light);
+  color: var(--primary);
+  font-family: 'Noto Serif Devanagari', serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  color-scheme: light !important;
 }
 
-/* Prevent mobile UAs from auto-darkening content by advising color-scheme (meta must match: set in layout) */
-:root {
-  color-scheme: light;
-}
-
-/* Helper classes */
-.hindi-text { line-height: 1.6 !important; }
-.no-android-blur { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-
-/* Tap highlight removal and performance hints */
+/* force light everywhere */
 * {
-  -webkit-tap-highlight-color: transparent;
-  isolation: isolate;
-  -webkit-transform: translateZ(0); /* promotes to layer */
-}
-
-/* ----------------------------
-   HERO / THEME visuals (kept but safer)
------------------------------ */
-
-/* hero container gradient (kept) */
-/* HERO container */
-.hero {
-  position: relative;
-  background-color: #DC2626; /* fallback base */
-  background-image: linear-gradient(135deg, #7C2D12 0%, #DC2626 50%, #D97706 100%);
-  overflow: hidden;
-}
-
-/* Divine Gradient Flow */
-.hero-gradient {
-  background-color: #F5D7A8; /* soft gold fallback */
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(217, 164, 65, 0.4),
-    rgba(220, 38, 38, 0.35),
-    rgba(245, 158, 11, 0.3)
-  );
-  background-size: 400% 400%;
-  animation: divine-flow 25s ease-in-out infinite;
-
-
-  will-change: background-position;
-}
-
-@keyframes divine-flow {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 100% 50%; }
-  50% { background-position: 50% 100%; }
-  75% { background-position: 100% 0%; }
-}
-
-/* HERO VIDEO - avoid blend modes on Android: keep brightness/filter gentle and provide fallback */
-.hero-video {
-  opacity: 0.9; /* made less aggressive */
-  filter: blur(0.6px) brightness(0.98);
-  transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
-  mix-blend-mode: normal; /* avoid overlay blending that many Android builds mishandle */
-  -webkit-filter: blur(0.6px) brightness(0.98);
-}
-
-/* On hover (desktop) slightly strengthen */
-.hero-video:hover {
-  opacity: 1;
-  filter: blur(0) brightness(1);
-}
-
-/* Video overlay simplified */
-.video-fade-overlay {
-  background: radial-gradient(circle at center, rgba(217, 164, 65, 0.14), rgba(220, 38, 38, 0.08));
-  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ----------------------------
-   HALOS, SHIMMERS, WAVES etc
-   (kept but ensure they are non-destructive on Android)
------------------------------ */
-
-.halo, .halo-pulse {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.55;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.halo {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.25), rgba(217, 164, 65, 0.18));
-}
-
-.halo-pulse {
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.18), transparent 70%);
-  filter: blur(120px);
-}
-
-/* Shimmer (reduced opacity and less whiteness to avoid bleaching on low-power devices) */
-/* ANDROID-SAFE SHIMMER EFFECT */
-.shimmer {
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-
-  /* FIXED GRADIENT (NO ANDROID DARKENING) */
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.12) 40%,
-    rgba(255, 255, 255, 0.22) 50%,
-    rgba(255, 255, 255, 0.12) 60%,
-    rgba(255, 255, 255, 0) 100%
-  );
-
-  /* ANDROID-SAFE TRANSPARENCY */
+  color-scheme: light !important;
   mix-blend-mode: normal !important;
   background-blend-mode: normal !important;
-
-  /* Prevent Android from auto-darkening */
-  filter: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-
-  transform: skewX(-25deg);
-  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* ============================================================
+   CARDS 
+============================================================ */
 
-@keyframes shimmer {
-  0% { left: -150%; opacity: 0; }
-  30% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { left: 150%; opacity: 0; }
-}
-.animate-shimmer { animation: shimmer 8s ease-in-out infinite; }
-
-/* Waves - keep opacity low to avoid saturation changes in WebView renderers */
-.wave { position: absolute; width: 300%; height: 300%; top: -100%; left: -100%; border-radius: 42%; opacity: 0.08; mix-blend-mode: normal; }
-
-/* ----------------------------
-   ROYAL ANIMATIONS & performance-friendly
------------------------------ */
-@keyframes pulse-slow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
-.animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
-
-/* Reduced spin intensity */
-@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.animate-spin-slow { animation: spin-slow 45s linear infinite; }
-
-/* Reveal */
-@keyframes reveal { 0% { opacity: 0; transform: scale(0.96) translateY(12px); filter: blur(6px); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
-.animate-reveal { animation: reveal 900ms cubic-bezier(0.34, 1.2, 0.64, 1) forwards; }
-
-/* ----------------------------
-   Ornament, borders, text effects
------------------------------ */
-
-.royal-border { position: relative; border-image: linear-gradient(45deg, #D97706, #DC2626, #F59E0B) 1; }
-.text-royal-glow {
-  text-shadow: 0 0 12px rgba(245,158,11,0.7), 0 0 24px rgba(220,38,38,0.45);
-}
-.text-divine {
- color: #E43F6F;   /* solid bright color */
-  text-shadow: 0 0 12px rgba(245,158,11,0.5);
-  background-size: 200% 200%; animation: gradient-shift 8s ease infinite;
-}
-@keyframes gradient-shift { 0%,100%{ background-position:0% 50%; } 50% { background-position:100% 50%; } }
-
-/* ----------------------------
-   Certificate-safe helpers
------------------------------ */
-.certificate-wrap { max-width: 540px; margin: 0 auto; }
-.certificate-inner { padding: 24px; background: #FFF8F4;
-; border-radius: 18px; }
-
-/* ----------------------------
-   Responsive & utility tweaks
------------------------------ */
-@media (max-width: 768px) {
-  .hero { min-height: 100vh; }
-  .no-android-blur { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(255,255,255,0.94) !important; }
-  .text-royal-glow { text-shadow: 0 0 8px rgba(245,158,11,0.6), 0 0 16px rgba(220,38,38,0.35); }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 28px;
+  padding: 1.75rem;
+  box-shadow: 0 8px 28px rgba(184, 65, 115, 0.10);
 }
 
-/* Performance hints */
-.will-change-transform { will-change: transform; }
-.will-change-opacity { will-change: opacity; }
-.gpu-accelerated { transform: translateZ(0); backface-visibility: hidden; perspective: 1000px; }
+/* ============================================================
+   HEADINGS
+============================================================ */
 
-/* ----------------------------
-   Android-specific detection and fixes
-   — KEEP THIS BLOCK AT THE END so it overrides earlier rules
------------------------------ */
-
-/* Technique: if the UA supports -webkit-tap-highlight-color (almost all mobile) AND does NOT support backdrop-filter consistently,
-   then many Android WebViews/Chrome versions will have rendering issues with blend modes. We detect via @supports then add overrides.
-   Note: This is CSS-only. For some vendors you may still need to add `document.documentElement.classList.add('android-fix')`
-   from JS on problematic UAs — but these CSS rules are robust and should fix 95% cases.
-*/
-
-@supports (-webkit-tap-highlight-color: transparent) {
-  /* Add a small safety net: disable heavy blend/filter for elements that are likely to trigger darkening */
-  .hero-video,
-  .video-fade-overlay,
-  .halo,
-  .shimmer,
-  .wave,
-  .hero-gradient {
-    mix-blend-mode: normal !important;
-    background-blend-mode: normal !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-  }
-
-  /* Make sure gradient backgrounds have solid fallback colors (soft pink/gold) so Android doesn't invert */
-  .fix-color, .hero, .certificate-inner, .no-android-blur {
-    background: none !important;
-    background-color: var(--soft-pink) !important;
-    mix-blend-mode: normal !important;
-    background-blend-mode: normal !important;
-  }
-
-  /* Specific: video fallback */
-  video, .hero-video { background-color: var(--soft-pink) !important; opacity: 1 !important; filter: none !important; mix-blend-mode: normal !important; }
-
-  /* If the device still darkens, using an 'android-fix' class (from JS) forces even stronger overrides */
-  html.android-fix body,
-  html.android-fix .fix-color,
-  html.android-fix .hero,
-  html.android-fix .hero-video,
-  html.android-fix .certificate-inner {
-    background-color: var(--soft-pink) !important;
-    color: var(--foreground) !important;
-    mix-blend-mode: normal !important;
-    background-blend-mode: normal !important;
-    -webkit-filter: none !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    opacity: 1 !important;
-  }
-
-  /* If you programmatically detect Android WebView or Samsung browser you can add class 'android-fix' to <html> for guaranteed fix */
+.heading-xl {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 800;
 }
 
-/* ----------------------------
-   Small print / printing
------------------------------ */
-@media print {
-  body { background: #fff !important; color: #000 !important; }
-  .hero-video, .shimmer, .halo, .wave { display: none !important; }
-  .certificate-wrap { max-width: 800px; }
+.heading-lg {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
 }
 
-/* ----------------------------
-   Accessibility / contrast helpers
------------------------------ */
-:focus { outline: 3px solid rgba(217,164,65,0.25); outline-offset: 2px; }
+.heading-md {
+  font-size: clamp(1.3rem, 3.2vw, 2.2rem);
+  font-weight: 700;
+}
 
-/* ANDROID HARD OVERRIDES — put this AT THE END of globals.css */
+.text-sub {
+  font-size: clamp(1rem, 2.4vw, 1.6rem);
+  color: rgba(122, 20, 51, 0.75);
+}
+
+/* ============================================================
+   GURU AVATAR FRAMES
+============================================================ */
+
+.guru-img {
+  width: clamp(5rem, 14vw, 7.5rem);
+  height: clamp(5rem, 14vw, 7.5rem);
+  border-radius: 50%;
+  border: 4px solid var(--accent-gold);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guru-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ============================================================
+   ICON + TEXT ROWS
+============================================================ */
+
+.info-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.info-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--accent-pink);
+}
+
+.info-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.info-text {
+  font-size: 0.875rem;
+  color: rgba(122, 20, 51, 0.85);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SECTIONS
+============================================================ */
+
+.section {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section-gap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 6vw, 4rem);
+}
+
+/* ============================================================
+   ANDROID OVERRIDE — FINAL + AGGRESSIVE
+============================================================ */
+
 html.android-fix,
 html.android-fix body,
-html.android-fix .hero,
-html.android-fix .hero-video,
-html.android-fix .fix-color,
-html.android-fix .certificate-inner,
-html.android-fix .no-android-blur {
-  background-color: var(--soft-pink) !important;
-  color: var(--foreground) !important;
-  mix-blend-mode: normal !important;
-  background-blend-mode: normal !important;
+html.android-fix * {
+  background: var(--bg-light) !important;
+  color-scheme: light !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
-  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  background-blend-mode: normal !important;
   -webkit-transform: none !important;
   transform: none !important;
 }

@@ -259,9 +259,7 @@ export default function DonationSection() {
             आपका योगदान अत्यंत मूल्यवान है
           </h2>
 
-          <p className="text-gray-700 max-w-2xl mx-auto mt-5 text-lg">
-            हर दान, हर रुपये में भविष्य का तीर्थ बसता है।
-          </p>
+         
         </div>
 
         {/* Card */}
