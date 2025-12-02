@@ -186,3 +186,43 @@ body {
   forced-color-adjust: none !important;
   -webkit-forced-color-adjust: none !important;
 }
+/* ============================================================
+   ADD ONLY THIS TO THE END OF YOUR globals.css
+   This fixes Android dark mode color blending
+============================================================ */
+
+/* Fix color blending that causes dark appearance */
+* {
+  mix-blend-mode: normal !important;
+  background-blend-mode: normal !important;
+  opacity: 1 !important;
+}
+
+/* Remove any filters that might darken */
+html, body, div, section, main, nav, header, footer {
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Ensure images aren't darkened */
+img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* SVG and icons */
+svg {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Remove dark mode color inversion */
+@media (prefers-color-scheme: dark) {
+  * {
+    filter: none !important;
+  }
+}

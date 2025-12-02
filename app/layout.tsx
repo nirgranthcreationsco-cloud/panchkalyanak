@@ -48,25 +48,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msapplication-navbutton-color" content="#FFF1F5" />
 
 
+
 <script
   dangerouslySetInnerHTML={{
     __html: `
-      (function() {
-        const html = document.documentElement;
-        html.style.colorScheme = 'light';
-        
-        // Detect Android
-        if (/Android/i.test(navigator.userAgent)) {
-          html.classList.add('android-fix');
-        }
-        
-        // Monitor dark mode changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (e.matches) {
-            html.style.colorScheme = 'light';
-          }
-        });
-      })();
+      document.documentElement.style.colorScheme = 'light';
     `,
   }}
 />
