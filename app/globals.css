@@ -11,13 +11,13 @@
 :root {
   color-scheme: light only !important;
 
-  --bg-light: #FFF1F5;
-  --bg-card: #FFFFFF;
-  --primary: #7A1433;
-  --accent-pink: #E0679F;
-  --accent-gold: #D8A24E;
-  --border-light: #F5D6E2;
-  --soft-pink: #FFE7F0;
+  --bg-light: #fff1f5;
+  --bg-card: #ffffff;
+  --primary: #7a1433;
+  --accent-pink: #e0679f;
+  --accent-gold: #d8a24e;
+  --border-light: #f5d6e2;
+  --soft-pink: #ffe7f0;
 }
 
 /* Force light mode in HTML */
@@ -46,7 +46,7 @@ body {
   padding: 0;
   background: var(--bg-light) !important;
   color: var(--primary) !important;
-  font-family: 'Noto Serif Devanagari', serif;
+  font-family: "Noto Serif Devanagari", serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -167,23 +167,18 @@ body {
 }
 
 /* ============================================================
-   ANDROID OVERRIDE — HARD MODE
+   ANDROID OVERRIDE — TARGETED MODE
 ============================================================ */
 
 /* Applied only when JS adds class "android-fix" */
 html.android-fix,
-html.android-fix body,
-html.android-fix * {
+html.android-fix body {
   background: var(--bg-light) !important;
   color-scheme: light only !important;
+}
 
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-
-  filter: none !important;
-  mix-blend-mode: normal !important;
-  background-blend-mode: normal !important;
-
-  -webkit-transform: none !important;
-  transform: none !important;
+/* Keep color scheme light but allow backgrounds and gradients */
+html.android-fix * {
+  color-scheme: light only !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
