@@ -51,8 +51,9 @@ export default function UniversalYojnaBookingFlow({
   const [phone, setPhone] = useState("");
   const [copied, setCopied] = useState("");
 
-  const certificateNumber =
-    "JDT-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+  const [certificateNumber] = React.useState(() =>
+  "JDT-" + Math.random().toString(36).substring(2, 8).toUpperCase()
+);
 
   if (!yojana) return null;
 

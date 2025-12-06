@@ -587,12 +587,10 @@ function CertificateSection({
 
   const [showModal, setShowModal] = React.useState(false);
 
-  const certificateNumber = React.useMemo(
-    () =>
-      "JDT-" +
-      Math.random().toString(36).substring(2, 8).toUpperCase(),
-    []
-  );
+  const [certificateNumber] = React.useState(() =>
+  "JDT-" + Math.random().toString(36).substring(2, 8).toUpperCase()
+);
+
 
   const category =
     categoryNames[formData.donationPurpose] || "दान";
