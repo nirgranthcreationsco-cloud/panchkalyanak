@@ -6,25 +6,32 @@ import {
   MapPin,
   Navigation,
   Plane,
-  Train
+  Train,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
+type Particle = {
+  top: number;
+  left: number;
+  delay: string;
+  duration: string;
+};
+
 const VenueConnectivity: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-const [particles, setParticles] = useState<any[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
-useEffect(() => {
-  const arr = Array.from({ length: 15 }).map(() => ({
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    delay: (Math.random() * 4).toFixed(2),
-    duration: (3 + Math.random() * 4).toFixed(2),
-  }));
+  useEffect(() => {
+    const arr: Particle[] = Array.from({ length: 15 }).map(() => ({
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      delay: (Math.random() * 4).toFixed(2),
+      duration: (3 + Math.random() * 4).toFixed(2),
+    }));
 
-  Promise.resolve().then(() => setParticles(arr));
-}, []);
-
+    // Schedule state update after layout
+    Promise.resolve().then(() => setParticles(arr));
+  }, []);
 
   /* ------------------------------ CONNECTIVITY ------------------------------ */
 
@@ -80,7 +87,7 @@ useEffect(() => {
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((p, i) => (
           <div
-            key={i}
+            key={`particle-${i}`}
             className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#E0679F] rounded-full opacity-30 animate-float"
             style={{
               top: `${p.top}%`,
@@ -163,18 +170,7 @@ useEffect(() => {
                   Open Full Map
                 </a>
 
-                {/* COPY LOCATION */}
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("23.643444, 74.365083");
-                    alert("📍 Location copied!");
-                  }}
-                  className="flex items-center gap-2 px-6 py-3 bg-[#F0B86C] text-[#7A1433] rounded-full font-semibold shadow-md hover:scale-105 transition-all"
-                >
-                  <MapPin className="w-5 h-5" />
-                  Copy Location
-                </button>
-
+               
               </div>
             </div>
 
@@ -249,7 +245,8 @@ useEffect(() => {
       {/* FLOAT ANIMATION */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0) translateX(0);
           }
           25% {
