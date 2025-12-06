@@ -5,204 +5,197 @@ import { X } from "lucide-react";
 import { useRef } from "react";
 
 interface CertificateProps {
-  name: string;
-  amount: string;
-  yojanaName: string;
-  phone: string;
-  certificateNumber: string;
-  tirthName: string;
+  name?: string;
+  amount?: string;
+  yojanaName?: string;
+  phone?: string;
+  certificateNumber?: string;
+  tirthName?: string;
   onClose: () => void;
 }
 
 export default function UniversalCertificateFinal({
-  name,
-  amount,
-  yojanaName,
-  phone,
-  certificateNumber,
-  tirthName,
+  name = "",
+  amount = "",
+  yojanaName = "",
+  phone = "",
+  certificateNumber = "",
+  tirthName = "",
   onClose,
 }: CertificateProps) {
+
   const certRef = useRef<HTMLDivElement>(null);
 
-  /* ------------------ DOWNLOAD CERTIFICATE ------------------ */
   const downloadImage = async () => {
     if (!certRef.current) return;
-
     const canvas = await html2canvas(certRef.current, {
       scale: 3,
       backgroundColor: null,
     });
-
     const link = document.createElement("a");
-    link.download = `certificate-${certificateNumber}.png`;
+    link.download = `certificate-${certificateNumber || "certificate"}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4 overflow-auto">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-auto">
 
       {/* CLOSE BUTTON */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-[99999] bg-white/70 backdrop-blur-md w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center hover:bg-white transition"
+        className="absolute top-4 right-4 z-[99999] bg-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition shadow-xl"
       >
         <X className="w-5 h-5 sm:w-6 sm:h-6 text-[#8B0048]" />
       </button>
 
-      {/* ----------- CERTIFICATE WRAPPER (AUTO SCALE PREVIEW) ----------- */}
-      <div className="w-full max-w-[380px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[500px] my-8">
+      {/* CERTIFICATE CONTAINER */}
+      <div className="w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[460px] my-4">
 
         <div
           ref={certRef}
-          className="
-            mx-auto 
-            aspect-[9/16] 
-            bg-white 
-            rounded-2xl sm:rounded-3xl
-            border-4 sm:border-8 
-            border-[#D4AF37] 
-            shadow-2xl 
-            overflow-hidden 
-            relative
-          "
+          className="mx-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden relative"
           style={{
-            background:
-              "linear-gradient(180deg, #FFF9F2 0%, #FFF4DF 100%)",
+            background: "linear-gradient(180deg, #FFFBF5 0%, #FFF4E6 50%, #FFFBF5 100%)",
+            maxHeight: "85vh",
+            aspectRatio: "9/14"
           }}
         >
-          {/* INNER SAFE AREA */}
-          <div className="absolute inset-0 flex flex-col p-3 sm:p-6">
+          
+          {/* ORNATE GOLDEN BORDER (UNCHANGED UI) */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-2 border-4 border-[#D4AF37] rounded-2xl"></div>
+            <div className="absolute inset-4 border-2 border-[#D4AF37]/40 rounded-xl"></div>
+            {/* Corner Ornaments */}
+            {/* (KEEP ALL SVGs UNCHANGED) */}
+            <svg className="absolute top-3 left-3 w-12 h-12 text-[#D4AF37]" viewBox="0 0 50 50">
+              <path d="M0,0 L15,0 Q20,5 15,10 L0,10 Z M0,0 L0,15 Q5,20 10,15 L10,0 Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <svg className="absolute top-3 right-3 w-12 h-12 text-[#D4AF37]" viewBox="0 0 50 50" style={{transform: 'scaleX(-1)'}}>
+              <path d="M0,0 L15,0 Q20,5 15,10 L0,10 Z M0,0 L0,15 Q5,20 10,15 L10,0 Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <svg className="absolute bottom-3 left-3 w-12 h-12 text-[#D4AF37]" viewBox="0 0 50 50" style={{transform: 'scaleY(-1)'}}>
+              <path d="M0,0 L15,0 Q20,5 15,10 L0,10 Z M0,0 L0,15 Q5,20 10,15 L10,0 Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <svg className="absolute bottom-3 right-3 w-12 h-12 text-[#D4AF37]" viewBox="0 0 50 50" style={{transform: 'scale(-1)'}}>
+              <path d="M0,0 L15,0 Q20,5 15,10 L0,10 Z M0,0 L0,15 Q5,20 10,15 L10,0 Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+          </div>
 
-            {/* ---------------- TOP DECOR ---------------- */}
-            <div className="relative text-center pb-2 sm:pb-4 flex-shrink-0">
+          {/* MAIN CONTENT */}
+          <div className="relative h-full flex flex-col p-4 sm:p-5 md:p-6">
 
-              {/* Center Logo */}
-              <div className="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 z-10">
-                <div className="w-16 sm:w-24 h-16 sm:h-24 rounded-full overflow-hidden border-3 sm:border-4 border-[#D4AF37] shadow-lg bg-white">
-                  <img src="/logo.png" className="w-full h-full object-cover" alt="Logo" />
+            {/* TOP SECTION */}
+            <div className="relative mb-4 sm:mb-5 flex-shrink-0">
+
+              {/* MATAJI IMAGES */}
+              <div className="absolute top-0 left-0">
+                <div className="relative">
+                  <div className="absolute -inset-0.5 bg-[#D4AF37] rounded-full blur-sm opacity-30"></div>
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-lg bg-white p-0.5">
+                    <img src="/mataji1.jpeg" className="w-full h-full object-cover object-top" alt="Mataji 1" />
+                  </div>
                 </div>
               </div>
 
-              {/* Corner Images (Left) */}
-              <div className="absolute top-1 sm:top-2 left-1 sm:left-2 flex flex-col items-center gap-1 sm:gap-2">
-                <img
-                  src="/virag.png"
-                  className="w-8 sm:w-14 h-8 sm:h-14 rounded-full border border-sm:border-2 border-[#D4AF37] shadow"
-                  alt="Virag"
-                />
-                <img
-                  src="/mataji1.jpeg"
-                  className="w-7 sm:w-12 h-7 sm:h-12 rounded-full border border-[#FFD76A] shadow"
-                  alt="Mataji"
-                />
+              <div className="absolute top-0 right-0">
+                <div className="relative">
+                  <div className="absolute -inset-0.5 bg-[#D4AF37] rounded-full blur-sm opacity-30"></div>
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-lg bg-white p-0.5">
+                    <img src="/mataji2.jpeg" className="w-full h-full object-cover object-top" alt="Mataji 2" />
+                  </div>
+                </div>
               </div>
 
-              {/* Corner Images (Right) */}
-              <div className="absolute top-1 sm:top-2 right-1 sm:right-2 flex flex-col items-center gap-1 sm:gap-2">
-                <img
-                  src="/vishudh.png"
-                  className="w-8 sm:w-14 h-8 sm:h-14 rounded-full border border-sm:border-2 border-[#D4AF37] shadow"
-                  alt="Vishudh"
-                />
-                <img
-                  src="/mataji2.jpeg"
-                  className="w-7 sm:w-12 h-7 sm:h-12 rounded-full border border-[#FFD76A] shadow"
-                  alt="Mataji"
-                />
+              {/* CENTER TITLE */}
+              <div className="pt-16 sm:pt-18 md:pt-20 text-center">
+                <h1 className="text-base sm:text-lg md:text-xl font-black text-[#8B0048] tracking-wide mb-1 sm:mb-2 px-2">
+                  {tirthName}
+                </h1>
+
+                <p className="text-xs sm:text-sm text-[#8B0048]/80 font-semibold">
+                  दिव्य पंचकल्याणक प्रतिष्ठा महोत्सव
+                </p>
+
+                <div className="flex items-center justify-center gap-2 mt-2 sm:mt-3">
+                  <div className="h-px w-12 sm:w-16 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                  <div className="h-px w-12 sm:w-16 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
+                </div>
               </div>
 
-              <h1 className="text-base sm:text-xl font-extrabold text-[#8B0048] tracking-wide mt-12 sm:mt-10 px-1">
-                {tirthName}
-              </h1>
-              <p className="text-xs sm:text-sm text-[#8B0048]/70 mt-1">
-                दिव्य पंचकल्याणक प्रतिष्ठा महोत्सव
-              </p>
-
-              <div className="flex justify-center mt-2">
-                <div className="h-[2px] sm:h-[3px] w-20 sm:w-32 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
-              </div>
             </div>
 
-            {/* SCROLLABLE BODY */}
-            <div className="flex-1 overflow-y-auto pr-1 sm:pr-2 text-center flex flex-col justify-center">
+            {/* MAIN AREA */}
+            <div className="flex-1 flex flex-col justify-between">
 
-              {/* CERTIFICATE TITLE */}
-              <h2 className="text-xl sm:text-3xl font-extrabold text-[#8B0048] mb-1 sm:mb-2">
-                सम्मान प्रमाण पत्र
-              </h2>
-
-              <p className="text-[#8B0048]/70 text-xs sm:text-sm mb-2 sm:mb-4">
-                यह प्रमाण पत्र विनम्रतापूर्वक प्रदान किया जाता है —
-              </p>
+              {/* TITLE */}
+              <div className="text-center mb-2 sm:mb-3">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-black text-[#8B0048] mb-1">
+                  सम्मान प्रमाण पत्र
+                </h2>
+                <p className="text-[9px] sm:text-[10px] text-[#8B0048]/70 italic">
+                  यह प्रमाण पत्र विनम्रतापूर्वक प्रदान किया जाता है
+                </p>
+              </div>
 
               {/* DONOR NAME */}
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-[#8B0048] leading-tight mb-3 sm:mb-4 break-words px-1 line-clamp-2">
-                {name}
-              </h1>
+              <div className="bg-gradient-to-r from-[#D4AF37]/10 via-[#D4AF37]/5 to-[#D4AF37]/10 rounded-lg p-2 sm:p-3 mb-2 sm:mb-3 border border-[#D4AF37]/30">
+                <p className="text-[9px] sm:text-[10px] text-[#8B0048]/60 text-center">
+                  श्रीमान/श्रीमती
+                </p>
+                <h3 className="text-base sm:text-lg md:text-xl font-black text-[#8B0048] text-center leading-tight">
+                  {name}
+                </h3>
+              </div>
 
-              {/* DETAILS GRID */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4 px-1">
+              {/* DETAILS */}
+              <div className="space-y-2 sm:space-y-3 mb-3">
 
-                <div className="p-2 sm:p-3 bg-[#FFF5E6] rounded-lg sm:rounded-xl border-l-4 border-[#D4AF37]">
-                  <p className="text-xs text-[#8B0048]/70">राशि</p>
-                  <p className="text-sm sm:text-lg font-semibold text-[#8B0048]">{amount}</p>
+                {/* AMOUNT */}
+                <div className="flex items-center justify-between p-2 bg-white rounded-lg border-l-3 border-[#D4AF37] shadow-sm">
+                  <p className="text-xs font-bold text-[#8B0048]">{amount}</p>
+                  <p className="text-[9px] text-[#8B0048]/60">दान राशि</p>
                 </div>
 
-                <div className="p-2 sm:p-3 bg-[#FFF5E6] rounded-lg sm:rounded-xl border-l-4 border-[#D4AF37]">
-                  <p className="text-xs text-[#8B0048]/70">योजना</p>
-                  <p className="text-sm sm:text-lg font-semibold text-[#8B0048] truncate">{yojanaName}</p>
+                {/* YOJANA */}
+                <div className="flex items-center justify-between p-2 bg-white rounded-lg border-l-3 border-[#D4AF37] shadow-sm">
+                  <p className="text-[10px] sm:text-xs font-semibold text-[#8B0048] truncate">{yojanaName}</p>
+                  <p className="text-[9px] text-[#8B0048]/60">योजना</p>
                 </div>
 
-                <div className="p-2 sm:p-3 bg-[#FFF5E6] rounded-lg sm:rounded-xl border-l-4 border-[#D4AF37]">
-                  <p className="text-xs text-[#8B0048]/70">संपर्क</p>
-                  <p className="text-xs sm:text-lg font-semibold text-[#8B0048] truncate">{phone}</p>
-                </div>
+                {/* PHONE + CERT */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 bg-white rounded-lg border border-[#D4AF37]/30 shadow-sm">
+                    <p className="text-[10px] font-semibold text-[#8B0048]">{phone}</p>
+                    <p className="text-[8px] text-[#8B0048]/60">संपर्क</p>
+                  </div>
 
-                <div className="p-2 sm:p-3 bg-[#FFF5E6] rounded-lg sm:rounded-xl border-l-4 border-[#D4AF37]">
-                  <p className="text-xs text-[#8B0048]/70">प्रमाण संख्या</p>
-                  <p className="text-xs sm:text-lg font-semibold text-[#8B0048] truncate">
-                    {certificateNumber}
-                  </p>
+                  <div className="p-2 bg-white rounded-lg border border-[#D4AF37]/30 shadow-sm">
+                    <p className="text-[10px] font-semibold text-[#8B0048] break-all">{certificateNumber}</p>
+                    <p className="text-[8px] text-[#8B0048]/60">प्रमाण संख्या</p>
+                  </div>
                 </div>
 
               </div>
 
-              {/* MESSAGE */}
-              <p className="text-[#8B0048]/70 italic text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 px-2">
-                आपका यह पावन सहयोग अनंत पुण्य का कारण बने।  
-                <br /> 🌸 ॐ सर्वे भवन्तु सुखिनः 🌸
-              </p>
+              {/* BLESSING */}
+              <div className="bg-gradient-to-br from-[#FFF5E6] to-[#FFE8CC] rounded-lg p-2 border border-[#D4AF37]/20 text-center mb-2">
+                <p className="text-[9px] sm:text-[10px] text-[#8B0048]/80 leading-relaxed italic">
+                  आपका यह पावन सहयोग अनंत पुण्य का कारण बने।
+                  <br />
+                  <span className="font-bold not-italic text-[#D4AF37]">🙏 धन्यवाद 🙏</span>
+                </p>
+              </div>
 
             </div>
 
-            {/* FOOTER LINE */}
-            <div className="text-center pt-1 sm:pt-2 flex-shrink-0 border-t-2 border-[#D4AF37]">
-              <p className="text-xs sm:text-sm text-[#8B0048] font-medium">
-                🌟 आध्यात्मिक उन्नति की ओर आपका एक दिव्य कदम 🌟
-              </p>
-            </div>
-
+           
           </div>
         </div>
 
-        {/* ------------ ACTION BUTTONS ------------- */}
-        <div className="mt-4 sm:mt-6 flex gap-2 sm:gap-4 justify-center flex-col sm:flex-row">
-          <button
-            onClick={downloadImage}
-            className="flex-1 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-[#8B0048] text-white font-bold text-sm sm:text-base shadow-md hover:scale-105 transition"
-          >
-            डाउनलोड करें
-          </button>
-
-          <button
-            onClick={onClose}
-            className="flex-1 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl border-2 border-[#8B0048] text-[#8B0048] font-bold text-sm sm:text-base hover:bg-[#8B0048]/10 transition"
-          >
-            बंद करें
-          </button>
-        </div>
+        
+    
 
       </div>
     </div>

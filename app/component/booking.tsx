@@ -2,7 +2,7 @@
 
 import { Check, Copy, QrCode, X } from 'lucide-react';
 import React, { useState } from 'react';
-import UniversalCertificateModal from './certificatemodal';
+import UniversalCertificateFinal from './certificatemodal';
 
 // ------------------------ YOJANA TYPE (UNIVERSAL) ------------------------
 
@@ -226,18 +226,22 @@ export default function UniversalYojnaBookingFlow({
    STEP 3 — UNIVERSAL CERTIFICATE MODAL
 ----------------------------------------------------- */}
 {step === 3 && (
-  <UniversalCertificateModal
-    name={name}
-    amount={yojana.amount}
-    yojanaName={yojana.name}
-    phone={phone}
-    certificateNumber={certificateNumber}
-    tirthName="श्री ह्रींकार तीर्थ, टिम्बा गामड़ी" // <-- change if needed
-    onClose={() => {
-      setStep(1);
-      onClose();
-    }}
-  />
+<UniversalCertificateFinal
+  name={name}
+  amount={`${yojana.amount}`}
+  yojanaName={yojana.name}
+  phone={phone}
+  certificateNumber={certificateNumber}
+  tirthName="श्री ह्रींकार तीर्थ, टिम्बा गामड़ी"
+  onClose={() => {
+    setStep(1);
+    onClose();
+  }}
+/>
+
+
+
+
 )}
 
       </div>

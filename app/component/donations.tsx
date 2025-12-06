@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import React, { useState } from "react";
+import UniversalCertificateFinal from "./certificatemodal";
 
 /* -----------------------------------------
    Types
@@ -563,11 +564,6 @@ function PaymentSection({
     </section>
   );
 }
-
-/* -----------------------------------------
-   CERTIFICATE SECTION
------------------------------------------- */
-
 function CertificateSection({
   formData,
   onDownload,
@@ -589,90 +585,71 @@ function CertificateSection({
     general: "सामान्य दान",
   };
 
+  const [showModal, setShowModal] = React.useState(false);
+
   const certificateNumber = React.useMemo(
-    () => "JDT-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    () =>
+      "JDT-" +
+      Math.random().toString(36).substring(2, 8).toUpperCase(),
     []
   );
+
+  const category =
+    categoryNames[formData.donationPurpose] || "दान";
+
+  /** 🔥 DATA SENT TO MODAL */
+  const modalData = {
+    donorName: formData.donorName || "",
+    amount: `${formData.donationAmount || 0}`,
+    category,
+    phone: formData.donorPhone || "",
+    email: formData.donorEmail || "",
+    certificateNumber,
+    tirthName: "श्री ह्रींकार तीर्थ, टिम्बा गामड़ी",
+    date: new Date().toLocaleDateString("hi-IN"),
+  };
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
       <div className="max-w-4xl mx-auto">
+
+        {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-4xl font-extrabold text-[#8B0048]">🙏 धन्यवाद</h2>
-          <p className="text-gray-700 text-lg">आपका प्रमाण पत्र तैयार है</p>
+          <h2 className="text-4xl font-extrabold text-[#8B0048]">
+            🙏 धन्यवाद
+          </h2>
+          <p className="text-gray-700 text-lg">
+            आपका प्रमाण पत्र तैयार है
+          </p>
         </div>
 
-        {/* Certificate */}
-        <div className="bg-white rounded-3xl shadow-2xl border-8 border-[#E0679F] overflow-hidden">
-          {/* header */}
-          <div className="bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] p-8 text-center">
-            <h3 className="text-3xl font-extrabold text-white">
-              सम्मान प्रमाण पत्र
-            </h3>
-            <p className="text-white/90 text-lg">Certificate of Merit</p>
-          </div>
+        {/* Certificate Preview Card */}
+        <div className="bg-white rounded-3xl shadow-xl border-4 border-[#E0679F] p-10 text-center">
 
-          {/* body */}
-          <div className="p-12 text-center">
-            <p className="text-[#8B0048]/70 text-lg mb-2">
-              यह प्रमाण पत्र प्रदान किया जाता है
-            </p>
+          <h3 className="text-3xl font-extrabold text-[#8B0048] mb-2">
+            सम्मान प्रमाण पत्र
+          </h3>
 
-            {/* name */}
-            <div className="py-6 border-y-2 border-[#E0679F] my-6">
-              <h2 className="text-4xl font-extrabold text-[#8B0048]">
-                {formData.donorName}
-              </h2>
-            </div>
+          {/* 🔥 Show donor name in preview */}
+          <p className="text-[#8B0048]/70 mb-6 text-xl font-bold">
+            {formData.donorName}
+          </p>
 
-            {/* details */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <CertificateField label="दान राशि" value={`₹${formData.donationAmount}`} />
-              <CertificateField
-                label="दान श्रेणी"
-                value={categoryNames[formData.donationPurpose] || "दान"}
-              />
-              <CertificateField label="ईमेल" value={formData.donorEmail} />
-              <CertificateField label="संपर्क नंबर" value={formData.donorPhone} />
-            </div>
-
-            {/* purpose */}
-            <div className="bg-[#FFF1F5] p-6 rounded-xl border-l-4 border-[#E0679F] mb-12">
-              <p className="text-[#8B0048] font-bold text-lg">
-                {categoryNames[formData.donationPurpose] || "दान"} हेतु दान
-              </p>
-            </div>
-
-            {/* date */}
-            <div className="grid md:grid-cols-3 mt-6 pt-6 border-t-2 border-[#E0679F]/40">
-              <div>
-                <p className="text-[#8B0048]/60 mb-2">दिनांक</p>
-                <p className="text-[#8B0048] font-bold">
-                  {new Date().toLocaleDateString("hi-IN")}
-                </p>
-              </div>
-
-              <div className="text-3xl text-[#E0679F]">✨</div>
-
-              <div>
-                <p className="text-[#8B0048]/60 mb-2">प्रमाण संख्या</p>
-                <p className="text-[#8B0048] font-bold">{certificateNumber}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* footer */}
-          <div className="bg-[#FFE4EC]/50 p-6 text-center">
-            <p className="text-[#8B0048] font-semibold text-sm">
-              🌟 आपका दान भविष्य पीढ़ी के लिए एक प्रकाश स्तंभ है 🌟
-            </p>
-          </div>
-        </div>
-
-        {/* buttons */}
-        <div className="flex flex-col md:flex-row gap-4 mt-10">
+          {/* OPEN MODAL BUTTON */}
           <button
-            onClick={onDownload}
+            onClick={() => setShowModal(true)}
+            className="px-6 py-3 bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] 
+                       text-white font-bold rounded-xl shadow-lg"
+          >
+            प्रमाण पत्र देखें
+          </button>
+        </div>
+
+        {/* Bottom Buttons */}
+        <div className="flex flex-col md:flex-row gap-4 mt-10">
+          
+          <button
+            onClick={() => setShowModal(true)} // 🔥 instead of direct download
             className="flex-1 py-4 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
                        text-white font-bold text-lg shadow-xl"
           >
@@ -687,6 +664,21 @@ function CertificateSection({
           </button>
         </div>
       </div>
+
+      {/* 🔥 Modal */}
+      {showModal && (
+        <UniversalCertificateFinal
+  name={formData.donorName || ""}
+  amount={String(formData.donationAmount).replace(/₹/g, "")}
+  yojanaName={categoryNames[formData.donationPurpose] || "दान"}
+  phone={formData.donorPhone || ""}
+  certificateNumber={certificateNumber}
+  tirthName="श्री ह्रींकार तीर्थ, टिम्बा गामड़ी"
+  onClose={() => setShowModal(false)}
+/>
+
+
+      )}
     </section>
   );
 }
