@@ -6,6 +6,9 @@ import CompactCountdown from "./countdown";
 
 const PanchkalyanakHero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+const [particles, setParticles] = useState<
+  { width: number; height: number; top: number; left: number; delay: number; duration: number; color: string }[]
+>([]);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const indexRef = useRef(0);
@@ -74,30 +77,18 @@ useEffect(() => {
     return () => video.removeEventListener("ended", handleEnded);
   }, []);
 
-  type Particle = {
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-  delay: number;
-  duration: number;
-  color: string;
-};
-
-const [particles, setParticles] = useState<Particle[]>([]);
-
-useEffect(() => {
-  const arr = Array.from({ length: 30 }, (_, i) => ({
-    width: parseFloat((Math.random() * 3 + 2).toFixed(2)),
-    height: parseFloat((Math.random() * 3 + 2).toFixed(2)),
-    top: parseFloat((Math.random() * 100).toFixed(2)),
-    left: parseFloat((Math.random() * 100).toFixed(2)),
-    delay: parseFloat((Math.random() * 6).toFixed(2)),
-    duration: parseFloat((Math.random() * 4 + 6).toFixed(2)),
+  useEffect(() => {
+  const arr = Array.from({ length: 30 }).map((_, i) => ({
+    width: Math.round((Math.random() * 3 + 2) * 100) / 100,
+    height: Math.round((Math.random() * 3 + 2) * 100) / 100,
+    top: Math.round(Math.random() * 10000) / 100,
+    left: Math.round(Math.random() * 10000) / 100,
+    delay: Math.round(Math.random() * 600) / 100,
+    duration: Math.round((6 + Math.random() * 4) * 100) / 100,
     color: i % 2 === 0 ? "#F9E4B7" : "#E0A851",
   }));
 
-  setParticles(arr);
+  requestAnimationFrame(() => setParticles(arr));
 }, []);
 
 
