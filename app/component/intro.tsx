@@ -26,7 +26,7 @@ const DivineIntro: React.FC = () => {
 
   <div className="flex flex-nowrap items-center justify-between gap-2 sm:gap-4">
 
-            <GuruCorner img="/virag.png" title="आचार्य श्री विराग सागर जी म.सा." />
+            <GuruCorner img="/virag.png" title="आचार्य श्री विराग सागर" />
 
             {/* Center Sacred Symbols */}
             <div className="flex flex-col items-center justify-center gap-1 sm:gap-1.5 px-2">
@@ -42,7 +42,7 @@ const DivineIntro: React.FC = () => {
 
             <GuruCorner
               img="/vishudh.png"
-              title="आचार्य श्री विशुद्ध सागर जी म.सा."
+              title="आचार्य श्री विशुद्ध सागर"
             />
           </div>
         </div>

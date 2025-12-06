@@ -176,16 +176,7 @@ const VenueConnectivity: React.FC = () => {
                   Open Full Map
                 </a>
 
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("23.643444, 74.365083");
-                    alert("📍 Location copied!");
-                  }}
-                  className="flex items-center gap-2 px-6 py-3 bg-[#F0B86C] text-[#7A1433] rounded-full font-semibold shadow-md hover:scale-105 transition-all"
-                >
-                  <MapPin className="w-5 h-5" />
-                  Copy Location
-                </button>
+                
               </div>
             </div>
 
