@@ -12,17 +12,24 @@ import React, { useEffect, useState } from "react";
 
 const VenueConnectivity: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [particles, setParticles] = useState<any[]>([]);
+const [particles, setParticles] = useState<{
+  top: number;
+  left: number;
+  delay: number;
+  duration: number;
+}[]>([]);
 
-  useEffect(() => {
-    const arr = Array.from({ length: 15 }).map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      delay: (Math.random() * 4).toFixed(2),
-      duration: (3 + Math.random() * 4).toFixed(2),
-    }));
-    setParticles(arr);
-  }, []);
+useEffect(() => {
+  const arr = Array.from({ length: 15 }).map(() => ({
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+    delay: Number((Math.random() * 4).toFixed(2)),
+    duration: Number((3 + Math.random() * 4).toFixed(2)),
+  }));
+  
+  setParticles(arr);
+}, []);
+
 
   /* ------------------------------ CONNECTIVITY ------------------------------ */
 
