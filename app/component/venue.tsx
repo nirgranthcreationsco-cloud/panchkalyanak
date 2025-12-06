@@ -8,32 +8,39 @@ import {
   Plane,
   Train,
 } from "lucide-react";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
+// deterministic particle type
 type Particle = {
   top: number;
   left: number;
-  delay: string;
-  duration: string;
+  delay: number;
+  duration: number;
 };
 
 const VenueConnectivity: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
 
+  /** Create particles on client only */
   useEffect(() => {
-    const arr: Particle[] = Array.from({ length: 15 }).map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      delay: (Math.random() * 4).toFixed(2),
-      duration: (3 + Math.random() * 4).toFixed(2),
-    }));
+    // do not call setState synchronously inside effect
+    const createParticles = () => {
+      const arr: Particle[] = Array.from({ length: 15 }).map(() => ({
+        top: Math.floor(Math.random() * 101), // integer safe
+        left: Math.floor(Math.random() * 101),
+        delay: Number((Math.random() * 4).toFixed(2)),
+        duration: Number((3 + Math.random() * 4).toFixed(2)),
+      }));
+      setParticles(arr);
+    };
 
-    // Schedule state update after layout
-    Promise.resolve().then(() => setParticles(arr));
+    // microtask helps avoid purity warnings
+    Promise.resolve().then(createParticles);
   }, []);
 
-  /* ------------------------------ CONNECTIVITY ------------------------------ */
+  /* ------------------------------ CONNECTIVITY DATA ------------------------------ */
 
   const connectivityData = [
     {
@@ -87,7 +94,7 @@ const VenueConnectivity: React.FC = () => {
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((p, i) => (
           <div
-            key={`particle-${i}`}
+            key={i}
             className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#E0679F] rounded-full opacity-30 animate-float"
             style={{
               top: `${p.top}%`,
@@ -119,7 +126,7 @@ const VenueConnectivity: React.FC = () => {
           </p>
         </div>
 
-        {/* ================= ENHANCED VENUE SECTION — PINK-GOLD ================= */}
+        {/* ================= VENUE SECTION ================= */}
         <div className="bg-white/70 backdrop-blur-xl rounded-3xl border-4 border-[#F0B86C]/40 shadow-pink-500/20 p-10 mb-16 relative overflow-hidden group">
 
           {/* Glow */}
@@ -127,7 +134,7 @@ const VenueConnectivity: React.FC = () => {
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
-            {/* LEFT CONTENT */}
+            {/* LEFT */}
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-gradient-to-br from-[#E0679F] to-[#F0B86C] rounded-xl shadow-lg">
@@ -149,32 +156,40 @@ const VenueConnectivity: React.FC = () => {
 
               {/* ACTION BUTTONS */}
               <div className="flex flex-wrap gap-4 pt-2">
-
-                {/* GOOGLE MAPS EXACT COORDS */}
                 <a
                   href="https://www.google.com/maps/dir/?api=1&destination=23.643444,74.365083"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 px-6 py-3 bg-[#7A1433] text-white rounded-full font-semibold shadow-md hover:scale-105 border-2 border-[#F0B86C] transition-all"
                 >
                   <Navigation className="w-5 h-5" />
                   Get Directions
                 </a>
 
-                {/* OPEN FULL MAP */}
                 <a
                   href="https://www.google.com/maps?q=23.643444,74.365083"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 px-6 py-3 bg-white/80 text-[#7A1433] rounded-full font-semibold shadow-md hover:scale-105 border-2 border-[#E0679F]/40 transition-all"
                 >
                   <ExternalLink className="w-5 h-5" />
                   Open Full Map
                 </a>
 
-               
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("23.643444, 74.365083");
+                    alert("📍 Location copied!");
+                  }}
+                  className="flex items-center gap-2 px-6 py-3 bg-[#F0B86C] text-[#7A1433] rounded-full font-semibold shadow-md hover:scale-105 transition-all"
+                >
+                  <MapPin className="w-5 h-5" />
+                  Copy Location
+                </button>
               </div>
             </div>
 
-            {/* MAP */}
+            {/* MAP + LOGO */}
             <div className="relative rounded-3xl shadow-[0_20px_40px_rgba(224,103,159,0.25)] overflow-hidden">
 
               <iframe
@@ -182,19 +197,26 @@ const VenueConnectivity: React.FC = () => {
                 className="w-full h-64 sm:h-80 md:h-[22rem]"
                 style={{ border: "none" }}
                 loading="lazy"
-              ></iframe>
+              />
 
               {/* LOGO */}
               <div className="absolute top-3 right-3 bg-white/70 backdrop-blur-md px-3 py-2 rounded-xl shadow-lg border border-[#F0B86C]/60 flex items-center gap-2">
-                <img src="/logo.png" className="w-8 h-8 animate-pulse" alt="Hrimkar" />
-                <span className="text-[#7A1433] font-bold text-sm">Hrimkar Tirth</span>
+                <Image
+                  src="/logo.png"
+                  width={32}
+                  height={32}
+                  alt="Hrimkar Logo"
+                  className="animate-pulse"
+                />
+                <span className="text-[#7A1433] font-bold text-sm">
+                  Hrimkar Tirth
+                </span>
               </div>
-
             </div>
           </div>
         </div>
 
-        {/* ================= CONNECTIVITY CARDS (PINK-GOLD) ================= */}
+        {/* ================= CONNECTIVITY CARDS ================= */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
           {connectivityData.map((item, index) => {
             const Icon = item.icon;
@@ -213,9 +235,7 @@ const VenueConnectivity: React.FC = () => {
 
                 <div className="relative">
                   <div className="flex justify-between items-start mb-6">
-                    <div
-                      className={`p-3 bg-gradient-to-br ${item.color} rounded-xl shadow-lg`}
-                    >
+                    <div className={`p-3 bg-gradient-to-br ${item.color} rounded-xl shadow-lg`}>
                       <Icon className="w-8 h-8 text-white" />
                     </div>
 
@@ -233,20 +253,20 @@ const VenueConnectivity: React.FC = () => {
                     {item.distance}
                   </p>
 
-                  <p className="text-sm text-[#7A1433]/70 mt-2">{item.details}</p>
+                  <p className="text-sm text-[#7A1433]/70 mt-2">
+                    {item.details}
+                  </p>
                 </div>
               </div>
             );
           })}
         </div>
-
       </div>
 
       {/* FLOAT ANIMATION */}
       <style jsx>{`
         @keyframes float {
-          0%,
-          100% {
+          0%, 100% {
             transform: translateY(0) translateX(0);
           }
           25% {
