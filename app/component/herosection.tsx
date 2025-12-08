@@ -3,20 +3,104 @@
 import { useEffect, useRef, useState } from "react";
 import CompactCountdown from "./countdown";
 
-const videos = ["/v1.mp4", "/v2.mp4", "/v3.mp4", "/v4.mp4", "/v5.mp4", "/v6.mp4"];
+const videos = [
+  "/v2.webm",
+  "/v5.webm",
+  "/v3.webm",
+  "/v4.webm",
+  "/v1.webm",
+  "/v6.webm",
+];
 
-const PanchkalyanakHero = () => {
+export default function PanchkalyanakHero() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [current, setCurrent] = useState(0);
 
-  const v1 = useRef<HTMLVideoElement | null>(null);
-  const v2 = useRef<HTMLVideoElement | null>(null);
+  const vA = useRef<HTMLVideoElement | null>(null);
+  const vB = useRef<HTMLVideoElement | null>(null);
 
-  // --------------------------------------
+  const activeRef = useRef<"A" | "B">("A");
+  const indexRef = useRef(0);
+
+  // --------------------------------------------------
+  // fade-in UI animation
+  // --------------------------------------------------
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoaded(true), 300);
+    return () => clearTimeout(t);
+  }, []);
+
+  // --------------------------------------------------
+  // preload a given video silently into the buffer
+  // --------------------------------------------------
+  function preloadVideo(src: string) {
+    const v = document.createElement("video");
+    v.src = src;
+    v.preload = "auto";
+    v.muted = true;
+    v.playsInline = true;
+    v.load();
+  }
+
+  // --------------------------------------------------
+  // MAIN video playback logic with cross-fade
+  // --------------------------------------------------
+  useEffect(() => {
+    const A = vA.current;
+    const B = vB.current;
+    if (!A || !B) return;
+
+    let nextIdx = 1;
+
+    // 1. Initialize first video instantly
+    A.src = videos[0];
+    A.style.opacity = "1";
+    A.load();
+    A.play().catch(() => {});
+
+    // Preload upcoming videos at start
+    videos.forEach((v) => preloadVideo(v));
+
+    const playNext = async () => {
+      const src = videos[nextIdx % videos.length];
+
+      const show = activeRef.current === "A" ? B : A;
+      const hide = activeRef.current === "A" ? A : B;
+
+      // prepare next video BEFORE transition
+      show.src = src;
+      show.currentTime = 0;
+      show.load();
+
+      try {
+        await show.play();
+      } catch {}
+
+      // crossfade
+      show.style.opacity = "1";
+      hide.style.opacity = "0";
+
+      // swap active ref
+      activeRef.current = activeRef.current === "A" ? "B" : "A";
+
+      // queue next index
+      nextIdx++;
+    };
+
+    // handle finish events
+    A.onended = playNext;
+    B.onended = playNext;
+
+    return () => {
+      A.onended = null;
+      B.onended = null;
+    };
+  }, []);
+
+  // --------------------------------------------------
   // Countdown timer
-  // --------------------------------------
+  // --------------------------------------------------
   const [timeLeft, setTimeLeft] = useState({
-    days: 0, hours: 0, minutes: 0, seconds: 0
+    days: 0, hours: 0, minutes: 0, seconds: 0,
   });
 
   useEffect(() => {
@@ -27,9 +111,9 @@ const PanchkalyanakHero = () => {
       const diff = target - now;
 
       setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff / 3600000) % 24),
+        minutes: Math.floor((diff / 60000) % 60),
         seconds: Math.floor((diff / 1000) % 60),
       });
     }, 1000);
@@ -37,104 +121,59 @@ const PanchkalyanakHero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // --------------------------------------
-  // Fade-in on load (UI animation)
-  // --------------------------------------
-  useEffect(() => {
-    const t = setTimeout(() => setIsLoaded(true), 600);
-    return () => clearTimeout(t);
-  }, []);
-
-  // --------------------------------------
-  // Cross-fade video switching
-  // --------------------------------------
-  useEffect(() => {
-    const first = v1.current;
-    const second = v2.current;
-
-    if (!first || !second) return;
-
-    // initial load
-    first.src = videos[0];
-    first.play().catch(() => {});
-
-    let index = 1;
-    let active = 1; // 1 = v2 fades in next
-
-    const playNext = () => {
-      const nextVideo = videos[index % videos.length];
-
-      const show = active === 1 ? second : first;
-      const hide = active === 1 ? first : second;
-
-      show.src = nextVideo;
-      show.currentTime = 0;
-
-      show.play().catch(() => {});
-      
-      // fade transition
-      show.style.opacity = "1";
-      hide.style.opacity = "0";
-
-      index++;
-      active = active === 1 ? 2 : 1;
-    };
-
-    // when current video ends, fade next
-    first.onended = playNext;
-    second.onended = playNext;
-
-  }, []);
-
+  // --------------------------------------------------
+  // UI
+  // --------------------------------------------------
   return (
     <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-black">
 
-      {/* --- Video 1 --- */}
+      {/* Video A */}
       <video
-        ref={v1}
+        ref={vA}
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-[1200ms]"
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
+        style={{ transform: "translateZ(0)" }}
       />
 
-      {/* --- Video 2 --- */}
+      {/* Video B */}
       <video
-        ref={v2}
+        ref={vB}
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1200ms]"
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
+        style={{ transform: "translateZ(0)" }}
       />
 
-      {/* --- Gradient overlay --- */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-black/80" />
+      {/* gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-black/70" />
 
-      {/* --- Golden Aura --- */}
+      {/* glow */}
       <div
-        className={`absolute z-10 w-[80vw] h-[80vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-[#F9E4B7]/25 via-[#E0A851]/20 to-[#C14C4C]/15 blur-3xl transition-all duration-[2500ms] 
+        className={`absolute z-10 w-[80vw] h-[80vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-[#F9E4B7]/25 via-[#E0A851]/20 to-[#C14C4C]/15 blur-3xl transition-all duration-[2000ms] 
         ${isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
       />
 
-      {/* --- Center Content --- */}
+      {/* content */}
       <div
-        className={`relative z-20 text-center transition-all duration-[2000ms] ease-out
-        ${isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-10"}`}
+        className={`relative z-20 text-center transition-all duration-[1500ms] ease-out
+        ${isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-6"}`}
       >
         <img
           src="/logo.png"
           alt="Panchkalyanak Logo"
           className="w-[60vw] max-w-[500px] object-contain drop-shadow-[0_0_60px_rgba(249,228,183,0.6)]"
+          loading="eager"
         />
 
         <CompactCountdown timeLeft={timeLeft} />
       </div>
 
-      {/* --- Frame --- */}
       <div className="absolute inset-10 md:inset-16 border-[1.5px] border-[#EEC76C]/40 rounded-[2rem]" />
-
     </section>
   );
-};
-
-export default PanchkalyanakHero;
+}

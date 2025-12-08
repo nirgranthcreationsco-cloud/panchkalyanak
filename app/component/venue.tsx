@@ -2,13 +2,10 @@
 
 import {
   Bus,
-  ExternalLink,
   MapPin,
-  Navigation,
   Plane,
-  Train,
+  Train
 } from "lucide-react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 // deterministic particle type
@@ -125,87 +122,161 @@ const VenueConnectivity: React.FC = () => {
             आपकी सुविधा के लिए संपूर्ण यात्रा जानकारी
           </p>
         </div>
+{/* ================= VENUE SECTION (PROFESSIONAL MOBILE FIRST) ================= */}
+<div className="bg-gradient-to-br from-white via-[#FFF5F8] to-white rounded-3xl border border-[#E0679F]/30 shadow-2xl p-6 sm:p-8 space-y-6 sm:space-y-8">
+  
+  {/* HEADER */}
+  <div className="text-center space-y-2">
+    <div className="inline-block">
+      <p className="text-xs sm:text-sm font-semibold text-[#E0679F] tracking-widest uppercase">आयोजन स्थल</p>
+    </div>
+    <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#7A1433] to-[#E0679F]">
+      आयोजन के स्थान
+    </h3>
+    <p className="text-sm sm:text-base text-[#7A1433]/70 max-w-2xl mx-auto">
+      दिव्य पंचकल्याणक महोत्सव का आयोजन राजस्थान के सुंदर स्थलों पर हो रहा है
+    </p>
+  </div>
 
-        {/* ================= VENUE SECTION ================= */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl border-4 border-[#F0B86C]/40 shadow-pink-500/20 p-10 mb-16 relative overflow-hidden group">
+  {/* VENUE CARDS GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+    {[
+      {
+        id: 1,
+        title: "ह्रींकार तीर्थ",
+        subtitle: "पंचकल्याणक स्थल",
+        address: "बाँसवाड़ा–उदयपुर रोड, टिम्बा गामड़ी",
+        city: "राजस्थान – 327001",
+        
+        /* MAP: EMBED VIEW */
+        embed: "https://www.openstreetmap.org/export/embed.html?bbox=74.360083%2C23.640444%2C74.370083%2C23.646444&layer=mapnik&marker=23.643444%2C74.365083",
 
-          {/* Glow */}
-          <div className="absolute -inset-32 bg-gradient-to-br from-[#E0679F]/20 to-[#F0B86C]/20 opacity-0 group-hover:opacity-100 duration-700 blur-[110px]" />
+        /* MAP: DIRECTIONS */
+        directions: "https://www.google.com/maps/dir/?api=1&destination=23.643444,74.365083",
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        icon: "📍"
+      },
+      {
+        id: 2,
+        title: "पंचकल्याणक स्थल",
+        subtitle: "बाहुबली कॉलोनी",
+        address: "संत भवन के पीछे, बांसवाड़ा",
+        city: "राजस्थान",
 
-            {/* LEFT */}
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-gradient-to-br from-[#E0679F] to-[#F0B86C] rounded-xl shadow-lg">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
+        /* MAP: EMBED VIEW */
+        embed: "https://maps.google.com/maps?q=बाहुबली%20कॉलोनी%20बांसवाड़ा&output=embed",
 
-                <div>
-                  <h3 className="text-3xl lg:text-4xl font-extrabold text-[#7A1433] leading-tight">
-                    ह्रींकार तीर्थ पंचकल्याणक स्थल
-                  </h3>
+        /* MAP: DIRECTIONS */
+        directions: "https://www.google.com/maps/search/?api=1&query=बाहुबली%20कॉलोनी%20बांसवाड़ा",
 
-                  <p className="text-[#7A1433]/80 leading-relaxed mt-2 text-sm sm:text-base">
-                    बाँसवाड़ा–उदयपुर रोड, मोरडी मिल के पास<br />
-                    टिम्बा गामड़ी, विद्या श्री ग्रेनाइट से आगे 400 मीटर<br />
-                    <span className="font-semibold">बांसवाड़ा, राजस्थान – 327001</span>
+        icon: "📍"
+      },
+    ].map((venue) => (
+      <div
+        key={venue.id}
+        className="group relative overflow-hidden rounded-2xl bg-white border border-[#E0679F]/20 shadow-md hover:shadow-xl hover:border-[#E0679F]/50 transition-all duration-300"
+      >
+        {/* CARD GRADIENT OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#E0679F]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        <div className="relative flex flex-col h-full">
+          
+          {/* MAP SECTION */}
+          <div className="relative w-full h-40 sm:h-48 overflow-hidden bg-[#F5D6E2] flex items-center justify-center">
+            <iframe
+              src={venue.embed}
+              loading="lazy"
+              className="w-full h-full"
+              title={venue.title}
+            />
+            {/* OVERLAY GRADIENT */}
+            <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent pointer-events-none" />
+          </div>
+
+          {/* CONTENT SECTION */}
+          <div className="flex flex-col flex-1 p-4 sm:p-5 space-y-3">
+            
+            {/* TITLE & SUBTITLE */}
+            <div className="space-y-1">
+              <div className="flex items-start gap-2">
+                <span className="text-xl flex-shrink-0">{venue.icon}</span>
+                <div className="flex-1">
+                  <p className="font-bold text-[#7A1433] text-base sm:text-lg leading-tight">
+                    {venue.title}
+                  </p>
+                  <p className="text-xs sm:text-sm font-medium text-[#E0679F]">
+                    {venue.subtitle}
                   </p>
                 </div>
               </div>
-
-              {/* ACTION BUTTONS */}
-              <div className="flex flex-wrap gap-4 pt-2">
-                <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=23.643444,74.365083"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-[#7A1433] text-white rounded-full font-semibold shadow-md hover:scale-105 border-2 border-[#F0B86C] transition-all"
-                >
-                  <Navigation className="w-5 h-5" />
-                  Get Directions
-                </a>
-
-                <a
-                  href="https://www.google.com/maps?q=23.643444,74.365083"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-white/80 text-[#7A1433] rounded-full font-semibold shadow-md hover:scale-105 border-2 border-[#E0679F]/40 transition-all"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  Open Full Map
-                </a>
-
-                
-              </div>
             </div>
 
-            {/* MAP + LOGO */}
-            <div className="relative rounded-3xl shadow-[0_20px_40px_rgba(224,103,159,0.25)] overflow-hidden">
-
-              <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=74.360083%2C23.640444%2C74.370083%2C23.646444&layer=mapnik&marker=23.643444%2C74.365083"
-                className="w-full h-64 sm:h-80 md:h-[22rem]"
-                style={{ border: "none" }}
-                loading="lazy"
-              />
-
-              {/* LOGO */}
-              <div className="absolute top-3 right-3 bg-white/70 backdrop-blur-md px-3 py-2 rounded-xl shadow-lg border border-[#F0B86C]/60 flex items-center gap-2">
-                <Image
-                  src="/logo.png"
-                  width={32}
-                  height={32}
-                  alt="Hrimkar Logo"
-                  className="animate-pulse"
-                />
-                <span className="text-[#7A1433] font-bold text-sm">
-                  Hrimkar Tirth
-                </span>
-              </div>
+            {/* ADDRESS */}
+            <div className="space-y-1 border-t border-[#E0679F]/10 pt-3">
+              <p className="text-xs sm:text-sm text-[#7A1433]/75 leading-relaxed">
+                {venue.address}
+              </p>
+              <p className="text-xs font-semibold text-[#E0679F] tracking-wide">
+                {venue.city}
+              </p>
             </div>
+
+            {/* CTA BUTTON */}
+            <div className="pt-2">
+              <a
+                href={venue.directions}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#E0679F] to-[#D8A24E] text-white text-xs sm:text-sm font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <span>गूगल मैप्स में खोलें</span>
+              </a>
+            </div>
+
           </div>
         </div>
+      </div>
+    ))}
+  </div>
+{/* ================= BOTTOM INFO (SIMPLE + CLEAN) ================= */}
+<div className="bg-gradient-to-r from-[#FFF5F8] to-[#FFE7F0] border border-[#E0679F]/20 rounded-2xl p-4 sm:p-5 space-y-2">
+
+  {/* TEXT */}
+  <div className="flex items-start gap-3">
+    {/* Info Icon */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-5 h-5 flex-shrink-0 text-[#E0679F]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="16" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12" y2="8" />
+    </svg>
+
+    <p className="text-xs sm:text-sm font-semibold text-[#7A1433] leading-relaxed">
+      दोनों स्थलों पर दिव्य पंचकल्याणक महोत्सव का आयोजन किया जा रहा है।  
+      अधिक जानकारी के लिए हमसे संपर्क करें।
+    </p>
+  </div>
+
+  {/* PHONE NUMBER */}
+  <div className="pt-1 border-t border-[#E0679F]/15">
+    <p className="text-xs sm:text-sm font-semibold text-[#E0679F]">
+      संपर्क: +91 88390 17577
+    </p>
+  </div>
+  
+</div>
+
+
+  </div>
+
+
+
 
         {/* ================= CONNECTIVITY CARDS ================= */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">

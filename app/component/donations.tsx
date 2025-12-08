@@ -539,7 +539,7 @@ function PaymentSection({
             <div className="bg-[#F0B86C]/20 p-6 rounded-xl border-l-4 border-[#F0B86C] mb-10">
               <p className="font-bold text-[#8B0048] text-lg mb-2">📞 महत्वपूर्ण:</p>
               <p className="text-[#8B0048]">
-                भुगतान के बाद कृपया हमें <b>+91-xxxxxxxxxx</b> पर WhatsApp भेजें।
+                भुगतान के बाद कृपया हमें <b>+91-8839017577</b> पर WhatsApp भेजें।
               </p>
             </div>
 
