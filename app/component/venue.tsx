@@ -123,7 +123,7 @@ const VenueConnectivity: React.FC = () => {
           </p>
         </div>
 {/* ================= VENUE SECTION (PROFESSIONAL MOBILE FIRST) ================= */}
-<div className="bg-gradient-to-br from-white via-[#FFF5F8] to-white rounded-3xl border border-[#E0679F]/30 shadow-2xl p-6 sm:p-8 space-y-6 sm:space-y-8">
+<div className="bg-gradient-to-br from-white via-[#FFF5F8] to-white rounded-3xl border border-[#E0679F]/30 shadow-2xl p-6 sm:p-8 space-y-6 sm:space-y-8 mb-16 md:mb-24">
   
   {/* HEADER */}
   <div className="text-center space-y-2">

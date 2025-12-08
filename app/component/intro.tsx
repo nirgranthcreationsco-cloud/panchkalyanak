@@ -160,13 +160,16 @@ const GuruBottom: React.FC<{ img: string; title: string }> = ({ img, title }) =>
 
       <div className="relative h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 rounded-full border-4 border-[#F0B86C] overflow-hidden shadow-[0_10px_25px_rgba(148,27,73,0.3)] bg-white">
 
-        <Image
-          src={img}
-          alt={title}
-          fill
-          loading="lazy"
-          className="object-cover object-top"
-        />
+<Image
+  src={img}
+  alt={title}
+  fill
+  loading="lazy"
+  className="object-cover"
+  sizes="96px"
+  style={{ objectPosition: "50% 15%" }}
+/>
+
 
       </div>
 
