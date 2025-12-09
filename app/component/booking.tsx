@@ -1,8 +1,9 @@
 'use client';
 
-import { Check, Copy, QrCode, X } from 'lucide-react';
+import { Check, Copy, X } from 'lucide-react';
 import React, { useState } from 'react';
 import UniversalCertificateFinal from './certificatemodal';
+import DynamicUPIQR from './qr';
 
 // ------------------------ YOJANA TYPE (UNIVERSAL) ------------------------
 
@@ -150,29 +151,31 @@ export default function UniversalYojnaBookingFlow({
   </div>
 )}
 
-        {/* ---------------------------------------------------
-           STEP 2 — PAYMENT
-        ----------------------------------------------------- */}
-        {step === 2 && (
-          <div className="p-8 bg-gradient-to-b from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7] max-h-[90vh] overflow-y-auto">
+       
+        {/* STEP 2 — PAYMENT */}
+{step === 2 && (
+  <div className="p-8 bg-gradient-to-b from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7] max-h-[90vh] overflow-y-auto">
 
-            <h2 className="text-center text-3xl font-extrabold text-[#8B0048] mb-6">
-              भुगतान करें
-            </h2>
+    <h2 className="text-center text-3xl font-extrabold text-[#8B0048] mb-6">
+      भुगतान करें
+    </h2>
 
-            {/* QR */}
-            <div className="p-6 rounded-2xl border-2 border-[#E0679F]/30 bg-white/70">
-              <div className="text-center">
-                <QrCode className="w-12 h-12 mx-auto text-[#E0679F]" />
-                <h3 className="text-xl font-bold text-[#8B0048] mt-2">तत्काल भुगतान</h3>
-              </div>
+    {/* Parse amount & donor name for QR */}
+    {(() => {
+      const selectedAmount = Number(yojana.amount.replace(/[^0-9]/g, ""));
+      const donorName = name || "Donor";
 
-              <div className="flex justify-center my-4">
-                <img src="/qr.png" className="w-52 h-52 object-contain border-4 border-[#E0679F] rounded-xl p-3 bg-white" />
-              </div>
+      return (
+        <div className="mt-6">
+          <DynamicUPIQR amount={selectedAmount} donorName={donorName} />
+        </div>
+      );
+    })()}
 
-             
-            </div>
+  
+
+            
+
 
             {/* BANK DETAILS */}
             <h3 className="text-xl font-bold text-center text-[#8B0048] mt-10 mb-4">

@@ -4,6 +4,8 @@ import { Calendar, Landmark, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
+
+
 const DivineIntro: React.FC = () => {
   return (
     <section className="relative w-full min-h-screen overflow-hidden py-10 sm:py-14 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">

@@ -41,15 +41,22 @@ const VenueConnectivity: React.FC = () => {
 
   const connectivityData = [
     {
-      icon: Train,
-      title: "निकटतम रेलवे स्टेशन",
-      name: "Ratlam Junction (मध्य प्रदेश)",
-      distance: "⌁ लगभग 130 किमी",
-      time: "⌁ 2.5 – 3 घंटे",
-      details:
-        "रतलाम जंक्शन – दिल्ली, मुंबई, अहमदाबाद, इंदौर आदि से सीधी रेल सेवा",
-      color: "from-[#E0679F] to-[#F0B86C]",
-    },
+  icon: Plane,
+  title: "निकटतम हवाई अड्डा",
+  name: "Maharana Pratap Airport, Udaipur (UDR)",
+  distance: "≈ 130-165 किमी",
+  time: "लगभग 3–4 घंटे",
+  details: "उदयपुर एयरपोर्ट – देश भर से जुड़ा"
+},
+{
+  icon: Train,
+  title: "निकटतम रेलवे स्टेशन",
+  name: "Ratlam Junction (MP)",
+  distance: "≈ 80-85 किमी",
+  time: "लगभग 1.5-2 घंटे",
+  details: "मुख्य रेल मार्ग एवं कई शहरों से संपर्क"
+},
+
     {
       icon: Bus,
       title: "निकटतम बस स्टैंड",
@@ -59,15 +66,7 @@ const VenueConnectivity: React.FC = () => {
       details: "RSRTC एवं प्राइवेट बस सुविधा उपलब्ध",
       color: "from-[#F0B86C] to-[#E0679F]",
     },
-    {
-      icon: Plane,
-      title: "निकटतम हवाई अड्डा",
-      name: "Maharana Pratap Airport, Udaipur",
-      distance: "⌁ 160–180 किमी",
-      time: "⌁ 3–4 घंटे",
-      details: "उदयपुर हवाई अड्डा – देश के प्रमुख महानगरों से जुड़ा",
-      color: "from-[#E0679F] to-[#F0B86C]",
-    },
+   
   ];
 
   /* ------------------------------ UI ------------------------------ */
@@ -258,15 +257,15 @@ const VenueConnectivity: React.FC = () => {
     </svg>
 
     <p className="text-xs sm:text-sm font-semibold text-[#7A1433] leading-relaxed">
-      दोनों स्थलों पर दिव्य पंचकल्याणक महोत्सव का आयोजन किया जा रहा है।  
-      अधिक जानकारी के लिए हमसे संपर्क करें।
+     पंचकल्याणक प्रतिष्ठा स्थल एवं ह्रींकार तीर्थक्षेत्र दोनों भिन्न हैं, अतः आपके आगमन के पूर्व इसे सुनिश्चित करें।
+     
     </p>
   </div>
 
   {/* PHONE NUMBER */}
   <div className="pt-1 border-t border-[#E0679F]/15">
     <p className="text-xs sm:text-sm font-semibold text-[#E0679F]">
-      संपर्क: +91 88390 17577
+      अधिक जानकारी हेतु सम्पर्क करें: +91 88390 17577
     </p>
   </div>
   
@@ -278,52 +277,57 @@ const VenueConnectivity: React.FC = () => {
 
 
 
-        {/* ================= CONNECTIVITY CARDS ================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
-          {connectivityData.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`relative bg-white/65 backdrop-blur-md rounded-2xl border border-[#E0679F]/30 shadow-md p-8 transition-all duration-500 group ${
-                  hoveredCard === index ? "scale-105 -translate-y-2" : ""
-                }`}
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-[0.07] group-hover:opacity-[0.15] duration-500`}
-                />
+      {/* ================= CONNECTIVITY CARDS ================= */}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
+  {connectivityData.map((item, index) => {
+    const Icon = item.icon;
 
-                <div className="relative">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className={`p-3 bg-gradient-to-br ${item.color} rounded-xl shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
+    return (
+      <div
+        key={index}
+        onMouseEnter={() => setHoveredCard(index)}
+        onMouseLeave={() => setHoveredCard(null)}
+        className={`relative bg-white/65 backdrop-blur-md rounded-2xl border border-[#E0679F]/30 shadow-md p-8 transition-all duration-500 group ${
+          hoveredCard === index ? "scale-105 -translate-y-2" : ""
+        }`}
+      >
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${
+            item.color || "from-[#E0679F] to-[#F0B86C]"
+          } opacity-[0.07] group-hover:opacity-[0.15] duration-500`}
+        />
 
-                    <div className="text-right">
-                      <p className="text-xl font-bold text-[#7A1433]">
-                        {item.name}
-                      </p>
-                      <p className="text-sm text-[#7A1433]/60">{item.time}</p>
-                    </div>
-                  </div>
+        <div className="relative">
+          <div className="flex justify-between items-start mb-6">
 
-                  <h3 className="text-lg font-bold text-[#7A1433]">{item.title}</h3>
+            {/* FIXED ICON BACKGROUND */}
+            <div
+              className={`p-3 bg-gradient-to-br ${
+                item.color || "from-[#E0679F] to-[#F0B86C]"
+              } rounded-xl shadow-lg`}
+            >
+              <Icon className="w-8 h-8 text-white" />
+            </div>
 
-                  <p className="text-base font-semibold text-[#F0B86C] mt-1">
-                    {item.distance}
-                  </p>
+            <div className="text-right">
+              <p className="text-xl font-bold text-[#7A1433]">{item.name}</p>
+              <p className="text-sm text-[#7A1433]/60">{item.time}</p>
+            </div>
+          </div>
 
-                  <p className="text-sm text-[#7A1433]/70 mt-2">
-                    {item.details}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+          <h3 className="text-lg font-bold text-[#7A1433]">{item.title}</h3>
+
+          <p className="text-base font-semibold text-[#F0B86C] mt-1">
+            {item.distance}
+          </p>
+
+          <p className="text-sm text-[#7A1433]/70 mt-2">{item.details}</p>
         </div>
       </div>
+    );
+  })}
+</div>
+</div>
 
       {/* FLOAT ANIMATION */}
       <style jsx>{`

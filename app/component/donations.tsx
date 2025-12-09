@@ -16,6 +16,7 @@ import {
 
 import React, { useState } from "react";
 import UniversalCertificateFinal from "./certificatemodal";
+import DynamicUPIQR from "./qr";
 
 /* -----------------------------------------
    Types
@@ -453,41 +454,32 @@ function PaymentSection({
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
       <div className="max-w-5xl mx-auto relative">
-        {/* Close */}
-        <button
-          onClick={onBack}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200"
-        >
+
+        <button onClick={onBack} className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200">
           <X className="w-6 h-6 text-[#8B0048]" />
         </button>
 
-        {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-extrabold text-[#8B0048]">भुगतान करें</h2>
           <p className="text-gray-700 text-lg">₹{formData.donationAmount}</p>
         </div>
 
-        {/* Card */}
         <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#F0B86C]/40">
           <div className="p-8 md:p-12">
-            {/* QR Box */}
+
+            {/* QR BOX */}
             <div className="border-2 border-[#E0679F]/30 rounded-3xl p-8 bg-[#FFF1F5]/60 mb-10">
               <div className="text-center mb-6">
                 <QrCode className="w-12 h-12 mx-auto text-[#E0679F]" />
-                <h3 className="text-2xl font-bold text-[#8B0048] mt-3">
-                  तत्काल भुगतान
-                </h3>
+                <h3 className="text-2xl font-bold text-[#8B0048] mt-3">तत्काल भुगतान</h3>
                 <p className="text-gray-600">अपने फोन से स्कैन करें</p>
               </div>
 
-              <div className="flex justify-center my-6">
-                <img
-                  src="/qr.png"
-                  className="w-64 h-64 border-4 border-[#E0679F] rounded-2xl bg-white p-4"
-                />
-              </div>
-
-             
+              {/* ✅ Dynamic QR Code */}
+              <DynamicUPIQR
+                amount={formData.donationAmount}
+                donorName={formData.donorName}
+              />
             </div>
 
             {/* Divider */}
@@ -499,63 +491,22 @@ function PaymentSection({
 
             {/* Bank Transfer */}
             <div className="bg-[#FFE4EC]/40 border-2 border-[#E0679F]/30 p-8 rounded-3xl mb-10">
-              <h3 className="text-2xl font-bold text-[#8B0048] text-center mb-6">
-                बैंक ट्रांसफर
-              </h3>
+              <h3 className="text-2xl font-bold text-[#8B0048] text-center mb-6">बैंक ट्रांसफर</h3>
 
               <div className="space-y-4">
-                <BankDetailRow
-                  label="खाता धारक का नाम"
-                  value={bankDetails.accountName}
-                  field="name"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="खाता संख्या"
-                  value={bankDetails.accountNumber}
-                  field="number"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="IFSC कोड"
-                  value={bankDetails.ifsc}
-                  field="ifsc"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
-                <BankDetailRow
-                  label="बैंक"
-                  value={bankDetails.bankName}
-                  field="bank"
-                  copiedField={copiedField}
-                  onCopy={onCopy}
-                />
+                <BankDetailRow label="खाता धारक का नाम" value={bankDetails.accountName} field="name" copiedField={copiedField} onCopy={onCopy} />
+                <BankDetailRow label="खाता संख्या" value={bankDetails.accountNumber} field="number" copiedField={copiedField} onCopy={onCopy} />
+                <BankDetailRow label="IFSC कोड" value={bankDetails.ifsc} field="ifsc" copiedField={copiedField} onCopy={onCopy} />
+                <BankDetailRow label="बैंक" value={bankDetails.bankName} field="bank" copiedField={copiedField} onCopy={onCopy} />
               </div>
             </div>
+            add one note section at the bottom too as added in our previous code about to after payment contact or inform ton this number
 
-            {/* Important */}
-            <div className="bg-[#F0B86C]/20 p-6 rounded-xl border-l-4 border-[#F0B86C] mb-10">
-              <p className="font-bold text-[#8B0048] text-lg mb-2">📞 महत्वपूर्ण:</p>
-              <p className="text-[#8B0048]">
-                भुगतान के बाद कृपया हमें <b>+91-8839017577</b> पर WhatsApp भेजें।
-              </p>
-            </div>
-
-            {/* Buttons */}
-            <button
-              onClick={onPaymentDone}
-              className="w-full py-6 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
-                text-white font-bold text-2xl shadow-xl mb-4"
-            >
+            <button onClick={onPaymentDone} className="w-full py-6 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] text-white font-bold text-2xl shadow-xl mb-4">
               भुगतान पूरा हुआ
             </button>
 
-            <button
-              onClick={onBack}
-              className="w-full py-4 rounded-xl border-2 border-[#E0679F] text-[#8B0048] font-bold"
-            >
+            <button onClick={onBack} className="w-full py-4 rounded-xl border-2 border-[#E0679F] text-[#8B0048] font-bold">
               वापस जाएं
             </button>
           </div>
@@ -564,6 +515,7 @@ function PaymentSection({
     </section>
   );
 }
+
 function CertificateSection({
   formData,
   onDownload,
