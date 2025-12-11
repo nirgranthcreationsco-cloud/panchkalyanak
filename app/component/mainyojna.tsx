@@ -58,14 +58,13 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
     )
   );
 
-  const [, tick] = useState(0);
- // ---------- FIX FOR IMPURE Date.now ----------
-const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(Date.now());
 
 useEffect(() => {
-  const iv = setInterval(() => setNow(Date.now()), 1000);
-  return () => clearInterval(iv);
+  const t = setInterval(() => setNow(Date.now()), 1000);
+  return () => clearInterval(t);
 }, []);
+
 
   /* ---------------------------
      Expiry hit → reduce seats
