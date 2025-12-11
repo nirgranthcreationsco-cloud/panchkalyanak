@@ -59,10 +59,13 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
   );
 
   const [, tick] = useState(0);
-  useEffect(() => {
-    const iv = setInterval(() => tick((x) => x + 1), 1000);
-    return () => clearInterval(iv);
-  }, []);
+ // ---------- FIX FOR IMPURE Date.now ----------
+const [now, setNow] = useState(Date.now());
+
+useEffect(() => {
+  const iv = setInterval(() => setNow(Date.now()), 1000);
+  return () => clearInterval(iv);
+}, []);
 
   /* ---------------------------
      Expiry hit → reduce seats
@@ -120,11 +123,13 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
   }, []);
 
   const formatTime = (id: string) => {
-    const diff = Math.max(0, Math.floor((expiry[id] - Date.now()) / 1000));
-    const mm = String(Math.floor(diff / 60)).padStart(2, "0");
-    const ss = String(diff % 60).padStart(2, "0");
-    return `${mm}:${ss}`;
-  };
+  const remaining = expiry[id] - now;
+  const diff = Math.max(0, Math.floor(remaining / 1000));
+  const mm = String(Math.floor(diff / 60)).padStart(2, "0");
+  const ss = String(diff % 60).padStart(2, "0");
+  return `${mm}:${ss}`;
+};
+
 
   /* ---------------------------
      UI SECTION

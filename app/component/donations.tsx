@@ -596,23 +596,7 @@ function CertificateSection({
         </div>
 
         {/* Bottom Buttons */}
-        <div className="flex flex-col md:flex-row gap-4 mt-10">
-          
-          <button
-            onClick={() => setShowModal(true)} // 🔥 instead of direct download
-            className="flex-1 py-4 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F]
-                       text-white font-bold text-lg shadow-xl"
-          >
-            प्रमाण पत्र डाउनलोड करें
-          </button>
-
-          <button
-            onClick={onNewDonation}
-            className="flex-1 py-4 rounded-xl border-2 border-[#E0679F] text-[#8B0048] font-bold"
-          >
-            फिर से दान करें
-          </button>
-        </div>
+       
       </div>
 
       {/* 🔥 Modal */}
