@@ -45,21 +45,34 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
     []
   );
 
-  /* --------------------------------------------
-     SEATS LEFT (Client Side Only)
-  -------------------------------------------- */
+  /* -------------------------------------------------
+     FIX 1: Prevent Hydration Mismatch (math / random)
+     We first wait for client mount, then start logic.
+  --------------------------------------------------- */
+  const [isClientMounted, setIsClientMounted] = useState(false);
+
+  useEffect(() => {
+    setIsClientMounted(true);
+  }, []);
+
+  /* -------------------------------------------------
+     SEATS LEFT — only initialize after client mount
+  --------------------------------------------------- */
   const [seatsLeft, setSeatsLeft] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    // initialize only on client
+    if (!isClientMounted) return;
+
     const init = Object.fromEntries(yojanas.map((y) => [y.id, y.seatsTotal]));
     setSeatsLeft(init);
-  }, [yojanas]);
+  }, [isClientMounted, yojanas]);
 
-  /* --------------------------------------------
-     RANDOM DROP FOMO (Client Side)
-  -------------------------------------------- */
+  /* -------------------------------------------------
+     FIX 2: Randomization runs ONLY on client
+     No SSR calculation → no deployment errors
+  --------------------------------------------------- */
   useEffect(() => {
+    if (!isClientMounted) return;
     if (Object.keys(seatsLeft).length === 0) return;
 
     const iv = setInterval(() => {
@@ -70,6 +83,7 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
 
         if (cur <= 2) return prev;
 
+        // Only client executes this
         if (Math.random() < 0.35) {
           return { ...prev, [pick]: cur - 1 };
         }
@@ -79,15 +93,15 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
     }, 6000);
 
     return () => clearInterval(iv);
-  }, [seatsLeft]);
+  }, [isClientMounted, seatsLeft]);
 
-  /* --------------------------------------------
-     UI
-  -------------------------------------------- */
+  /* -------------------------------------------------
+     UI — all values guaranteed stable at SSR
+  --------------------------------------------------- */
   return (
     <section className="relative py-16 px-6 bg-gradient-to-b from-[#8B0048] via-[#C04878] to-[#8B0048] text-white">
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD76A] via-[#FAD2C1] to-[#FFD76A] pb-1">
@@ -128,8 +142,7 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
                     className="h-2 rounded-full"
                     style={{
                       width: `${width}%`,
-                      background:
-                        "linear-gradient(90deg, #FFD76A, #FAD2C1)",
+                      background: "linear-gradient(90deg, #FFD76A, #FAD2C1)",
                     }}
                   />
                 </div>
