@@ -1,10 +1,11 @@
 export interface Yojana {
-  id?: string;                   // optional to avoid build errors
+  id: string;
   name: string;
   amount: string;
+  seatsTotal: number;
+  icon?: React.ReactNode;
+
   description?: string;
   features?: string[];
-  icon?: React.ReactNode;
   benefits?: string[];
-  seatsTotal?: number;           // optional
 }
