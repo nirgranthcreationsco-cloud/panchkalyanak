@@ -44,7 +44,7 @@ const VenueConnectivity: React.FC = () => {
   icon: Plane,
   title: "निकटतम हवाई अड्डा",
   name: "Maharana Pratap Airport, Udaipur (UDR)",
-  distance: "≈ 130-165 किमी",
+  distance: "≈ 160-170 किमी",
   time: "लगभग 3–4 घंटे",
   details: "उदयपुर एयरपोर्ट – देश भर से जुड़ा"
 },
@@ -61,11 +61,21 @@ const VenueConnectivity: React.FC = () => {
       icon: Bus,
       title: "निकटतम बस स्टैंड",
       name: "Banswara Bus Stand",
-      distance: "⌁ 8–10 किमी",
+      distance: "15-20 किमी",
       time: "⌁ 15–20 मिनट",
       details: "RSRTC एवं प्राइवेट बस सुविधा उपलब्ध",
       color: "from-[#F0B86C] to-[#E0679F]",
     },
+    {
+  icon: Bus,
+  title: "निकटतम बस स्टैंड",
+  name: "Dahod Bus Stand",
+  distance: "100 किमी",
+  time: "⌁ लगभग 2–2.5 घंटे",
+  details: "दाहोद से बांसवाड़ा हेतु नियमित बस/टैक्सी सुविधा उपलब्ध",
+  color: "from-[#F0B86C] to-[#E0679F]",
+},
+
    
   ];
 
@@ -277,8 +287,9 @@ const VenueConnectivity: React.FC = () => {
 
 
 
-      {/* ================= CONNECTIVITY CARDS ================= */}
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
+      {/* ================= CONNECTIVITY CARDS (4 in ROW on large screens) ================= */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
+
   {connectivityData.map((item, index) => {
     const Icon = item.icon;
 
@@ -287,47 +298,66 @@ const VenueConnectivity: React.FC = () => {
         key={index}
         onMouseEnter={() => setHoveredCard(index)}
         onMouseLeave={() => setHoveredCard(null)}
-        className={`relative bg-white/65 backdrop-blur-md rounded-2xl border border-[#E0679F]/30 shadow-md p-8 transition-all duration-500 group ${
-          hoveredCard === index ? "scale-105 -translate-y-2" : ""
-        }`}
+        className={`
+          relative bg-white/70 backdrop-blur-md rounded-xl 
+          border border-[#E0679F]/25 shadow-md p-6 
+          transition-all duration-300 group 
+          ${hoveredCard === index ? "scale-[1.04] -translate-y-1" : ""}
+        `}
       >
+        {/* Soft Gradient Overlay */}
         <div
           className={`absolute inset-0 bg-gradient-to-br ${
             item.color || "from-[#E0679F] to-[#F0B86C]"
-          } opacity-[0.07] group-hover:opacity-[0.15] duration-500`}
+          } opacity-[0.06] group-hover:opacity-[0.12] transition-all`}
         />
 
         <div className="relative">
-          <div className="flex justify-between items-start mb-6">
-
-            {/* FIXED ICON BACKGROUND */}
+          {/* TOP AREA */}
+          <div className="flex justify-between items-start mb-4">
+            
+            {/* Icon with background */}
             <div
-              className={`p-3 bg-gradient-to-br ${
+              className={`p-2.5 bg-gradient-to-br ${
                 item.color || "from-[#E0679F] to-[#F0B86C]"
-              } rounded-xl shadow-lg`}
+              } rounded-lg shadow-md`}
             >
-              <Icon className="w-8 h-8 text-white" />
+              <Icon className="w-7 h-7 text-white" />
             </div>
 
-            <div className="text-right">
-              <p className="text-xl font-bold text-[#7A1433]">{item.name}</p>
-              <p className="text-sm text-[#7A1433]/60">{item.time}</p>
+            {/* Title Right Side */}
+            <div className="text-right leading-tight">
+              <p className="text-[17px] font-bold text-[#7A1433]">
+                {item.name}
+              </p>
+              <p className="text-xs text-[#7A1433]/60">
+                {item.time}
+              </p>
             </div>
           </div>
 
-          <h3 className="text-lg font-bold text-[#7A1433]">{item.title}</h3>
+          {/* MAIN TITLE */}
+          <h3 className="text-[16px] font-semibold text-[#7A1433]">
+            {item.title}
+          </h3>
 
-          <p className="text-base font-semibold text-[#F0B86C] mt-1">
+          {/* Distance */}
+          <p className="text-[15px] font-semibold text-[#F0B86C] mt-1">
             {item.distance}
           </p>
 
-          <p className="text-sm text-[#7A1433]/70 mt-2">{item.details}</p>
+          {/* Details */}
+          <p className="text-sm text-[#7A1433]/70 mt-2 leading-relaxed">
+            {item.details}
+          </p>
         </div>
       </div>
     );
   })}
+
 </div>
-</div>
+
+      </div>  
 
       {/* FLOAT ANIMATION */}
       <style jsx>{`

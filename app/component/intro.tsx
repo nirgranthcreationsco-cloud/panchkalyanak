@@ -3,6 +3,7 @@
 import { Calendar, Landmark, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import GuruBioCollapse from "./bio";
 
 
 
@@ -67,7 +68,7 @@ const DivineIntro: React.FC = () => {
             पंचकल्याणक प्रतिष्ठा महा-महोत्सव
           </h2>
         </div>
-
+<GuruBioCollapse />
         {/* ================================================
              INFORMATION CARD
         ================================================= */}

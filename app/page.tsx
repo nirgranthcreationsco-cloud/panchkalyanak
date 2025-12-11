@@ -9,6 +9,7 @@ import DonationSection from "./component/donations";
 import FooterSection from "./component/footer";
 import PanchkalyanakHero from "./component/herosection";
 import DivineIntro from "./component/intro";
+import MainYojnaSection from "./component/mainyojna";
 import VenueConnectivity from "./component/venue";
 import YojanaSection from "./component/yojna";
 
@@ -32,8 +33,7 @@ const LandingPage = () => {
       <PanchkalyanakHero />
       <DivineIntro />
       <VenueConnectivity />
-
-      {/* YOJNA SECTION */}
+      <MainYojnaSection setSelectedYojana={setSelectedYojana} />
       <YojanaSection setSelectedYojana={setSelectedYojana} />
 
       {/* DONATION SECTION */}

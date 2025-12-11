@@ -15,15 +15,14 @@ export const metadata: Metadata = {
   title: "Panchkalyanak Mahotsav",
   description: "Official Website",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
-  other: {
-    "color-scheme": "light only",
-    "supported-color-schemes": "light",
-    "google": "notranslate",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
   },
 };
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -38,6 +37,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         {/* Critical Meta Tags */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <meta name="application-name" content="Panchkalyanak Mahotsav" />
+        <meta name="apple-mobile-web-app-title" content="Panchkalyanak" />
+
         <meta name="color-scheme" content="light only" />
         <meta name="supported-color-schemes" content="light" />
         <meta name="theme-color" content="#FFF1F5" />
