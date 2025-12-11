@@ -1,8 +1,8 @@
 export interface Yojana {
-  id: string;
+  id?: string;               // optional
   name: string;
   amount: string;
-  seatsTotal: number;
+  seatsTotal?: number;       // optional
   icon?: React.ReactNode;
 
   description?: string;
