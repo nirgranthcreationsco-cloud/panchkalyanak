@@ -99,7 +99,7 @@ const YojanaSection: React.FC<YojanaSectionProps> = ({ setSelectedYojana }) => {
                          text-[#8B0048] font-semibold rounded-xl shadow-lg 
                          hover:scale-[1.05] transition-all"
             >
-              यजमान बनें
+             पुन्यारजक बनें
             </button>
           </div>
         ))}

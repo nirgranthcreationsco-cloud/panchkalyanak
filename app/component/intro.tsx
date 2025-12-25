@@ -257,8 +257,8 @@ const InfoCard = () => (
         {/* left column */}
         <div className="space-y-6">
           <InfoItem icon={<Landmark className="w-5 h-5 text-[#E0679F]" />} title="ऐतिहासिक आयोजन" text="500+ जिनबिंब की प्रतिष्ठा का भव्य पंचकल्याणक" />
-          <InfoItem icon={<Calendar className="w-5 h-5 text-[#E0679F]" />} title="भावी जिनालय का शिलान्यास" text="22 फरवरी 2026, प्रातः 08:00 बजे" />
-          <InfoItem icon={<MapPin className="w-5 h-5 text-[#E0679F]" />} title="पुण्य स्थल" text="टिम्बा गामड़ी, मोरडी मिल के पास, बाँसवाड़ा–उदयपुर रोड" />
+          <InfoItem icon={<Calendar className="w-5 h-5 text-[#E0679F]" />} title="भावी जिनालय का शिलान्यास" text="25 फरवरी 2026, प्रातः 08:00 बजे" />
+          <InfoItem icon={<MapPin className="w-5 h-5 text-[#E0679F]" />} title="पुण्य स्थल" text="बाहुबली कॉलोनी, संत भवन के पीछे, बांसवाड़ा" />
         </div>
 
         {/* right column */}

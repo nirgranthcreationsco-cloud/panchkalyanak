@@ -28,6 +28,7 @@ html {
 
 /* Kill dark-mode media queries (Chrome/Android/OS) */
 @media (prefers-color-scheme: dark) {
+
   :root,
   html,
   body {

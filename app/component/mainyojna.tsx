@@ -45,10 +45,26 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD76A] via-[#FAD2C1] to-[#FFD76A] pb-1">
+          <h2 
+            className="text-3xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD76A] via-[#FAD2C1] to-[#FFD76A] pb-1"
+            style={{ 
+              lineHeight: '1.4', 
+              paddingTop: '0.2em', 
+              paddingBottom: '0.2em',
+              overflow: 'visible'
+            }}
+          >
             पंचकल्याणक मुख्य योजनाएं
           </h2>
-          <p className="text-lg text-[#FAD2C1]/90 mt-3">
+          <p 
+            className="text-lg text-[#FAD2C1]/90 mt-3"
+            style={{ 
+              lineHeight: '1.6', 
+              paddingTop: '0.15em', 
+              paddingBottom: '0.15em',
+              overflow: 'visible'
+            }}
+          >
             प्रत्येक योजना — सीमित स्थान उपलब्ध ✨
           </p>
         </div>
@@ -61,23 +77,55 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
                 key={y.id}
                 className="bg-white/10 border border-[#FFD76A]/40 rounded-3xl p-6 backdrop-blur-lg transition-all hover:-translate-y-2 hover:shadow-xl"
               >
-                <h3 className="text-xl font-bold text-center text-[#FFD76A]">
+                <h3 
+                  className="text-xl font-bold text-center text-[#FFD76A]"
+                  style={{ 
+                    lineHeight: '1.5', 
+                    paddingTop: '0.15em', 
+                    paddingBottom: '0.15em',
+                    overflow: 'visible'
+                  }}
+                >
                   {y.name}
                 </h3>
 
-                <p className="text-center text-2xl font-extrabold bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] bg-clip-text text-transparent mt-2">
+                <p 
+                  className="text-center text-2xl font-extrabold bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] bg-clip-text text-transparent mt-2"
+                  style={{ 
+                    lineHeight: '1.5', 
+                    paddingTop: '0.15em', 
+                    paddingBottom: '0.15em',
+                    overflow: 'visible'
+                  }}
+                >
                   {y.amount}
                 </p>
 
                 <div className="text-center mt-4">
-                  <p className="text-[#FAD2C1]/80 text-sm">कुल स्थान: {y.seatsTotal}</p>
+                  <p 
+                    className="text-[#FAD2C1]/80 text-sm"
+                    style={{ 
+                      lineHeight: '1.6', 
+                      paddingTop: '0.15em', 
+                      paddingBottom: '0.15em',
+                      overflow: 'visible'
+                    }}
+                  >
+                    कुल स्थान: {y.seatsTotal}
+                  </p>
                 </div>
 
                 <button
                   onClick={() => setSelectedYojana(y)}
                   className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] text-[#8B0048] font-bold shadow-lg hover:scale-105 transition-transform"
+                  style={{ 
+                    lineHeight: '1.5', 
+                    paddingTop: '0.2em', 
+                    paddingBottom: '0.2em',
+                    overflow: 'visible'
+                  }}
                 >
-                  यजमान बनें
+                  पुन्यारजक बनें
                 </button>
               </div>
             );

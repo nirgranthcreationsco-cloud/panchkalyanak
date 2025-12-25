@@ -153,7 +153,6 @@ const VenueConnectivity: React.FC = () => {
       {
         id: 1,
         title: "ह्रींकार तीर्थ",
-        subtitle: "पंचकल्याणक स्थल",
         address: "बाँसवाड़ा–उदयपुर रोड, टिम्बा गामड़ी",
         city: "राजस्थान – 327001",
         
