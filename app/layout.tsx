@@ -14,13 +14,6 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Hrimkartirth Panchkalyanak",
   description: "पंचकल्याणक प्रतिष्ठा महा-महोत्सव - Official Website",
-  icons: {
-    icon: [
-      { url: "/logo.png", type: "image/png", sizes: "any" },
-    ],
-    apple: "/logo.png",
-    shortcut: "/logo.png",
-  },
 };
 
 
@@ -37,9 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         {/* Critical Meta Tags */}
-        <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-        <link rel="shortcut icon" href="/logo.png" />
         <meta name="application-name" content="Hrimkartirth Panchkalyanak" />
         <meta name="apple-mobile-web-app-title" content="Hrimkartirth Panchkalyanak" />
 
