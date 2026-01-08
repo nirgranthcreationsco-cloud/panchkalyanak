@@ -49,6 +49,9 @@ export default function PanchkalyanakHero() {
     if (!A || !B) return;
 
     let nextIdx = 1;
+    let retryCount = 0;
+    const MAX_RETRIES = 3;
+    let isCleanedUp = false;
 
     // 1. Initialize first video instantly
     A.src = videos[0];
@@ -60,9 +63,11 @@ export default function PanchkalyanakHero() {
     videos.forEach((v) => preloadVideo(v));
 
     const playNext = async () => {
-      // Ensure we loop through videos indefinitely
-      nextIdx = nextIdx % videos.length;
-      const src = videos[nextIdx];
+      if (isCleanedUp) return;
+
+      // Calculate current index with proper looping
+      const currentIdx = nextIdx % videos.length;
+      const src = videos[currentIdx];
 
       const show = activeRef.current === "A" ? B : A;
       const hide = activeRef.current === "A" ? A : B;
@@ -74,11 +79,28 @@ export default function PanchkalyanakHero() {
 
       try {
         await show.play();
+        // Reset retry count on successful play
+        retryCount = 0;
       } catch (err) {
-        console.error("Video playback error:", err);
-        // If playback fails, try to continue with next video
-        nextIdx++;
-        setTimeout(playNext, 100);
+        console.error(`Video playback error for ${src}:`, err);
+        
+        // Increment retry count
+        retryCount++;
+        
+        // If we've exceeded max retries, skip to next video
+        if (retryCount >= MAX_RETRIES) {
+          console.warn(`Skipping ${src} after ${MAX_RETRIES} failed attempts`);
+          retryCount = 0;
+          nextIdx++;
+          
+          // Use exponential backoff before trying next video
+          setTimeout(playNext, 1000);
+          return;
+        }
+        
+        // Retry the same video with exponential backoff
+        const backoffDelay = Math.min(1000 * Math.pow(2, retryCount - 1), 5000);
+        setTimeout(playNext, backoffDelay);
         return;
       }
 
@@ -89,15 +111,22 @@ export default function PanchkalyanakHero() {
       // swap active ref
       activeRef.current = activeRef.current === "A" ? "B" : "A";
 
-      // queue next index (will be modulo'd on next call)
+      // queue next index
       nextIdx++;
     };
 
     // handle finish events
-    A.onended = playNext;
-    B.onended = playNext;
+    const handleEnded = () => {
+      if (!isCleanedUp) {
+        playNext();
+      }
+    };
+
+    A.onended = handleEnded;
+    B.onended = handleEnded;
 
     return () => {
+      isCleanedUp = true;
       A.onended = null;
       B.onended = null;
     };
