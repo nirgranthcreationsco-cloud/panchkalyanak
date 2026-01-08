@@ -9,7 +9,6 @@ const videos = [
   "/v3.webm",
   "/v4.webm",
   "/v1.webm",
-  "/v6.webm",
 ];
 
 export default function PanchkalyanakHero() {
@@ -61,7 +60,9 @@ export default function PanchkalyanakHero() {
     videos.forEach((v) => preloadVideo(v));
 
     const playNext = async () => {
-      const src = videos[nextIdx % videos.length];
+      // Ensure we loop through videos indefinitely
+      nextIdx = nextIdx % videos.length;
+      const src = videos[nextIdx];
 
       const show = activeRef.current === "A" ? B : A;
       const hide = activeRef.current === "A" ? A : B;
@@ -73,7 +74,13 @@ export default function PanchkalyanakHero() {
 
       try {
         await show.play();
-      } catch {}
+      } catch (err) {
+        console.error("Video playback error:", err);
+        // If playback fails, try to continue with next video
+        nextIdx++;
+        setTimeout(playNext, 100);
+        return;
+      }
 
       // crossfade
       show.style.opacity = "1";
@@ -82,7 +89,7 @@ export default function PanchkalyanakHero() {
       // swap active ref
       activeRef.current = activeRef.current === "A" ? "B" : "A";
 
-      // queue next index
+      // queue next index (will be modulo'd on next call)
       nextIdx++;
     };
 
