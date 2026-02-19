@@ -183,3 +183,46 @@ html.android-fix * {
   color-scheme: light only !important;
   -webkit-tap-highlight-color: transparent !important;
 }
+
+/* ============================================================
+   ACCESSIBILITY — Screen Reader Only
+   (Used for hidden SEO h1 and aria-only text)
+============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   ACCESSIBILITY — Focus Visible (keyboard nav)
+============================================================ */
+
+:focus-visible {
+  outline: 3px solid #E0679F;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   PERFORMANCE — Reduced motion support
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

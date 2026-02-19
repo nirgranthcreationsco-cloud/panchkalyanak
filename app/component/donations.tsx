@@ -1,17 +1,17 @@
 "use client";
 
 import {
-  Check,
-  Copy,
-  HeartHandshake,
-  IndianRupee,
-  Mail,
-  Phone,
-  QrCode,
-  ShieldCheck,
-  Target,
-  User,
-  X
+    Check,
+    Copy,
+    HeartHandshake,
+    IndianRupee,
+    Mail,
+    Phone,
+    QrCode,
+    ShieldCheck,
+    Target,
+    User,
+    X
 } from "lucide-react";
 
 import React, { useState } from "react";
@@ -500,7 +500,15 @@ function PaymentSection({
                 <BankDetailRow label="बैंक" value={bankDetails.bankName} field="bank" copiedField={copiedField} onCopy={onCopy} />
               </div>
             </div>
-            add one note section at the bottom too as added in our previous code about to after payment contact or inform ton this number
+            {/* Contact note after payment */}
+            <div className="bg-[#FFF1F5] border border-[#E0679F]/40 rounded-xl p-5 mb-6">
+              <p className="text-[#8B0048] text-sm font-semibold">
+                📢 भुगतान के पश्चात् कृपया हमें सूचित करें:
+              </p>
+              <p className="text-[#8B0048]/80 text-sm mt-1">
+                📞 <a href="tel:+918839017577" className="underline">+91 88390 17577</a>
+              </p>
+            </div>
 
             <button onClick={onPaymentDone} className="w-full py-6 rounded-xl bg-gradient-to-r from-[#E0679F] via-[#F0B86C] to-[#E0679F] text-white font-bold text-2xl shadow-xl mb-4">
               भुगतान पूरा हुआ

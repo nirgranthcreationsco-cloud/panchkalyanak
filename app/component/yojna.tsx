@@ -44,7 +44,10 @@ const YojanaSection: React.FC<YojanaSectionProps> = ({ setSelectedYojana }) => {
   ];
 
   return (
-    <section className="relative py-20 px-6 bg-gradient-to-b from-[#8B0048] via-[#C04878] to-[#8B0048] text-white">
+    <section
+      className="relative py-20 px-6 bg-gradient-to-b from-[#8B0048] via-[#C04878] to-[#8B0048] text-white"
+      aria-label="पंचकल्याणक योजनाएं – दिव्य अवसर के यजमान बनें"
+    >
 
       {/* Background glow */}
       <div className="absolute inset-0">
@@ -95,11 +98,12 @@ const YojanaSection: React.FC<YojanaSectionProps> = ({ setSelectedYojana }) => {
             {/* CTA */}
             <button
               onClick={() => setSelectedYojana(yojana)}
+              aria-label={`${yojana.name} – पुण्यार्जक बनें, राशि: ${yojana.amount}`}
               className="mt-6 w-full py-3 bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] 
                          text-[#8B0048] font-semibold rounded-xl shadow-lg 
                          hover:scale-[1.05] transition-all"
             >
-             पुन्यारजक बनें
+             पुण्यार्जक बनें
             </button>
           </div>
         ))}
@@ -110,6 +114,7 @@ const YojanaSection: React.FC<YojanaSectionProps> = ({ setSelectedYojana }) => {
 <div className="mt-14 flex justify-center relative z-[50]">
   <button
     onClick={() => router.push("/moreyojnas")}
+    aria-label="सभी पंचकल्याणक योजनाएँ देखें"
     className="
       px-10 py-4 
       bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] 

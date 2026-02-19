@@ -40,7 +40,10 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
   ];
 
   return (
-    <section className="relative py-16 px-6 bg-gradient-to-b from-[#8B0048] via-[#C04878] to-[#8B0048] text-white">
+    <section
+      className="relative py-16 px-6 bg-gradient-to-b from-[#8B0048] via-[#C04878] to-[#8B0048] text-white"
+      aria-label="पंचकल्याणक मुख्य योजनाएं – बुकिंग"
+    >
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}
@@ -118,14 +121,10 @@ export default function MainYojnaSection({ setSelectedYojana }: Props) {
                 <button
                   onClick={() => setSelectedYojana(y)}
                   className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-[#FFD76A] to-[#FAD2C1] text-[#8B0048] font-bold shadow-lg hover:scale-105 transition-transform"
-                  style={{ 
-                    lineHeight: '1.5', 
-                    paddingTop: '0.2em', 
-                    paddingBottom: '0.2em',
-                    overflow: 'visible'
-                  }}
+                  style={{ lineHeight: '1.5', paddingTop: '0.2em', paddingBottom: '0.2em', overflow: 'visible' }}
+                  aria-label={`${y.name} – पुण्यार्जक बनें`}
                 >
-                  पुन्यारजक बनें
+                  पुण्यार्जक बनें
                 </button>
               </div>
             );

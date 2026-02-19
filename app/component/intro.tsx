@@ -9,7 +9,10 @@ import GuruBioCollapse from "./bio";
 
 const DivineIntro: React.FC = () => {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden py-10 sm:py-14 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]">
+    <section
+      className="relative w-full min-h-screen overflow-hidden py-10 sm:py-14 bg-gradient-to-br from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]"
+      aria-label="दिव्य परिचय – आचार्य श्री एवं महाराज, सन्निधि, आयोजन"
+    >
 
       {/* Soft Pattern Overlay */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.045]">
@@ -87,10 +90,10 @@ const DivineIntro: React.FC = () => {
           </h3>
 
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 sm:gap-7 md:gap-8">
-            <SanidhyaCard name="आदित्य सागर जी महाराज" img="/aditya.png" />
-            <SanidhyaCard name="अप्रमित सागर जी महाराज" img="/apramit.png" />
-            <SanidhyaCard name="सहज सागर जी महाराज" img="/sahaj.png" />
-            <SanidhyaCard name="क्षुल्लक श्रेयस सागर जी" img="/chullak.png" />
+            <SanidhyaCard name="मुनि श्री आदित्य सागर जी महाराज" img="/aditya.png" />
+            <SanidhyaCard name="मुनि श्री अप्रमित सागर जी महाराज" img="/apramit.png" />
+            <SanidhyaCard name="मुनि श्री सहज सागर जी महाराज" img="/sahaj.png" />
+            <SanidhyaCard name="क्षुल्लक श्री श्रेयस सागर जी" img="/chullak.png" />
           </div>
 
         </div>
@@ -140,6 +143,7 @@ const GuruCorner: React.FC<{ img: string; title: string }> = ({ img, title }) =>
           fill
           priority={false}
           loading="lazy"
+          sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 112px"
           className="object-cover object-center"
         />
 
@@ -169,7 +173,7 @@ const GuruBottom: React.FC<{ img: string; title: string }> = ({ img, title }) =>
   fill
   loading="lazy"
   className="object-cover"
-  sizes="96px"
+  sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
   style={{ objectPosition: "50% 15%" }}
 />
 
@@ -200,6 +204,7 @@ const SanidhyaCard: React.FC<{ name: string; img: string }> = ({ name, img }) =>
           alt={name}
           fill
           loading="lazy"
+          sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
           className="object-cover object-top"
         />
 

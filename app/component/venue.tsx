@@ -1,10 +1,10 @@
 "use client";
 
 import {
-  Bus,
-  MapPin,
-  Plane,
-  Train
+    Bus,
+    MapPin,
+    Plane,
+    Train
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -82,7 +82,10 @@ const VenueConnectivity: React.FC = () => {
   /* ------------------------------ UI ------------------------------ */
 
   return (
-    <section className="relative w-full min-h-screen bg-gradient-to-b from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]/40 overflow-hidden py-12 px-3 sm:px-4 md:px-6">
+    <section
+      className="relative w-full min-h-screen bg-gradient-to-b from-[#FFF1F5] via-[#FFE4EC] to-[#FFE7C7]/40 overflow-hidden py-12 px-3 sm:px-4 md:px-6"
+      aria-label="आयोजन स्थल एवं यात्रा संपर्क सूत्र"
+    >
 
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.04]">
@@ -195,7 +198,8 @@ const VenueConnectivity: React.FC = () => {
               src={venue.embed}
               loading="lazy"
               className="w-full h-full"
-              title={venue.title}
+              title={`${venue.title} – गूगल मैप`}
+              aria-label={`${venue.title} का मानचित्र`}
             />
             {/* OVERLAY GRADIENT */}
             <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent pointer-events-none" />
@@ -235,6 +239,7 @@ const VenueConnectivity: React.FC = () => {
                 href={venue.directions}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`${venue.title} का गूगल मैप्स में रास्ता खोलें`}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#E0679F] to-[#D8A24E] text-white text-xs sm:text-sm font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <span>गूगल मैप्स में खोलें</span>

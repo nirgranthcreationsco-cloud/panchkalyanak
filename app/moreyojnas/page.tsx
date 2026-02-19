@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  ChevronRight,
-  Crown,
-  Gem,
-  Heart,
-  Landmark,
-  Sparkles,
-  Star
+    ChevronRight,
+    Crown,
+    Gem,
+    Heart,
+    Landmark,
+    Sparkles,
+    Star
 } from "lucide-react";
 import { JSX, useState } from "react";
 import UniversalYojnaBookingFlow from "../component/booking";
@@ -236,7 +236,11 @@ export default function MoreYojnas() {
   /* ---------------------- UI ---------------------- */
   return (
     <>
-      <main className="min-h-screen bg-gradient-to-b from-[#FFF7F0] via-[#FAE7D6]/70 to-[#F7B7A3]/40 relative overflow-hidden">
+      <main
+        className="min-h-screen bg-gradient-to-b from-[#FFF7F0] via-[#FAE7D6]/70 to-[#F7B7A3]/40 relative overflow-hidden"
+        role="main"
+        aria-label="ह्रींकार तीर्थ – समस्त योजनाएँ"
+      >
       {/* Back Button */}
 <button
   onClick={() => window.history.back()}

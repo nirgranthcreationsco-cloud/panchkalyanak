@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import CompactCountdown from "./countdown";
+import LiveEventBadge from "./countdown";
 
 const videos = [
   "/v2.webm",
@@ -41,7 +42,7 @@ export default function PanchkalyanakHero() {
   }
 
   // --------------------------------------------------
-  // MAIN video playback logic with cross-fade
+  // MAIN video playback logic with cross-fade (Mobile-optimized)
   // --------------------------------------------------
   useEffect(() => {
     const A = vA.current;
@@ -52,15 +53,34 @@ export default function PanchkalyanakHero() {
     let retryCount = 0;
     const MAX_RETRIES = 3;
     let isCleanedUp = false;
+    let currentVideoElement: HTMLVideoElement = A;
+
+    // Detect mobile browser
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // 1. Initialize first video instantly
     A.src = videos[0];
     A.style.opacity = "1";
     A.load();
-    A.play().catch(() => {});
+    
+    // For mobile, we need to be more aggressive with play attempts
+    const tryPlay = (video: HTMLVideoElement) => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Initial play prevented:", err);
+          // On mobile, user interaction might be needed
+        });
+      }
+    };
+    
+    tryPlay(A);
+    currentVideoElement = A;
 
-    // Preload upcoming videos at start
-    videos.forEach((v) => preloadVideo(v));
+    // Preload upcoming videos at start (but not on mobile to save bandwidth)
+    if (!isMobile) {
+      videos.forEach((v) => preloadVideo(v));
+    }
 
     const playNext = async () => {
       if (isCleanedUp) return;
@@ -72,15 +92,37 @@ export default function PanchkalyanakHero() {
       const show = activeRef.current === "A" ? B : A;
       const hide = activeRef.current === "A" ? A : B;
 
+      console.log(`Attempting to play video ${currentIdx + 1}/${videos.length}: ${src}`);
+
       // prepare next video BEFORE transition
       show.src = src;
       show.currentTime = 0;
-      show.load();
+      
+      // Wait for video to be ready before playing
+      const waitForReady = new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error("Video load timeout")), 10000);
+        
+        const onCanPlay = () => {
+          clearTimeout(timeout);
+          show.removeEventListener("canplaythrough", onCanPlay);
+          show.removeEventListener("loadeddata", onCanPlay);
+          resolve();
+        };
+        
+        show.addEventListener("canplaythrough", onCanPlay);
+        show.addEventListener("loadeddata", onCanPlay);
+        show.load();
+      });
 
       try {
+        await waitForReady;
         await show.play();
+        
+        console.log(`Successfully playing: ${src}`);
+        
         // Reset retry count on successful play
         retryCount = 0;
+        currentVideoElement = show;
       } catch (err) {
         console.error(`Video playback error for ${src}:`, err);
         
@@ -115,53 +157,63 @@ export default function PanchkalyanakHero() {
       nextIdx++;
     };
 
-    // handle finish events
-    const handleEnded = () => {
+    // handle finish events with better mobile support
+    const handleEnded = (e: Event) => {
+      console.log("Video ended, playing next...");
       if (!isCleanedUp) {
-        playNext();
+        // Small delay to ensure smooth transition on mobile
+        setTimeout(playNext, isMobile ? 200 : 50);
       }
     };
 
-    A.onended = handleEnded;
-    B.onended = handleEnded;
+    A.addEventListener("ended", handleEnded);
+    B.addEventListener("ended", handleEnded);
+
+    // Add visibility change handler to resume playback when tab becomes visible
+    const handleVisibilityChange = () => {
+      if (!document.hidden && currentVideoElement && currentVideoElement.paused) {
+        console.log("Tab visible, resuming playback");
+        currentVideoElement.play().catch(() => {});
+      }
+    };
+    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Watchdog to ensure videos keep playing (especially important on mobile)
+    const watchdog = setInterval(() => {
+      if (isCleanedUp) return;
+      
+      const active = activeRef.current === "A" ? A : B;
+      
+      // Check if video is stuck
+      if (active.paused && !active.ended && active.readyState >= 2) {
+        console.log("Watchdog: Video stuck, attempting to resume");
+        active.play().catch(() => {});
+      }
+    }, 3000);
 
     return () => {
       isCleanedUp = true;
-      A.onended = null;
-      B.onended = null;
+      A.removeEventListener("ended", handleEnded);
+      B.removeEventListener("ended", handleEnded);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      clearInterval(watchdog);
     };
-  }, []);
-
-  // --------------------------------------------------
-  // Countdown timer
-  // --------------------------------------------------
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0, hours: 0, minutes: 0, seconds: 0,
-  });
-
-  useEffect(() => {
-    const target = new Date("2026-02-19T00:00:00").getTime();
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const diff = target - now;
-
-      setTimeLeft({
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff / 3600000) % 24),
-        minutes: Math.floor((diff / 60000) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
   // --------------------------------------------------
   // UI
   // --------------------------------------------------
   return (
-    <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-black">
+    <section
+      className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-black"
+      aria-label="ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Hero Section"
+      role="banner"
+    >
+      {/* Hidden H1 for SEO – visible text is the logo image */}
+      <h1 className="sr-only">
+        ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Hrimkar Tirth Panchkalyanak Banswara Rajasthan
+      </h1>
 
       {/* Video A */}
       <video
@@ -170,6 +222,7 @@ export default function PanchkalyanakHero() {
         playsInline
         preload="auto"
         disablePictureInPicture
+        aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
         style={{ transform: "translateZ(0)" }}
       />
@@ -181,6 +234,7 @@ export default function PanchkalyanakHero() {
         playsInline
         preload="auto"
         disablePictureInPicture
+        aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
         style={{ transform: "translateZ(0)" }}
       />
@@ -199,14 +253,16 @@ export default function PanchkalyanakHero() {
         className={`relative z-20 text-center transition-all duration-[1500ms] ease-out
         ${isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-6"}`}
       >
-        <img
+        <Image
           src="/logo.png"
-          alt="Panchkalyanak Logo"
+          alt="ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Official Logo"
+          width={500}
+          height={375}
+          priority
           className="w-[60vw] max-w-[500px] object-contain drop-shadow-[0_0_60px_rgba(249,228,183,0.6)]"
-          loading="eager"
         />
 
-        <CompactCountdown timeLeft={timeLeft} />
+        <LiveEventBadge />
       </div>
 
       <div className="absolute inset-10 md:inset-16 border-[1.5px] border-[#EEC76C]/40 rounded-[2rem]" />
