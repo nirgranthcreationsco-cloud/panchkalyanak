@@ -3,7 +3,7 @@
 
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://panchkalyanak.com";
+const BASE_URL = "https://www.hrimkartirth.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     return [

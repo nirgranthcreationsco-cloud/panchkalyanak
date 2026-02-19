@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     "ध्वजारोहण",
   ],
   alternates: {
-    canonical: "https://panchkalyanak.com/moreyojnas",
+    canonical: "https://www.hrimkartirth.com/moreyojnas",
   },
   openGraph: {
     title: "ह्रींकार तीर्थ – समस्त पंचकल्याणक योजनाएँ | Banswara 2026",
     description:
       "सभी दान एवं सेवा योजनाएँ – पंचकल्याणक प्रतिष्ठा महोत्सव 2026 के लिए। पुण्यार्जक बनें।",
-    url: "https://panchkalyanak.com/moreyojnas",
-    images: [{ url: "https://panchkalyanak.com/logo.png", width: 800, height: 600, alt: "ह्रींकार तीर्थ समस्त योजनाएँ" }],
+    url: "https://www.hrimkartirth.com/moreyojnas",
+    images: [{ url: "https://www.hrimkartirth.com/logo.png", width: 800, height: 600, alt: "ह्रींकार तीर्थ समस्त योजनाएँ" }],
   },
   twitter: {
     card: "summary_large_image",

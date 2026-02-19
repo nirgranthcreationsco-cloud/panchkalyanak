@@ -62,12 +62,12 @@ export const metadata: Metadata = {
   ],
 
   /* ── Author / Publisher ────────────────────────── */
-  authors: [{ name: "ह्रींकार तीर्थ पंचकल्याणक समिति", url: "https://panchkalyanak.com" }],
+  authors: [{ name: "ह्रींकार तीर्थ पंचकल्याणक समिति", url: "https://www.hrimkartirth.com" }],
   creator: "Nirgranth Creation",
   publisher: "चतुर्विंशती तीर्थंकर समिति, वात्सल्य सेवार्थ फाउंडेशन",
 
   /* ── Canonical / Alternate ─────────────────────── */
-  metadataBase: new URL("https://panchkalyanak.com"),
+  metadataBase: new URL("https://www.hrimkartirth.com"),
   alternates: {
     canonical: "/",
     languages: {
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "hi_IN",
-    url: "https://panchkalyanak.com",
+    url: "https://www.hrimkartirth.com",
     siteName: "ह्रींकार तीर्थ पंचकल्याणक 2026",
     title:
       "ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 | Banswara Rajasthan",
@@ -181,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" /> */}
 
         {/* ── Canonical (backup inline – Next.js Metadata also emits this) ── */}
-        <link rel="canonical" href="https://panchkalyanak.com" />
+        <link rel="canonical" href="https://www.hrimkartirth.com" />
 
         {/* ── JSON-LD Structured Data ─────────────── */}
         <script
@@ -193,8 +193,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 1. WebSite */
                 {
                   "@type": "WebSite",
-                  "@id": "https://panchkalyanak.com/#website",
-                  url: "https://panchkalyanak.com",
+                  "@id": "https://www.hrimkartirth.com/#website",
+                  url: "https://www.hrimkartirth.com",
                   name: "ह्रींकार तीर्थ पंचकल्याणक 2026",
                   alternateName: "Hrimkar Tirth Panchkalyanak",
                   description:
@@ -205,7 +205,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     target: {
                       "@type": "EntryPoint",
                       urlTemplate:
-                        "https://panchkalyanak.com/?s={search_term_string}",
+                        "https://www.hrimkartirth.com/?s={search_term_string}",
                     },
                     "query-input": "required name=search_term_string",
                   },
@@ -214,13 +214,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 2. Organization */
                 {
                   "@type": "Organization",
-                  "@id": "https://panchkalyanak.com/#organization",
+                  "@id": "https://www.hrimkartirth.com/#organization",
                   name: "चतुर्विंशती तीर्थंकर समिति",
                   alternateName: "Chaturvimshati Tirthankara Samiti",
-                  url: "https://panchkalyanak.com",
+                  url: "https://www.hrimkartirth.com",
                   logo: {
                     "@type": "ImageObject",
-                    url: "https://panchkalyanak.com/logo.png",
+                    url: "https://www.hrimkartirth.com/logo.png",
                     width: 800,
                     height: 600,
                   },
@@ -245,7 +245,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 3. Event */
                 {
                   "@type": "Event",
-                  "@id": "https://panchkalyanak.com/#event",
+                  "@id": "https://www.hrimkartirth.com/#event",
                   name: "ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026",
                   alternateName: "Hrimkar Tirth Panchkalyanak Pratishtha Maha-Mahotsav 2026",
                   description:
@@ -286,11 +286,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     },
                   ],
                   organizer: {
-                    "@id": "https://panchkalyanak.com/#organization",
+                    "@id": "https://www.hrimkartirth.com/#organization",
                   },
                   image: {
                     "@type": "ImageObject",
-                    url: "https://panchkalyanak.com/logo.png",
+                    url: "https://www.hrimkartirth.com/logo.png",
                     width: 800,
                     height: 600,
                   },
@@ -303,14 +303,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 4. LocalBusiness / Religious Organization */
                 {
                   "@type": ["LocalBusiness", "ReligiousOrganization"],
-                  "@id": "https://panchkalyanak.com/#localbusiness",
+                  "@id": "https://www.hrimkartirth.com/#localbusiness",
                   name: "ह्रींकार तीर्थ",
                   alternateName: "Hrimkar Tirth",
                   description:
                     "दिगंबर जैन तीर्थ क्षेत्र – पंचकल्याणक प्रतिष्ठा महोत्सव 2026 का पुण्य स्थल",
-                  url: "https://panchkalyanak.com",
+                  url: "https://www.hrimkartirth.com",
                   telephone: "+91-88390-17577",
-                  image: "https://panchkalyanak.com/logo.png",
+                  image: "https://www.hrimkartirth.com/logo.png",
                   address: {
                     "@type": "PostalAddress",
                     streetAddress: "बांसवाड़ा–उदयपुर रोड, टिम्बा गामड़ी",
@@ -334,13 +334,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 5. BreadcrumbList */
                 {
                   "@type": "BreadcrumbList",
-                  "@id": "https://panchkalyanak.com/#breadcrumb",
+                  "@id": "https://www.hrimkartirth.com/#breadcrumb",
                   itemListElement: [
                     {
                       "@type": "ListItem",
                       position: 1,
                       name: "Home",
-                      item: "https://panchkalyanak.com",
+                      item: "https://www.hrimkartirth.com",
                     },
                   ],
                 },
@@ -348,7 +348,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 /* 6. FAQ */
                 {
                   "@type": "FAQPage",
-                  "@id": "https://panchkalyanak.com/#faq",
+                  "@id": "https://www.hrimkartirth.com/#faq",
                   mainEntity: [
                     {
                       "@type": "Question",
