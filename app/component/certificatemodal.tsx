@@ -93,7 +93,7 @@ export default function UniversalCertificateFinal({
                 <div className="relative">
                   <div className="absolute -inset-0.5 bg-[#D4AF37] rounded-full blur-sm opacity-30"></div>
                   <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-lg bg-white p-0.5">
-                    <img src="/mataji1.jpeg" className="w-full h-full object-cover object-top" alt="Mataji 1" />
+                    <img src="/mataji1.jpeg" className="w-full h-full object-cover object-top" alt="परम पूज्य माताजी – ह्रींकार तीर्थ पंचकल्याणक" />
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default function UniversalCertificateFinal({
                 <div className="relative">
                   <div className="absolute -inset-0.5 bg-[#D4AF37] rounded-full blur-sm opacity-30"></div>
                   <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-lg bg-white p-0.5">
-                    <img src="/mataji2.jpeg" className="w-full h-full object-cover object-top" alt="Mataji 2" />
+                    <img src="/mataji2.jpeg" className="w-full h-full object-cover object-top" alt="परम पूज्य माताजी – पंचकल्याणक महोत्सव 2026" />
                   </div>
                 </div>
               </div>

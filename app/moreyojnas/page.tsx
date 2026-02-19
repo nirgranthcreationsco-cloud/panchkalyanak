@@ -25,6 +25,8 @@ type SelectedYojna = YojnaItem & {
 export default function MoreYojnas() {
   const [selected, setSelected] = useState<SelectedYojna | null>(null);
   const [showQR, setShowQR] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+  const [comingSoonItem, setComingSoonItem] = useState<string | null>(null);
 
   /* ---------------------- DATA ---------------------- */
   const sections: {
@@ -224,6 +226,10 @@ export default function MoreYojnas() {
   ];
 
   const handleOpenModal = (item: YojnaItem, sectionTitle: string) => {
+    if (sectionTitle === "आगामी योजनाएँ") {
+      setComingSoonItem(item.name);
+      return;
+    }
     setSelected({ ...item, sectionTitle });
     setShowQR(false);
   };
@@ -418,6 +424,7 @@ export default function MoreYojnas() {
                 </p>
                 <button
                   type="button"
+                  onClick={() => setShowContact(true)}
                   className="px-10 py-4 bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#FFD76A] text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-[0_0_30px_rgba(192,72,120,0.6)] hover:scale-[1.03] transition-transform"
                 >
                   समिति से संपर्क करें
@@ -434,6 +441,132 @@ export default function MoreYojnas() {
     onClose={() => setSelected(null)}
   />
 )}
+
+      {/* ── Coming Soon Popup ─────────────────────── */}
+      {comingSoonItem && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setComingSoonItem(null)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="relative z-10 w-full max-w-sm rounded-3xl overflow-hidden bg-gradient-to-b from-[#0f0025] via-[#1a003a] to-[#0f0025] border border-[#FFD76A]/30 shadow-[0_20px_60px_rgba(0,0,0,0.6)] animate-[scaleIn_0.25s_ease-out]" onClick={(e) => e.stopPropagation()}>
+
+            {/* Close */}
+            <button onClick={() => setComingSoonItem(null)} className="absolute top-3 right-4 text-white/50 hover:text-white text-2xl leading-none z-10" aria-label="बंद करें">×</button>
+
+            {/* Star field decoration */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+              {["top-4 left-8","top-10 right-12","top-20 left-1/2","bottom-20 left-6","bottom-10 right-8"].map((pos, i) => (
+                <div key={i} className={`absolute ${pos} w-1 h-1 rounded-full bg-[#FFD76A] opacity-60 animate-pulse`} style={{animationDelay:`${i*0.4}s`}} />
+              ))}
+            </div>
+
+            {/* Body */}
+            <div className="px-6 pt-10 pb-8 text-center space-y-5">
+              {/* Icon */}
+              <div className="text-5xl animate-bounce">⏳</div>
+
+              {/* Coming Soon badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFD76A]/10 border border-[#FFD76A]/40">
+                <span className="w-2 h-2 rounded-full bg-[#FFD76A] animate-pulse" />
+                <span className="text-[#FFD76A] text-xs font-bold tracking-[0.2em] uppercase">Coming Soon</span>
+              </div>
+
+              {/* Yojna name */}
+              <div>
+                <p className="text-white/60 text-xs mb-1">योजना</p>
+                <h2 className="text-white font-extrabold text-xl leading-snug">{comingSoonItem}</h2>
+              </div>
+
+              <p className="text-white/50 text-sm leading-relaxed">
+                यह योजना जल्द ही उपलब्ध होगी।<br />
+                अधिक जानकारी के लिए समिति से संपर्क करें।
+              </p>
+
+              {/* Divider */}
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-[#FFD76A]/30 to-transparent" />
+
+              {/* Call + WhatsApp */}
+              <div className="flex flex-col gap-3">
+                <a href="tel:+918839017577" className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-gradient-to-r from-[#8B0048] to-[#C04878] text-white font-bold text-sm shadow-md hover:scale-[1.02] active:scale-95 transition-transform">
+                  📞 +91 88390 17577 – कॉल करें
+                </a>
+                <a href="https://wa.me/918839017577" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-[#25D366] hover:bg-[#20b558] text-white font-bold text-sm shadow-md hover:scale-[1.02] active:scale-95 transition-transform">
+                  💬 WhatsApp पर पूछें
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Contact Popup ─────────────────────────────── */}
+      {showContact && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+          onClick={() => setShowContact(false)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+          {/* Card */}
+          <div
+            className="relative z-10 w-full max-w-sm rounded-3xl overflow-hidden bg-gradient-to-b from-[#FFF1F5] to-[#FFE4EC] border border-[#E0679F]/30 shadow-[0_20px_60px_rgba(139,0,72,0.35)] animate-[scaleIn_0.25s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#8B0048] via-[#C04878] to-[#8B0048] px-6 py-5 text-center relative">
+              <button
+                onClick={() => setShowContact(false)}
+                className="absolute top-3 right-4 text-white/70 hover:text-white text-2xl leading-none"
+                aria-label="बंद करें"
+              >
+                ×
+              </button>
+              <div className="text-3xl mb-1">🙏</div>
+              <h2 className="text-white font-extrabold text-lg leading-snug">
+                समिति से संपर्क करें
+              </h2>
+              <p className="text-[#FAD2C1]/80 text-xs mt-1">
+                ह्रींकार तीर्थ पंचकल्याणक समिति
+              </p>
+            </div>
+
+            {/* Contact Numbers */}
+            <div className="px-6 py-6 flex flex-col gap-4">
+
+              {[
+                { label: "मुख्य संपर्क",      number: "+91 88390 17577", tel: "+918839017577" },
+              ].map((c) => (
+                <div key={c.tel} className="flex items-center justify-between bg-white rounded-2xl px-4 py-4 border border-[#E0679F]/20 shadow-sm">
+                  <div>
+                    <p className="text-[#8B0048] text-xs font-semibold mb-0.5">{c.label}</p>
+                    <p className="text-[#1a1a1a] font-bold text-lg tracking-wide">{c.number}</p>
+                  </div>
+                  <a
+                    href={`tel:${c.tel}`}
+                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#8B0048] to-[#C04878] text-white font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition-transform"
+                  >
+                    📞 कॉल करें
+                  </a>
+                </div>
+              ))}
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/918839017577"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20b558] text-white font-bold text-base shadow-md hover:scale-[1.02] active:scale-95 transition-all"
+              >
+                <span className="text-xl">💬</span> WhatsApp पर संपर्क करें
+              </a>
+
+              {/* Timing note */}
+              <p className="text-center text-[#8B0048]/60 text-xs">
+                📅 19–24 फरवरी 2026 · बांसवाड़ा, राजस्थान
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap");

@@ -212,7 +212,7 @@ export default function PanchkalyanakHero() {
     >
       {/* Hidden H1 for SEO – visible text is the logo image */}
       <h1 className="sr-only">
-        ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Hrimkar Tirth Panchkalyanak Banswara Rajasthan
+        पंचकल्याणक प्रतिष्ठा महोत्सव 2026 – बांसवाड़ा, राजस्थान | ह्रींकार तीर्थ | जैन पंचकल्याणक महोत्सव
       </h1>
 
       {/* Video A */}
