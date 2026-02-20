@@ -7,6 +7,7 @@ import UniversalYojnaBookingFlow from "./component/booking";
 import CertificateModal from "./component/certificatemodal";
 import DonationSection from "./component/donations";
 import FooterSection from "./component/footer";
+import GallerySection from "./component/gallery";
 import PanchkalyanakHero from "./component/herosection";
 import DivineIntro from "./component/intro";
 import MainYojnaSection from "./component/mainyojna";
@@ -38,6 +39,9 @@ const LandingPage = () => {
       <VenueConnectivity />
       <MainYojnaSection setSelectedYojana={setSelectedYojana} />
       <YojanaSection setSelectedYojana={setSelectedYojana} />
+
+      {/* GALLERY SECTION */}
+      <GallerySection />
 
       {/* DONATION SECTION */}
       <DonationSection />

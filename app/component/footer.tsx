@@ -96,6 +96,7 @@ const FooterSection = () => {
           <ul className="flex flex-wrap justify-center gap-4 text-sm text-[#FAD2C1]/80">
             <li><Link href="/" className="hover:text-[#FFD76A] transition-colors">होम</Link></li>
             <li><Link href="/about" className="hover:text-[#FFD76A] transition-colors">महोत्सव के बारे में</Link></li>
+            <li><Link href="/#gallery" className="hover:text-[#FFD76A] transition-colors">गैलरी</Link></li>
             <li><Link href="/location" className="hover:text-[#FFD76A] transition-colors">आयोजन स्थल</Link></li>
             <li><Link href="/history" className="hover:text-[#FFD76A] transition-colors">इतिहास</Link></li>
             <li><Link href="/moreyojnas" className="hover:text-[#FFD76A] transition-colors">सभी योजनाएँ</Link></li>
