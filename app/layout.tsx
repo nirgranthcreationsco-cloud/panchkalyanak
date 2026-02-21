@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   /* ── Canonical / Alternate ─────────────────────── */
   metadataBase: new URL("https://www.hrimkartirth.com"),
   alternates: {
-    canonical: "/",
+    canonical: "https://www.hrimkartirth.com/",
     languages: {
       "hi-IN": "/",
       "en-IN": "/",
@@ -182,7 +182,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" /> */}
 
         {/* ── Canonical (backup inline – Next.js Metadata also emits this) ── */}
-        <link rel="canonical" href="https://www.hrimkartirth.com" />
+        <link rel="canonical" href="https://www.hrimkartirth.com/" />
 
         {/* ── JSON-LD Structured Data ─────────────── */}
         <script

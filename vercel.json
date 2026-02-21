@@ -2,7 +2,12 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "hrimkartirth.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "hrimkartirth.com"
+        }
+      ],
       "destination": "https://www.hrimkartirth.com/:path*",
       "permanent": true
     }

@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   title: "ह्रींकार तीर्थ – समस्त योजनाएँ | Hrimkar Tirth All Yojnas 2026",
   description:
     "पंचकल्याणक योजनाएँ, विशेष योजनाएँ, आधार स्तंभ, एवं आगामी योजनाएँ – सभी श्रेणियाँ। सामान्य इन्द्र-इन्द्राणी (₹3,100) से लेकर परम शिरोमणि संरक्षक (₹31,00,000) तक – अनंत पुण्य अर्जित करें। Hrimkar Tirth Panchkalyanak Yojnas Banswara 2026.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   keywords: [
     "पंचकल्याणक योजनाएं",
     "Hrimkar Tirth Yojna",
