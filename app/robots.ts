@@ -3,7 +3,7 @@
 
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://www.hrimkartirth.com";
+const BASE_URL = "https://hrimkartirth.com";
 
 export default function robots(): MetadataRoute.Robots {
     return {

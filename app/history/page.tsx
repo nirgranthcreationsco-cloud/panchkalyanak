@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   title: "पंचकल्याणक का इतिहास एवं महत्त्व | History | ह्रींकार तीर्थ",
   description:
     "पंचकल्याणक प्रतिष्ठा का इतिहास, आध्यात्मिक महत्त्व, पाँच कल्याणकों का विवरण और जैन धर्म में इसकी भूमिका – सम्पूर्ण जानकारी।",
-  alternates: { canonical: "https://www.hrimkartirth.com/history" },
+  alternates: { canonical: "https://hrimkartirth.com/history" },
   openGraph: {
     title: "पंचकल्याणक का इतिहास | History of Panchkalyanak | जैन धर्म",
     description: "जैन धर्म में पंचकल्याणक का इतिहास, पाँच कल्याणकों का अर्थ, आध्यात्मिक फल और प्रतिष्ठा विधि।",
-    url: "https://www.hrimkartirth.com/history",
+    url: "https://hrimkartirth.com/history",
     images: [{ url: "/logo.png", width: 800, height: 600, alt: "पंचकल्याणक इतिहास जैन धर्म" }],
   },
 };

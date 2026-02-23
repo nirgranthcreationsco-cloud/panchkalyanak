@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   title: "पंचकल्याणक महोत्सव के बारे में | About Event | ह्रींकार तीर्थ",
   description:
     "ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महोत्सव 2026 की सम्पूर्ण जानकारी। आयोजन का उद्देश्य, महत्त्व, आचार्यों की सन्निधि और दिव्य कार्यक्रम – सब कुछ यहाँ पढ़ें।",
-  alternates: { canonical: "https://www.hrimkartirth.com/about" },
+  alternates: { canonical: "https://hrimkartirth.com/about" },
   openGraph: {
     title: "पंचकल्याणक महोत्सव 2026 – About | ह्रींकार तीर्थ बांसवाड़ा",
     description: "500+ जिनबिंब प्रतिष्ठा – जानें पंचकल्याणक महोत्सव का महत्त्व, उद्देश्य एवं आयोजन की विस्तृत जानकारी।",
-    url: "https://www.hrimkartirth.com/about",
+    url: "https://hrimkartirth.com/about",
     images: [{ url: "/logo.png", width: 800, height: 600, alt: "ह्रींकार तीर्थ पंचकल्याणक महोत्सव" }],
   },
 };
