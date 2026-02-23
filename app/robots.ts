@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: [
             {
                 userAgent: "*",
-                allow: ["/$"], // Only allow the exact homepage URL
+                allow: ["/$", "/sitemap.xml"], // Allow homepage and sitemap
                 disallow: ["/"], // Disallow everything else
             },
         ],
