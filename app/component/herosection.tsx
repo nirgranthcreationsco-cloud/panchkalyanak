@@ -145,15 +145,23 @@ export default function PanchkalyanakHero() {
         पंचकल्याणक प्रतिष्ठा महोत्सव 2026 – बांसवाड़ा, राजस्थान | ह्रींकार तीर्थ | जैन पंचकल्याणक महोत्सव
       </h1>
 
+      {/* Background Fallback (Poster) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center grayscale-[20%] opacity-40 transition-opacity duration-1000"
+        style={{ backgroundImage: 'url("/day1.jpeg")', filter: 'blur(8px) brightness(0.5)' }}
+      />
+
       {/* Video A */}
       <video
         ref={vA}
         muted
         playsInline
+        autoPlay
+        loop
         preload="auto"
         disablePictureInPicture
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
+        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1500ms] will-change-auto"
         style={{ transform: "translateZ(0)" }}
       />
 
@@ -162,10 +170,12 @@ export default function PanchkalyanakHero() {
         ref={vB}
         muted
         playsInline
+        autoPlay
+        loop
         preload="auto"
         disablePictureInPicture
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1000ms] will-change-auto"
+        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1500ms] will-change-auto"
         style={{ transform: "translateZ(0)" }}
       />
 

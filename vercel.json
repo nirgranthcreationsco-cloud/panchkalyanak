@@ -1,15 +1,3 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.hrimkartirth.com"
-        }
-      ],
-      "destination": "https://hrimkartirth.com/:path*",
-      "permanent": true
-    }
-  ]
+  "redirects": []
 }
