@@ -30,7 +30,7 @@ export default function PanchkalyanakHero() {
   }, []);
 
   // --------------------------------------------------
-  // MAIN video playback logic (Production-Ready)
+  // MAIN video playback logic (High Resilience)
   // --------------------------------------------------
   useEffect(() => {
     const A = vA.current;
@@ -40,69 +40,69 @@ export default function PanchkalyanakHero() {
     let nextIdx = 1;
     let isCleanedUp = false;
 
-    // Initialization Helper
     const setupVideo = (video: HTMLVideoElement, src: string) => {
       video.src = src;
       video.muted = true;
       video.playsInline = true;
       video.preload = "auto";
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
       video.load();
     };
 
-    // Initial setup for both buffers
+    // Initialize
     setupVideo(A, videos[0]);
-    // Pre-setup B with the next video
     setupVideo(B, videos[1]);
 
-    const startInitialPlay = async () => {
+    const playWithResilience = async (video: HTMLVideoElement) => {
       try {
-        await A.play();
-        A.style.opacity = "1";
+        await video.play();
+        return true;
       } catch (err) {
-        console.warn("Autoplay blocked, waiting for interaction");
-        const handleInteraction = () => {
-          A.play().then(() => {
-            A.style.opacity = "1";
-            window.removeEventListener("mousedown", handleInteraction);
-            window.removeEventListener("touchstart", handleInteraction);
-          }).catch(() => {});
+        // Fallback for Safari/Mobile low-power mode or aggressive blocking
+        const handleForcePlay = () => {
+          video.play().catch(() => {});
+          window.removeEventListener("touchstart", handleForcePlay);
+          window.removeEventListener("mousedown", handleForcePlay);
         };
-        window.addEventListener("mousedown", handleInteraction);
-        window.addEventListener("touchstart", handleInteraction);
+        window.addEventListener("touchstart", handleForcePlay);
+        window.addEventListener("mousedown", handleForcePlay);
+        return false;
       }
     };
 
-    startInitialPlay();
+    const start = async () => {
+      const success = await playWithResilience(A);
+      if (success || A.readyState >= 2) {
+        A.style.opacity = "1";
+      }
+    };
+
+    start();
 
     const playNext = async () => {
       if (isCleanedUp) return;
 
       const currentIdx = nextIdx % videos.length;
-      const src = videos[currentIdx];
-
       const show = activeRef.current === "A" ? B : A;
       const hide = activeRef.current === "A" ? A : B;
 
       try {
-        // 'show' was already pre-loaded/setup in previous step or during init
         await show.play();
-        
-        // crossfade
         show.style.opacity = "1";
         hide.style.opacity = "0";
-
-        // swap active ref
+        
         activeRef.current = activeRef.current === "A" ? "B" : "A";
         
-        // Prepare 'hide' for its NEXT turn (2 indices ahead)
         nextIdx++;
-        const futureIdx = (nextIdx) % videos.length;
+        const futureIdx = nextIdx % videos.length;
+        
+        // Setup the next video after crossfade starts
         setTimeout(() => {
           if (!isCleanedUp) setupVideo(hide, videos[futureIdx]);
-        }, 1000); // Wait for fade to finish before changing src
+        }, 1500);
 
       } catch (err) {
-        console.error(`Playback error for ${src}:`, err);
         nextIdx++;
         setTimeout(playNext, 1000);
       }
@@ -115,13 +115,14 @@ export default function PanchkalyanakHero() {
     A.addEventListener("ended", handleEnded);
     B.addEventListener("ended", handleEnded);
 
+    // Watchdog to ensure video never stays paused (e.g. after tab wake up)
     const watchdog = setInterval(() => {
       if (isCleanedUp) return;
       const active = activeRef.current === "A" ? A : B;
       if (active.paused && active.readyState >= 2) {
         active.play().catch(() => {});
       }
-    }, 5000);
+    }, 2000);
 
     return () => {
       isCleanedUp = true;
