@@ -9,20 +9,9 @@ export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             {
-                // Allow all well-behaved bots
                 userAgent: "*",
-                allow: "/",
-                disallow: [
-                    "/api/",          // internal API routes
-                    "/_next/",        // Next.js internals
-                    "/admin",
-                    "/secret",
-                ],
-            },
-            {
-                // Explicitly welcome Googlebot image crawler
-                userAgent: "Googlebot-Image",
-                allow: "/",
+                allow: ["/$"], // Only allow the exact homepage URL
+                disallow: ["/"], // Disallow everything else
             },
         ],
         sitemap: `${BASE_URL}/sitemap.xml`,

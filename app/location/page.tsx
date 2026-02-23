@@ -6,7 +6,8 @@ export const metadata: Metadata = {
   title: "आयोजन स्थल – बांसवाड़ा, राजस्थान | ह्रींकार तीर्थ",
   description:
     "ह्रींकार तीर्थ, बांसवाड़ा-उदयपुर रोड, राजस्थान – पंचकल्याणक महोत्सव 2026 का आयोजन स्थल। रेल, बस, हवाई मार्ग से पहुँचने की सम्पूर्ण जानकारी यहाँ पाएं।",
-  alternates: { canonical: "https://hrimkartirth.com/location" },
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/location" },
   openGraph: {
     title: "आयोजन स्थल – ह्रींकार तीर्थ, बांसवाड़ा | Panchkalyanak 2026",
     description: "बांसवाड़ा में रेल, बस व हवाई मार्ग से कैसे पहुँचें – सम्पूर्ण यात्रा गाइड।",

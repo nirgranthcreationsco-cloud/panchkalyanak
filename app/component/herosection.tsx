@@ -190,23 +190,28 @@ export default function PanchkalyanakHero() {
       />
 
       {/* content */}
-      <div
-        className={`relative z-20 text-center transition-all duration-[1500ms] ease-out
+      <div 
+        className={`relative z-20 w-full max-w-[90vw] flex flex-col items-center justify-center text-center transition-all duration-[1500ms] ease-out px-4
         ${isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-90 translate-y-6"}`}
       >
-        <Image
-          src="/logo.png"
-          alt="ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Official Logo"
-          width={500}
-          height={375}
-          priority
-          className="w-[60vw] max-w-[500px] object-contain drop-shadow-[0_0_60px_rgba(249,228,183,0.6)]"
-        />
+        <div className="relative flex justify-center w-full mb-6">
+          <Image
+            src="/logo.png"
+            alt="ह्रींकार तीर्थ पंचकल्याणक प्रतिष्ठा महा-महोत्सव 2026 – Official Logo"
+            width={500}
+            height={375}
+            priority
+            className="w-[85vw] sm:w-[65vw] max-w-[500px] h-auto object-contain drop-shadow-[0_0_80px_rgba(249,228,183,0.7)]"
+          />
+        </div>
 
-        <LiveEventBadge />
+        <div className="w-full flex justify-center">
+          <LiveEventBadge />
+        </div>
       </div>
 
-      <div className="absolute inset-10 md:inset-16 border-[1.5px] border-[#EEC76C]/40 rounded-[2rem]" />
+      {/* Hero Frame Border */}
+      <div className="absolute inset-4 sm:inset-10 md:inset-16 border-[1.5px] border-[#EEC76C]/30 rounded-[1.5rem] md:rounded-[2rem] pointer-events-none" />
     </section>
   );
 }
