@@ -3,15 +3,14 @@
 
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://hrimkartirth.com";
+const BASE_URL = "https://www.hrimkartirth.com";
 
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             {
                 userAgent: "*",
-                allow: ["/$", "/sitemap.xml"], // Allow homepage and sitemap
-                disallow: ["/"], // Disallow everything else
+                allow: "/", // Allow everything on the primary domain
             },
         ],
         sitemap: `${BASE_URL}/sitemap.xml`,

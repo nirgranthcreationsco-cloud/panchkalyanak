@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "पंचकल्याणक का इतिहास | History of Panchkalyanak | जैन धर्म",
     description: "जैन धर्म में पंचकल्याणक का इतिहास, पाँच कल्याणकों का अर्थ, आध्यात्मिक फल और प्रतिष्ठा विधि।",
-    url: "https://hrimkartirth.com/history",
+    url: "https://www.hrimkartirth.com/history",
     images: [{ url: "/logo.png", width: 800, height: 600, alt: "पंचकल्याणक इतिहास जैन धर्म" }],
   },
 };

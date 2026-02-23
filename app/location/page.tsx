@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "आयोजन स्थल – ह्रींकार तीर्थ, बांसवाड़ा | Panchkalyanak 2026",
     description: "बांसवाड़ा में रेल, बस व हवाई मार्ग से कैसे पहुँचें – सम्पूर्ण यात्रा गाइड।",
-    url: "https://hrimkartirth.com/location",
+    url: "https://www.hrimkartirth.com/location",
     images: [{ url: "/logo.png", width: 800, height: 600, alt: "ह्रींकार तीर्थ बांसवाड़ा स्थान" }],
   },
 };
