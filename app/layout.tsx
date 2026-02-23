@@ -142,16 +142,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="hi"
-      dir="ltr"
-      style={{
-        colorScheme: "light",
-        backgroundColor: "#FFF1F5",
-        margin: 0,
-        padding: 0,
-      } as React.CSSProperties}
-    >
+    <html lang="hi" dir="ltr">
       <head>
         {/* ── Preconnect / DNS‑Prefetch for fonts ── */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -178,11 +169,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msapplication-navbutton-color" content="#8B0048" />
         <meta name="msapplication-TileColor" content="#8B0048" />
 
+
         {/* ── Google Site Verification (add your token below) ── */}
         {/* <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" /> */}
-
-        {/* ── Canonical (backup inline – Next.js Metadata also emits this) ── */}
-        <link rel="canonical" href="https://hrimkartirth.com/" />
 
         {/* ── JSON-LD Structured Data ─────────────── */}
         <script
@@ -406,18 +395,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        style={{
-          backgroundColor: "#FFF1F5",
-          colorScheme: "light",
-          color: "#7A1433",
-          margin: 0,
-          padding: 0,
-          WebkitTapHighlightColor: "transparent",
-          WebkitFontSmoothing: "antialiased",
-        } as React.CSSProperties}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div
           style={{
             colorScheme: "light",
